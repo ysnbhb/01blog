@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
 @Data
-public class User {
+public class UserReq {
     private String password;
     private String email;
     private String username;
@@ -13,4 +13,5 @@ public class User {
     private String name;
     private String lastName;
     private MultipartFile photo;
+    private String urlPhot ;
 }
