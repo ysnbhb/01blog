@@ -13,5 +13,5 @@ public class UserReq {
     private String name;
     private String lastName;
     private MultipartFile photo;
-    private String urlPhot ;
+    private String urlPhoto;
 }

@@ -9,5 +9,8 @@ public class UserRes {
     private String dateOfBirth;
     private String name;
     private String lastName;
-    private String urlPhot;
+    private String urlPhoto;
+    private int followers;
+    private int following;
+    private boolean mayAcount;
 }

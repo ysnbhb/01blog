@@ -11,9 +11,9 @@ import _blog.com._blog.model.UserReq;
 @RestController
 public class Login {
     @PostMapping(path = "/register")
-    public ResponseEntity<String> registerUser(@ModelAttribute UserReq user) {
+    public UserReq registerUser(@ModelAttribute UserReq user) {
         System.out.println(user.toString());
-        return ResponseEntity.ok().body("");
+        return user;
         // return "";
     }
 
