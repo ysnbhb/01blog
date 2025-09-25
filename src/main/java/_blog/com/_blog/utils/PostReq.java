@@ -1,4 +1,4 @@
-package _blog.com._blog.model;
+package _blog.com._blog.utils;
 
 import org.springframework.web.multipart.MultipartFile;
 

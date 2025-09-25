@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import _blog.com._blog.model.UserReq;
+import _blog.com._blog.utils.UserReq;
 
 @RestController
 public class Login {

@@ -1,4 +1,5 @@
-package _blog.com._blog.model;
+package _blog.com._blog.utils;
+
 
 import lombok.Data;
 
