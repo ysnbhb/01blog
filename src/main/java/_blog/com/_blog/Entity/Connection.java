@@ -1,8 +1,5 @@
 package _blog.com._blog.Entity;
 
-import java.time.LocalDateTime;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,20 +9,17 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Entity
 @Data
-@Table(name = "comments")
-public class Comment {
+@Entity
+@Table(name = "connection")
+public class Connection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String contane;
+    private Long id;
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+    @JoinColumn(name = "follower_id", referencedColumnName = "id", nullable = false)
+    private User follower;
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    @JoinColumn(name = "following_id", referencedColumnName = "id", nullable = false)
+    private User following;
 }

@@ -1,5 +1,6 @@
 package _blog.com._blog.controllers;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +20,16 @@ public class UserController {
     }
 
     @PostMapping(path = "/register")
-    public User registerUser(@ModelAttribute UserReq user) {
-        return userServ.save(user);
+    public UserReq registerUser(@ModelAttribute UserReq user) {
+        try {
+
+            userServ.save(user);
+            return user;
+        } catch (DataIntegrityViolationException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        // return new CommentRes();
     }
 
     @PostMapping(path = "/login")

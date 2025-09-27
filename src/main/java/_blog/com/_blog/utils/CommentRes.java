@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CommentRes {
-    private UserRes user;
+    private UserReq user;
     private String text;
     private int numOflike;
     private boolean isliked;

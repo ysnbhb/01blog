@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class PostRes {
-    private UserRes user;
+    private UserReq user;
     private String text;
     private String urlPhot;
     private String typePhoto;
