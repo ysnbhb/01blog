@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import _blog.com._blog.Entity.User;
 import _blog.com._blog.services.UserServ;
 import _blog.com._blog.utils.UserReq;
 
