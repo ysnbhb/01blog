@@ -9,6 +9,10 @@ import _blog.com._blog.Entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    
+
     List<User> findByRoleNot(String role);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByUsername(String username);
 }

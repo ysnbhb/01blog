@@ -2,18 +2,18 @@ package _blog.com._blog.Exception;
 
 public class UserExeption extends Exception {
     private int status;
-    private String contan;
+    private String message;
 
-    public UserExeption(int status, String contan) {
+    public UserExeption(int status, String message) {
         this.status = status;
-        this.contan = contan;
+        this.message = message;
     }
 
     public int getStatus() {
         return status;
     }
 
-    public String getContan() {
-        return contan;
+    public String getMessage() {
+        return message;
     }
 }

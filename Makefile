@@ -8,3 +8,5 @@ db:
   	-e POSTGRES_DB=blogdb \
   	-p 5432:5432 \
   	-d postgres:15
+db_bash:
+	docker exec -it 01blogdb bash 

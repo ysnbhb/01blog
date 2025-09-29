@@ -1,8 +1,13 @@
 package _blog.com._blog.services;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 import org.springframework.stereotype.Service;
 import _blog.com._blog.utils.UserReq;
 import _blog.com._blog.Entity.User;
+import _blog.com._blog.Exception.UserExeption;
 import _blog.com._blog.repositories.UserRepository;
 
 @Service
@@ -13,19 +18,48 @@ public class UserServ {
         this.userRepository = userRepository;
     }
 
-    public User save(UserReq userReq) {
-        if (!userReq.isValid()) {
-            throw new IllegalArgumentException("Invalid user data");
+    public User save(UserReq userReq) throws UserExeption {
+        String error = userReq.isValid();
+        if (error != null) {
+            throw new UserExeption(400, error);
         }
+        if (userRepository.existsByEmail(userReq.getEmail())) {
+            throw new UserExeption(400, "email already exists try other one");
+        }
+        String userName = userReq.getUsername();
+        if (userName != null && userRepository.existsByUsername(userName)) {
+            throw new UserExeption(400, "username already exists try other one");
 
+        }
+        if (userName == null) {
+            userName = generateUsername(userReq.getName(), userReq.getLastName());
+            while (userRepository.existsByUsername(userName)) {
+                userName = generateUsername(userReq.getName(), userReq.getLastName());
+            }
+        }
         User user = new User();
         user.setEmail(userReq.getEmail());
-        user.setUsername(userReq.getUsername());
+        user.setUsername(userName);
         user.setPassword(userReq.getPassword());
         user.setDateOfBirth(userReq.getDateOfBirth());
         user.setName(userReq.getName());
         user.setLastName(userReq.getLastName());
         user.setUrlPhoto(userReq.getUrlPhoto());
         return userRepository.save(user);
+    }
+
+    public static String generateUsername(String name, String lastName) {
+        Random rand = new Random(System.currentTimeMillis());
+
+        List<String> formats = Arrays.asList(
+                name + lastName,
+                name + "." + lastName,
+                name + "_" + lastName,
+                name.substring(0, 3) + "@" + lastName.substring(0, 3),
+                name + (100 + rand.nextInt(900)),
+                lastName + (100 + rand.nextInt(900)));
+
+        String username = formats.get(rand.nextInt(formats.size()));
+        return username.toLowerCase();
     }
 }
