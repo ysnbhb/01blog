@@ -8,21 +8,23 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import lombok.Data;
 
 @Data
 public class UserReq {
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String email;
     private String username;
     private String dateOfBirth;
     private String name;
     private String lastName;
-    @JsonIgnore
-    private MultipartFile photo;
+    // @JsonIgnore
+    // private MultipartFile photo;
     private String urlPhoto;
     private int followers;
     private int following;
@@ -46,13 +48,13 @@ public class UserReq {
             return "unvalid date of Birth";
         if (username != null && username.length() < 3)
             return "username is too short";
-        try {
-            if (photo != null && !isRealPhoto(photo)) {
-                return "photo is unvalid";
-            }
-        } catch (Exception e) {
-            return "photo is unvalid";
-        }
+        // try {
+        //     if (photo != null && !isRealPhoto(photo)) {
+        //         return "photo is unvalid";
+        //     }
+        // } catch (Exception e) {
+        //     return "photo is unvalid";
+        // }
 
         return null;
     }

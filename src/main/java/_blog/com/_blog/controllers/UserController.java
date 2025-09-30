@@ -8,7 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import _blog.com._blog.Exception.UserExeption;
 import _blog.com._blog.services.UserServ;
 import _blog.com._blog.utils.UserReq;
@@ -22,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@ModelAttribute UserReq userReq) {
+    public ResponseEntity<?> registerUser(@ModelAttribute UserReq userReq , @RequestParam("photo") MultipartFile photo) {
         try {
             System.out.println(userReq.toString());
             userServ.save(userReq);
