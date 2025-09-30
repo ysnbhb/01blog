@@ -2,6 +2,9 @@ package _blog.com._blog.utils;
 
 import java.time.LocalDate;
 import java.time.Period;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -15,15 +18,16 @@ import lombok.Data;
 public class UserReq {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    @NotBlank(message = "name must be not null")
     private String email;
     private String username;
     private String dateOfBirth;
-    @NotBlank(message =  "name must be not null")
+    @NotBlank(message = "name must be not null")
     @Size(min = 3, message = "hsdfhgjhdsf jhgsdjhgjdsf")
     private String name;
     private String lastName;
-    // @JsonIgnore
-    // private MultipartFile photo;
+    @JsonIgnore
+    private MultipartFile photo;
     private String urlPhoto;
     private int followers;
     private int following;
@@ -44,13 +48,6 @@ public class UserReq {
             return "unvalid date of Birth";
         if (username != null && username.length() < 3)
             return "username is too short";
-        // try {
-        // if (photo != null && !isRealPhoto(photo)) {
-        // return "photo is unvalid";
-        // }
-        // } catch (Exception e) {
-        // return "photo is unvalid";
-        // }
 
         return null;
     }
@@ -58,15 +55,11 @@ public class UserReq {
     @JsonIgnore
     public boolean isValidDate() {
         try {
-            LocalDate birthDate = LocalDate.parse(dateOfBirth); // e.g. "2005-09-27"
+            LocalDate birthDate = LocalDate.parse(dateOfBirth);
             LocalDate today = LocalDate.now();
-
-            // Check if birthDate is in the future (invalid)
             if (birthDate.isAfter(today)) {
                 return false;
             }
-
-            // Calculate age
             int age = Period.between(birthDate, today).getYears();
 
             return age >= 16;
