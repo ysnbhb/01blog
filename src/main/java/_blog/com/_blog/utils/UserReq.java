@@ -1,17 +1,14 @@
 package _blog.com._blog.utils;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -21,6 +18,8 @@ public class UserReq {
     private String email;
     private String username;
     private String dateOfBirth;
+    @NotBlank(message =  "name must be not null")
+    @Size(min = 3, message = "hsdfhgjhdsf jhgsdjhgjdsf")
     private String name;
     private String lastName;
     // @JsonIgnore
@@ -35,9 +34,6 @@ public class UserReq {
         if (password == null || password.length() < 8) {
             return "password must be at less 8 charat";
         }
-        if (name == null || name.length() < 3) {
-            return "name is too short";
-        }
         if (lastName == null || lastName.length() < 3) {
             return "name is too short";
         }
@@ -49,11 +45,11 @@ public class UserReq {
         if (username != null && username.length() < 3)
             return "username is too short";
         // try {
-        //     if (photo != null && !isRealPhoto(photo)) {
-        //         return "photo is unvalid";
-        //     }
+        // if (photo != null && !isRealPhoto(photo)) {
+        // return "photo is unvalid";
+        // }
         // } catch (Exception e) {
-        //     return "photo is unvalid";
+        // return "photo is unvalid";
         // }
 
         return null;
@@ -75,29 +71,6 @@ public class UserReq {
 
             return age >= 16;
         } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @JsonIgnore
-    public static boolean isRealPhoto(MultipartFile file) throws IOException {
-        if (file == null || file.isEmpty())
-            return false;
-
-        String contentType = file.getContentType();
-        if (contentType == null || !contentType.startsWith("image/")) {
-            return false;
-        }
-        byte[] bytes = file.getBytes();
-        return isValidImage(bytes);
-    }
-
-    @JsonIgnore
-    public static boolean isValidImage(byte[] data) {
-        try {
-            BufferedImage img = ImageIO.read(new ByteArrayInputStream(data));
-            return img != null;
-        } catch (IOException e) {
             return false;
         }
     }

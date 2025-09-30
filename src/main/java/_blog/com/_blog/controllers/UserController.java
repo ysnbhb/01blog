@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import _blog.com._blog.Exception.UserExeption;
 import _blog.com._blog.services.UserServ;
 import _blog.com._blog.utils.UserReq;
+import jakarta.validation.Valid;
 
 @RestController
 public class UserController {
@@ -25,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@ModelAttribute UserReq userReq , @RequestParam("photo") MultipartFile photo) {
+    public ResponseEntity<?> registerUser(@Valid @ModelAttribute UserReq userReq) {
         try {
             System.out.println(userReq.toString());
             userServ.save(userReq);
