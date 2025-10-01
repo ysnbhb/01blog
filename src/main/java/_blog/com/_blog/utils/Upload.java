@@ -52,7 +52,10 @@ public class Upload {
 
     public static String saveImage(MultipartFile file) throws UserExeption {
         isRealPhoto(file);
-        File dir = new File(UPLOAD_DIR);
+
+        String projectDir = System.getProperty("user.dir");
+        File dir = new File(projectDir, UPLOAD_DIR);
+
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -64,10 +67,11 @@ public class Upload {
         try {
             file.transferTo(destination);
         } catch (Exception e) {
-            throw new UserExeption(500, "Failed to save image");
+            e.printStackTrace();
+            throw new UserExeption(500, "Failed to save image: " + e.getMessage());
         }
 
-        return fileName; 
+        return fileName;
     }
 
     private static String getExtension(String originalName) {

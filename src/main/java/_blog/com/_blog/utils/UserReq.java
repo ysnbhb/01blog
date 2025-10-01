@@ -1,15 +1,9 @@
 package _blog.com._blog.utils;
 
-import java.time.LocalDate;
-import java.time.Period;
-
 import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import jakarta.mail.internet.AddressException;
-import jakarta.mail.internet.InternetAddress;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -19,12 +13,19 @@ public class UserReq {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @NotBlank(message = "name must be not null")
+    @Email(message = "Email should be valid")
     private String email;
+    @UserName
+    @Size(max = 16 , min = 3 , message = "invalid username")
     private String username;
+    @ValidDateOfBirth
     private String dateOfBirth;
     @NotBlank(message = "name must be not null")
-    @Size(min = 3, message = "hsdfhgjhdsf jhgsdjhgjdsf")
+    @Size(max = 6, min = 3, message = "Name should be min 3 and max 6")
+    @NameValid
     private String name;
+    @Size(max = 10, min = 3, message = "Last Name should be  min 3 and max 10")
+    @NameValid
     private String lastName;
     @JsonIgnore
     private MultipartFile photo;
@@ -32,52 +33,4 @@ public class UserReq {
     private int followers;
     private int following;
     private boolean mayAcount;
-
-    @JsonIgnore
-    public String isValid() {
-        if (password == null || password.length() < 8) {
-            return "password must be at less 8 charat";
-        }
-        if (lastName == null || lastName.length() < 3) {
-            return "name is too short";
-        }
-        if (!isValidEmailAddress(email)) {
-            return "unvalid emainl";
-        }
-        if (!isValidDate())
-            return "unvalid date of Birth";
-        if (username != null && username.length() < 3)
-            return "username is too short";
-
-        return null;
-    }
-
-    @JsonIgnore
-    public boolean isValidDate() {
-        try {
-            LocalDate birthDate = LocalDate.parse(dateOfBirth);
-            LocalDate today = LocalDate.now();
-            if (birthDate.isAfter(today)) {
-                return false;
-            }
-            int age = Period.between(birthDate, today).getYears();
-
-            return age >= 16;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @JsonIgnore
-    public static boolean isValidEmailAddress(String email) {
-        boolean result = true;
-        try {
-            InternetAddress emailAddr = new InternetAddress(email);
-            emailAddr.validate();
-        } catch (AddressException ex) {
-            result = false;
-        }
-        return result;
-    }
-
 }

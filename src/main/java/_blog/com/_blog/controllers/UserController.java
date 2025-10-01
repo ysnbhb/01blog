@@ -8,9 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import _blog.com._blog.Exception.UserExeption;
 import _blog.com._blog.services.UserServ;
@@ -37,7 +35,7 @@ public class UserController {
                     .body(Map.of("error", "Email or username already exists"));
         } catch (UserExeption e) {
             return ResponseEntity
-                    .badRequest()
+                    .status(e.getStatus())
                     .body(Map.of("error", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity

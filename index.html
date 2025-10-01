@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register User + Upload Photo</title>
+</head>
+<body>
+  <h2>Register User</h2>
+  <form id="registerForm">
+    <label>First Name:</label>
+    <input type="text" name="name" required><br><br>
+
+    <label>Last Name:</label>
+    <input type="text" name="lastName" required><br><br>
+
+    <label>Email:</label>
+    <input type="email" name="email" required><br><br>
+
+    <label>Password:</label>
+    <input type="password" name="password" required><br><br>
+
+    <label>Date of Birth:</label>
+    <input type="date" name="dateOfBirth" required><br><br>
+
+    <label>Profile Photo:</label>
+    <input type="file" name="photo" accept="image/*"><br><br>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+      console.log(formData);
+      
+
+      try {
+        const response = await fetch("http://localhost:8080/register", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+        document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById("result").innerText = "Error: " + err;
+      }
+    });
+  </script>
+</body>
+</html>

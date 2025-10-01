@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import org.springframework.stereotype.Service;
+
+import _blog.com._blog.utils.Upload;
 import _blog.com._blog.utils.UserReq;
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.Exception.UserExeption;
@@ -19,10 +21,6 @@ public class UserServ {
     }
 
     public User save(UserReq userReq) throws UserExeption {
-        String error = userReq.isValid();
-        if (error != null) {
-            throw new UserExeption(400, error);
-        }
         if (userRepository.existsByEmail(userReq.getEmail())) {
             throw new UserExeption(400, "email already exists try other one");
         }
@@ -36,6 +34,13 @@ public class UserServ {
             while (userRepository.existsByUsername(userName)) {
                 userName = generateUsername(userReq.getName(), userReq.getLastName());
             }
+        }
+        userReq.setUsername(userName);
+        var photo = userReq.getPhoto();
+        if (photo != null) {
+            userReq.setUrlPhoto((Upload.saveImage(photo)));
+        } else {
+            userReq.setUrlPhoto("default-avatar.jpg");
         }
         User user = new User();
         user.setEmail(userReq.getEmail());
