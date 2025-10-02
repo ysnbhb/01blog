@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class PostReq {
     @JsonIgnore
-    private int userid;
+    private long userid;
     private UserReq user;
     @NotBlank(message = "content must be not null")
     @Size(min = 3, max = 500, message = "content must be between 3 and 500")

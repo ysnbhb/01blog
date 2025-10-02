@@ -10,6 +10,7 @@ import _blog.com._blog.utils.Upload;
 import _blog.com._blog.utils.UserReq;
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.Exception.UserExeption;
+import _blog.com._blog.dto.UserConvert;
 import _blog.com._blog.repositories.UserRepository;
 
 @Service
@@ -42,15 +43,8 @@ public class UserServ {
         } else {
             userReq.setUrlPhoto("default-avatar.jpg");
         }
-        User user = new User();
-        user.setEmail(userReq.getEmail());
-        user.setUsername(userName);
-        user.setPassword(userReq.getPassword());
-        user.setDateOfBirth(userReq.getDateOfBirth());
-        user.setName(userReq.getName());
-        user.setLastName(userReq.getLastName());
-        user.setUrlPhoto(userReq.getUrlPhoto());
-        return userRepository.save(user);
+
+        return userRepository.save(UserConvert.convertToUser(userReq));
     }
 
     public static String generateUsername(String name, String lastName) {

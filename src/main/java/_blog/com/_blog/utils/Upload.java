@@ -5,20 +5,15 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
 import java.util.UUID;
-
 import javax.imageio.ImageIO;
-
 import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import _blog.com._blog.Exception.UserExeption;
 
 public class Upload {
 
-    private static final String UPLOAD_DIR = "uploads/images";
+    private static final String UPLOAD_DIR_Photo = "uploads/images";
+    private static final String UPLOAD_DIR_video = "uploads/video";
 
-    @JsonIgnore
     public static boolean isRealPhoto(MultipartFile file) throws UserExeption {
         if (file == null || file.isEmpty()) {
             throw new UserExeption(400, "Image file is required");
@@ -40,7 +35,6 @@ public class Upload {
         }
     }
 
-    @JsonIgnore
     public static boolean isValidImage(byte[] data) {
         try {
             BufferedImage img = ImageIO.read(new ByteArrayInputStream(data));
@@ -54,7 +48,7 @@ public class Upload {
         isRealPhoto(file);
 
         String projectDir = System.getProperty("user.dir");
-        File dir = new File(projectDir, UPLOAD_DIR);
+        File dir = new File(projectDir, UPLOAD_DIR_Photo);
 
         if (!dir.exists()) {
             dir.mkdirs();
@@ -68,7 +62,7 @@ public class Upload {
             file.transferTo(destination);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new UserExeption(500, "Failed to save image: " + e.getMessage());
+            throw new UserExeption(500, "Failed to save image");
         }
 
         return fileName;
@@ -80,4 +74,41 @@ public class Upload {
         int dotIndex = originalName.lastIndexOf(".");
         return (dotIndex >= 0) ? originalName.substring(dotIndex) : "";
     }
+
+    public static boolean isLikelyVideo(MultipartFile file) {
+        try {
+            String contentType = file.getContentType();
+            if (contentType == null || !contentType.startsWith("video/")) {
+                return false;
+            }
+
+            byte[] header = file.getBytes();
+            String headerStr = new String(header, 0, Math.min(header.length, 64));
+            return headerStr.contains("ftyp") || headerStr.contains("moov");
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static String saveVideo(MultipartFile file) throws UserExeption {
+        if (!isLikelyVideo(file)) {
+            throw new UserExeption(400, "File is not an video");
+        }
+        String projectDir = System.getProperty("user.dir");
+        File dir = new File(projectDir, UPLOAD_DIR_video);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        String extension = getExtension(file.getOriginalFilename());
+        String fileName = UUID.randomUUID().toString() + (extension.isEmpty() ? ".mp4" : extension);
+        File destination = new File(dir, fileName);
+        try {
+            file.transferTo(destination);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new UserExeption(500, "Failed to save video");
+        }
+        return fileName;
+    }
+
 }
