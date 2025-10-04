@@ -1,5 +1,7 @@
 package _blog.com._blog.utils;
 
+import java.time.LocalDateTime;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,7 +17,7 @@ public class PostReq {
     private UserReq user;
     @NotBlank(message = "content must be not null")
     @Size(min = 3, max = 500, message = "content must be between 3 and 500")
-    private String text;
+    private String content;
     private String urlPhot;
     private String typePhoto;
     private int numOflike;
@@ -23,4 +25,5 @@ public class PostReq {
     private boolean isliked;
     @JsonIgnore
     private MultipartFile photo;
+    private LocalDateTime createdAt;
 }

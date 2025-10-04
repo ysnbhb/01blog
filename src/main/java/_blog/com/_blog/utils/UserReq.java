@@ -15,8 +15,9 @@ public class UserReq {
     @NotBlank(message = "name must be not null")
     @Email(message = "Email should be valid")
     private String email;
+    private String uuid;
     @UserName
-    @Size(max = 16 , min = 3 , message = "invalid username")
+    @Size(max = 16, min = 3, message = "invalid username")
     private String username;
     @ValidDateOfBirth
     private String dateOfBirth;

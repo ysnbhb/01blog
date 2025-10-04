@@ -6,7 +6,7 @@ import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.Exception.UserExeption;
 import _blog.com._blog.dto.PostConvert;
-import _blog.com._blog.dto.UserConvert;
+// import _blog.com._blog.dto.UserConvert;
 import _blog.com._blog.repositories.PostRepositery;
 import _blog.com._blog.repositories.UserRepository;
 import _blog.com._blog.utils.PostReq;
@@ -23,11 +23,8 @@ public class PostServ {
     }
 
     public Post save(PostReq postReq) throws UserExeption {
-        User userOption = userRepository.findById(postReq.getUserid()).orElse(null);
-        if (userOption == null) {
-            return null;
-        }
-        postReq.setUser(UserConvert.convertToUserReq(userOption));
+        User user = userRepository.findById(1L)
+                .orElseThrow(() -> new UserExeption(404, "User not found"));
         var photo = postReq.getPhoto();
         if (photo != null) {
 
@@ -39,7 +36,25 @@ public class PostServ {
                 postReq.setTypePhoto("video");
             }
         }
-        return postRepositery.save(PostConvert.convertToPost(postReq));
+        Post post = PostConvert.convertToPost(postReq);
+        post.setUser(user);
+        System.out.println(user.toString());
+        return postRepositery.save(post);
+    }
+
+    public void delete(long Postid, long userId) throws UserExeption {
+        User user = userRepository.findById(1L)
+                .orElseThrow(() -> new UserExeption(404, "User not found"));
+        User ownrPost = postRepositery.findById(Postid)
+                .map(Post::getUser)
+                .orElseThrow(() -> new UserExeption(404, "Post not found"));
+
+        ;
+        if (user.equals(ownrPost)) {
+            postRepositery.deleteById(Postid);
+        } else {
+            throw new UserExeption(400, "you can't delet this post");
+        }
     }
 
 }

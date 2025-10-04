@@ -31,10 +31,9 @@ public class UserServ {
 
         }
         if (userName == null) {
-            userName = generateUsername(userReq.getName(), userReq.getLastName());
-            while (userRepository.existsByUsername(userName)) {
+            do {
                 userName = generateUsername(userReq.getName(), userReq.getLastName());
-            }
+            } while (userRepository.existsByUsername(userName));
         }
         userReq.setUsername(userName);
         var photo = userReq.getPhoto();

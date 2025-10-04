@@ -1,9 +1,5 @@
 package _blog.com._blog.controllers;
 
-import java.util.Map;
-
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,24 +20,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @ModelAttribute UserReq userReq) {
-        try {
-            System.out.println(userReq.toString());
-            userServ.save(userReq);
-            return ResponseEntity.ok(userReq);
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(Map.of("error", "Email or username already exists"));
-        } catch (UserExeption e) {
-            return ResponseEntity
-                    .status(e.getStatus())
-                    .body(Map.of("error", e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", "Unexpected error occurred"));
-        }
+    public ResponseEntity<?> registerUser(@Valid @ModelAttribute UserReq userReq) throws UserExeption {
+        userServ.save(userReq);
+        return ResponseEntity.ok(userReq);
     }
 
     @PostMapping(path = "/login")
