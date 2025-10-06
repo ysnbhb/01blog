@@ -20,7 +20,6 @@ public class AdminControl {
 
     @PostMapping("/delete")
     public ResponseEntity<?> registerUser(@RequestParam("uuid") String uuid) throws UserExeption {
-        // User user = userServ.save(userReq);
         userServ.delet(uuid);
         return ResponseEntity.ok(uuid);
     }

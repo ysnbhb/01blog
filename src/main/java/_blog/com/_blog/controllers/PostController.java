@@ -1,6 +1,7 @@
 package _blog.com._blog.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +35,12 @@ public class PostController {
     public ResponseEntity<?> delete(@RequestParam("id") String id, HttpServletRequest request) throws Exception {
         Long userid = (long) request.getAttribute("userId");
         postRepositery.delete(Long.parseLong(id), userid);
-        return null;
+        return ResponseEntity.ok(id);
+    }
+
+    @GetMapping(path = "posts")
+    public ResponseEntity<?> getPost() {
+        return ResponseEntity.ok(postRepositery.getPost());
     }
 
 }

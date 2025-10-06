@@ -23,9 +23,11 @@ public class UserReq {
     private String dateOfBirth;
     @NotBlank(message = "name must be not null")
     @Size(max = 6, min = 3, message = "Name should be min 3 and max 6")
+    @NotBlank
     @NameValid
     private String name;
     @Size(max = 10, min = 3, message = "Last Name should be  min 3 and max 10")
+    @NotBlank
     @NameValid
     private String lastName;
     @JsonIgnore
@@ -34,4 +36,6 @@ public class UserReq {
     private int followers;
     private int following;
     private boolean mayAcount;
+    private boolean hasCon;
+
 }

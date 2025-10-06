@@ -32,7 +32,6 @@ public class UserController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<String> loginUser(@RequestBody UserReq userReq) throws UserExeption {
-        System.out.println(userReq.toString());
         User user = userServ.login(userReq);
         String token = jwtService.generateToken(user);
         return ResponseEntity.ok(token);

@@ -1,5 +1,7 @@
 package _blog.com._blog.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import _blog.com._blog.Entity.Post;
@@ -22,7 +24,7 @@ public class PostServ {
         this.postRepositery = PostRepositery;
     }
 
-    public Post save(PostReq postReq , Long userid) throws UserExeption {
+    public Post save(PostReq postReq, Long userid) throws UserExeption {
         User user = userRepository.findById(userid)
                 .orElseThrow(() -> new UserExeption(404, "User not found"));
         var photo = postReq.getPhoto();
@@ -55,6 +57,10 @@ public class PostServ {
         } else {
             throw new UserExeption(400, "you can't delet this post");
         }
+    }
+
+    public List<Post> getPost() {
+        return postRepositery.findAll();
     }
 
 }
