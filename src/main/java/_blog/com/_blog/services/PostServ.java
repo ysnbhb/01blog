@@ -22,8 +22,8 @@ public class PostServ {
         this.postRepositery = PostRepositery;
     }
 
-    public Post save(PostReq postReq) throws UserExeption {
-        User user = userRepository.findById(1L)
+    public Post save(PostReq postReq , Long userid) throws UserExeption {
+        User user = userRepository.findById(userid)
                 .orElseThrow(() -> new UserExeption(404, "User not found"));
         var photo = postReq.getPhoto();
         if (photo != null) {
@@ -38,7 +38,7 @@ public class PostServ {
         }
         Post post = PostConvert.convertToPost(postReq);
         post.setUser(user);
-        System.out.println(user.toString());
+        // System.out.println(user.toString());
         return postRepositery.save(post);
     }
 

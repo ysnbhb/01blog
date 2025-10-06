@@ -11,6 +11,7 @@ import _blog.com._blog.Entity.Post;
 import _blog.com._blog.dto.PostConvert;
 import _blog.com._blog.services.PostServ;
 import _blog.com._blog.utils.PostReq;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
@@ -23,14 +24,16 @@ public class PostController {
     }
 
     @PostMapping(path = "creat_post")
-    public ResponseEntity<?> post(@Valid @ModelAttribute PostReq postReq) throws Exception {
-        Post post = postRepositery.save(postReq);
+    public ResponseEntity<?> post(@Valid @ModelAttribute PostReq postReq, HttpServletRequest request) throws Exception {
+        Long userid = (long) request.getAttribute("userId");
+        Post post = postRepositery.save(postReq, userid);
         return ResponseEntity.ok(PostConvert.convertToPostReq(post));
     }
 
     @PostMapping(path = "delete_post")
-    public ResponseEntity<?> delete(@RequestParam("id") String id) throws Exception {
-        postRepositery.delete(Long.parseLong(id), 1);
+    public ResponseEntity<?> delete(@RequestParam("id") String id, HttpServletRequest request) throws Exception {
+        Long userid = (long) request.getAttribute("userId");
+        postRepositery.delete(Long.parseLong(id), userid);
         return null;
     }
 

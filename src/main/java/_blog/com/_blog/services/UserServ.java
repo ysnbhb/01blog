@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import _blog.com._blog.utils.Upload;
@@ -16,9 +17,11 @@ import _blog.com._blog.repositories.UserRepository;
 @Service
 public class UserServ {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServ(UserRepository userRepository) {
+    public UserServ(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User save(UserReq userReq) throws UserExeption {
@@ -30,6 +33,7 @@ public class UserServ {
             throw new UserExeption(400, "username already exists try other one");
 
         }
+        userReq.setPassword(passwordEncoder.encode(userReq.getPassword()));
         if (userName == null) {
             do {
                 userName = generateUsername(userReq.getName(), userReq.getLastName());
@@ -42,8 +46,18 @@ public class UserServ {
         } else {
             userReq.setUrlPhoto("default-avatar.jpg");
         }
+        User user = UserConvert.convertToUser(userReq);
+        user.setRole("USER");
+        return userRepository.save(user);
+    }
 
-        return userRepository.save(UserConvert.convertToUser(userReq));
+    public User login(UserReq userReq) throws UserExeption {
+        User user = userRepository.findByEmail(userReq.getEmail())
+                .orElseThrow(() -> new UserExeption(400, "user not found or password not correct"));
+        if (passwordEncoder.matches(user.getPassword(), userReq.getPassword())) {
+            throw new UserExeption(400, "user not found or password not correct");
+        }
+        return user;
     }
 
     public static String generateUsername(String name, String lastName) {
