@@ -21,7 +21,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
-    // Remove UserDetailsService from constructor
     public JwtAuthFilter(JwtService jwtService, UserRepository userRepository) {
         this.jwtService = jwtService;
         this.userRepository = userRepository;
@@ -45,6 +44,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             User user = userRepository.findById(userId).orElse(null);
 
             if (user != null && jwtService.isTokenValid(token, user)) {
+                System.out.println(user.toString());
+                System.out.println(userId);
                 UserDetails userDetails = org.springframework.security.core.userdetails.User
                         .withUsername(user.getUsername())
                         .password(user.getPassword())
@@ -59,7 +60,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 request.setAttribute("user", user);
             }
         }
-
         filterChain.doFilter(request, response);
     }
 }

@@ -1,6 +1,5 @@
 package _blog.com._blog.Entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,8 +17,11 @@ public class Reaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", name = "post_id", nullable = false)
+    @JoinColumn(referencedColumnName = "id", name = "post_id")
     private Post post;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id", name = "comment_id")
+    private Comment comments;
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", name = "user_id", nullable = false)
     private User user;

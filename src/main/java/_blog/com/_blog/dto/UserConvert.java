@@ -18,7 +18,7 @@ public class UserConvert {
         userReq.setLastName(user.getLastName());
         userReq.setUrlPhoto(user.getUrlPhoto());
         userReq.setUuid(user.getUuid());
-        // userReq.setRole(user.getRole());
+        userReq.setRole(user.getRole());
         // userReq.setStatus(user.getStatus()); 
 
         return userReq;

@@ -17,12 +17,12 @@ public class UserReq {
     private String email;
     private String uuid;
     @UserName
-    @Size(max = 16, min = 3, message = "invalid username")
+    @Size(max = 10, min = 3, message = "invalid username")
     private String username;
     @ValidDateOfBirth
     private String dateOfBirth;
     @NotBlank(message = "name must be not null")
-    @Size(max = 6, min = 3, message = "Name should be min 3 and max 6")
+    @Size(max = 10, min = 3, message = "Name should be min 3 and max 6")
     @NotBlank
     @NameValid
     private String name;
@@ -37,5 +37,6 @@ public class UserReq {
     private int following;
     private boolean mayAcount;
     private boolean hasCon;
+    private String role;
 
 }
