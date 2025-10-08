@@ -1,7 +1,7 @@
 package _blog.com._blog.controllers;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ public class AdminControl {
         this.userServ = userServ;
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<?> registerUser(@RequestParam("uuid") String uuid) throws UserExeption {
         userServ.delet(uuid);
         return ResponseEntity.ok(uuid);

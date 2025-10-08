@@ -46,21 +46,14 @@ public class JwtService {
 
     public Long extractUserId(String token) {
         try {
-            System.out.println("Token: " + token);
-            System.out.println("Secret Key: " + secretKey);
-            System.out.println("Secret Key Length: " + secretKey.length());
-
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(getSigningKey())
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
 
-            System.out.println("Claims Subject: " + claims.getSubject());
             return Long.parseLong(claims.getSubject());
         } catch (JwtException | NumberFormatException e) {
-            System.out.println("Error Type: " + e.getClass().getName());
-            System.out.println("Error Message: " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException("Invalid or expired JWT token", e);
         }

@@ -10,3 +10,5 @@ db:
   	-d postgres:15
 db_bash:
 	docker exec -it 01blogdb bash 
+admin:
+	./mvnw spring-boot:run -Dspring-boot.run.arguments="--server.port=8081 --admin"
