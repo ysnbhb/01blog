@@ -19,8 +19,8 @@ public class AdminControl {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> registerUser(@RequestParam("uuid") String uuid) throws UserExeption {
-        userServ.delet(uuid);
+    public ResponseEntity<?> deleteUser(@RequestParam("uuid") String uuid) throws UserExeption {
+        userServ.delete(uuid);
         return ResponseEntity.ok(uuid);
     }
 }

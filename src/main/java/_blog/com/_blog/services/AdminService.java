@@ -19,7 +19,7 @@ public class AdminService {
     }
 
     @Transactional
-    public void delet(String uuid) throws UserExeption {
+    public void delete(String uuid) throws UserExeption {
         User user = userRepository.findByUuid(uuid)
                 .orElseThrow(() -> new UserExeption(400, "User not found"));
 
