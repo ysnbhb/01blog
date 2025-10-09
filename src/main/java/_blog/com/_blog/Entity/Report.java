@@ -29,6 +29,6 @@ public class Report {
     @JoinColumn(name = "to_userid", referencedColumnName = "id", nullable = false)
     private User reportedUser;
     @ManyToOne
-    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
 }

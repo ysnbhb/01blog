@@ -51,12 +51,14 @@ public class PostServ {
 
     public List<Map<String, Object>> getPost(Long userid, int offset) throws UserExeption {
         try {
-            return postRepositery.getPosts(userid, offset);
+            return postRepositery.getPostsNothide(userid, offset);
 
         } catch (Exception e) {
             e.printStackTrace();
             throw new UserExeption(500, "some unexpacte error");
         }
     }
+
+  
 
 }

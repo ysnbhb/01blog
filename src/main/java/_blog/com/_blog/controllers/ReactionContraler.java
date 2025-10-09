@@ -1,5 +1,7 @@
 package _blog.com._blog.controllers;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,13 +21,12 @@ public class ReactionContraler {
         this.reactionServer = reactionServer;
 
     }
+
     @PostMapping("like")
-    public void like(@RequestParam(defaultValue = "0", name = "postId") long post_id, HttpServletRequest request)
+    public Map<String, Object> like(@RequestParam(defaultValue = "0", name = "postId") long post_id,
+            HttpServletRequest request)
             throws UserExeption {
-        if (post_id == 0) {
-            return;
-        }
         User user = (User) request.getAttribute("user");
-        reactionServer.like(post_id, user);
+        return reactionServer.like(post_id, user);
     }
 }

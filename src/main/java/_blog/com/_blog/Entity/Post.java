@@ -29,6 +29,7 @@ public class Post {
     private String typePhoto;
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+    private boolean hide;
 
     @PrePersist
     public void prePersist() {

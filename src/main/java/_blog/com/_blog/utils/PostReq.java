@@ -22,6 +22,7 @@ public class PostReq {
     private int numOflike;
     private int numOfcomment;
     private boolean isliked;
+    private boolean isHide;
     @JsonIgnore
     private MultipartFile photo;
     private LocalDateTime createdAt;

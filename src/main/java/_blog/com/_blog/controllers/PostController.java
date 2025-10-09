@@ -33,24 +33,20 @@ public class PostController {
     }
 
     @DeleteMapping(path = "delete_post")
-    public ResponseEntity<?> delete(@RequestParam("id") String id, HttpServletRequest request) throws Exception {
+    public ResponseEntity<?> delete(@RequestParam(defaultValue = "0", name = "postId") Long id,
+            HttpServletRequest request) throws Exception {
         User user = (User) request.getAttribute("user");
-        postServ.delete(Long.parseLong(id), user);
+        postServ.delete(id, user);
         return ResponseEntity.ok(id);
     }
 
     @GetMapping(path = "posts")
     public ResponseEntity<?> getPost(HttpServletRequest request,
-            @RequestParam(defaultValue = "0", name = "offset") String offset)
+            @RequestParam(defaultValue = "0", name = "offset") Long offset)
             throws Exception {
         Long userid = (long) request.getAttribute("userId");
-        int offsetint;
-        try {
-            offsetint = Integer.parseInt(offset);
-        } catch (Exception e) {
-            offsetint = 0;
-        }
-        return ResponseEntity.ok(PostConvert.convertToPostReq(postServ.getPost(userid, offsetint)));
+
+        return ResponseEntity.ok(PostConvert.convertToPostReq(postServ.getPost(userid, offset.intValue())));
     }
 
 }
