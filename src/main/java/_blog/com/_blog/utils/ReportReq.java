@@ -6,11 +6,14 @@ import lombok.Data;
 
 @Data
 public class ReportReq {
-    private int id;
+    private Long id;
     private String uuid;
     private Long postId;
+    private PostReq post;
     @Null
     private UserReq user;
+    @Null
+    private UserReq userReported;
     @NotBlank
     private String reason;
     @Null

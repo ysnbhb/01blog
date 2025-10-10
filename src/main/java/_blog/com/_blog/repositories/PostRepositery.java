@@ -19,6 +19,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
     Optional<Post> findById(Long id);
 
     void deleteAllByUser(User user);
+
     @Query(value = """
             SELECT
                 p.id,

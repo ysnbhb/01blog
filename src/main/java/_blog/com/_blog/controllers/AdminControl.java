@@ -49,4 +49,12 @@ public class AdminControl {
         Long userid = (long) request.getAttribute("userId");
         return ResponseEntity.ok(PostConvert.convertToPostReq(adminServ.getHidePost(userid, offset.intValue())));
     }
+
+    @GetMapping(path = "report_posts")
+    public ResponseEntity<?> getReportPost(HttpServletRequest request,
+            @RequestParam(defaultValue = "0", name = "offset") Long offset)
+            throws Exception {
+        Long userid = (long) request.getAttribute("userId");
+        return ResponseEntity.ok(PostConvert.convertToPostReq(adminServ.getHidePost(userid, offset.intValue())));
+    }
 }

@@ -9,7 +9,6 @@ public class UserConvert {
         if (user == null) {
             return null;
         }
-
         UserReq userReq = new UserReq();
         userReq.setDateOfBirth(user.getDateOfBirth());
         userReq.setEmail(user.getEmail());
@@ -19,12 +18,13 @@ public class UserConvert {
         userReq.setUrlPhoto(user.getUrlPhoto());
         userReq.setUuid(user.getUuid());
         userReq.setRole(user.getRole());
-        // userReq.setStatus(user.getStatus()); 
-
         return userReq;
     }
 
     public static User convertToUser(UserReq userReq) {
+        if (userReq == null) {
+            return null;
+        }
         User user = new User();
         user.setEmail(userReq.getEmail());
         user.setUsername(userReq.getUsername());

@@ -1,10 +1,12 @@
 package _blog.com._blog.services;
 
+import java.util.List;
+
 import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.Report;
-// import _blog.com._blog.Entity.Report;
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.Exception.ProgramExeption;
+import _blog.com._blog.dto.ReportConvet;
 import _blog.com._blog.repositories.PostRepositery;
 import _blog.com._blog.repositories.ReportRepostiry;
 import _blog.com._blog.repositories.UserRepository;
@@ -39,5 +41,15 @@ public class ReportSer {
         report2.setReason(report.getReason());
         report2.setReporter(user);
         reportRepostiry.save(report2);
+    }
+
+    public List<ReportReq> findReportPost(int offset) {
+        return reportRepostiry.findReportsPost(offset).stream().map((report) -> ReportConvet.convertToReportReq(report))
+                .toList();
+    }
+
+    public List<ReportReq> findReportUser(int offset) {
+        return reportRepostiry.findReportsUser(offset).stream().map((report) -> ReportConvet.convertToReportReq(report))
+                .toList();
     }
 }

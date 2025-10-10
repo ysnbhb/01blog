@@ -9,15 +9,18 @@ import _blog.com._blog.utils.UserReq;
 
 public class PostConvert {
     public static Post convertToPost(PostReq postReq) {
+        if (postReq == null)
+            return null;
         Post post = new Post();
         post.setContent(postReq.getContent());
         post.setUrlPhoto(postReq.getUrlPhot());
-        // post.setUser(UserConvert.convertToUser(postReq.getUser()));
         post.setTypePhoto(postReq.getTypePhoto());
         return post;
     }
 
     public static PostReq convertToPostReq(Post postReq) {
+        if (postReq == null)
+            return null;
         PostReq post = new PostReq();
         post.setContent(postReq.getContent());
         post.setUrlPhot(postReq.getUrlPhoto());
