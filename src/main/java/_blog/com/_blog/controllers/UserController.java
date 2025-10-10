@@ -1,13 +1,16 @@
 package _blog.com._blog.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.Exception.ProgramExeption;
+import _blog.com._blog.dto.UserConvert;
 import _blog.com._blog.services.JwtService;
 import _blog.com._blog.services.UserServ;
 import _blog.com._blog.utils.UserReq;
@@ -38,6 +41,12 @@ public class UserController {
         System.out.println(userReq.toString());
         String token = jwtService.generateToken(user);
         return ResponseEntity.ok(token);
+    }
+
+    @GetMapping("me")
+
+    public UserReq me(@RequestAttribute("user") User user) {
+        return UserConvert.convertToUserReq(user);
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.repositories.UserRepository;
+import jakarta.validation.Valid;
 
 @Component
 public class AdminInitializer implements ApplicationRunner {
@@ -22,6 +23,7 @@ public class AdminInitializer implements ApplicationRunner {
     }
 
     @Override
+    @Valid
     public void run(ApplicationArguments args) {
         if (!args.containsOption("admin")) {
             return;

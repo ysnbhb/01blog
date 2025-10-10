@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.User;
 
@@ -29,5 +31,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT * FROM users ORDER BY created_at LIMIT 10 OFFSET :offset", nativeQuery = true)
     List<User> findAllWithOffset(@Param("offset") int offset);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE users SET status = :status WHERE uuid = :uuid", nativeQuery = true)
+    int updateUserStatus(@Param("uuid") String uuid, @Param("status") String status);
 
 }

@@ -44,8 +44,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             User user = userRepository.findById(userId).orElse(null);
 
             if (user != null && jwtService.isTokenValid(token, user)) {
-                System.out.println(user.toString());
-                System.out.println(userId);
+                if (user.getStatus().equals("BANNED")) {
+                    throw new ServletException();
+                }
                 UserDetails userDetails = org.springframework.security.core.userdetails.User
                         .withUsername(user.getUsername())
                         .password(user.getPassword())

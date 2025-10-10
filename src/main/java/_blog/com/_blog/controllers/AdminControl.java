@@ -54,6 +54,11 @@ public class AdminControl {
         return ResponseEntity.ok(PostConvert.convertToPostReq(adminServ.getHidePost(userid, offset.intValue())));
     }
 
+    @GetMapping(path = "banne_user")
+    public boolean banneUser(@RequestParam("uuid") String uuid) throws Exception {
+        return adminServ.banneUser(uuid);
+    }
+
     @GetMapping(path = "reported")
     public List<Map<String, Object>> getReported(@RequestParam(defaultValue = "0", name = "offset") Long offset,
             @RequestParam(name = "type") String type) throws Exception {
@@ -63,6 +68,5 @@ public class AdminControl {
             return reportSer.findReportPost(offset.intValue());
         }
         return null;
-
     }
 }
