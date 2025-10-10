@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<String> loginUser(@Valid @RequestBody UserReq userReq) throws ProgramExeption {
+    public ResponseEntity<String> loginUser(@RequestBody UserReq userReq) throws ProgramExeption {
 
         User user = userServ.login(userReq);
         System.out.println(user.toString());

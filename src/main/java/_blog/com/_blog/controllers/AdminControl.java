@@ -1,6 +1,7 @@
 package _blog.com._blog.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.dto.PostConvert;
 import _blog.com._blog.services.AdminService;
+import _blog.com._blog.services.ReportSer;
 import _blog.com._blog.utils.UserReq;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -20,9 +22,11 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("admin")
 public class AdminControl {
     private final AdminService adminServ;
+    private final ReportSer reportSer;
 
-    public AdminControl(AdminService adminServ) {
+    public AdminControl(AdminService adminServ, ReportSer reportSer) {
         this.adminServ = adminServ;
+        this.reportSer = reportSer;
     }
 
     @DeleteMapping("/delete_user")
@@ -50,11 +54,15 @@ public class AdminControl {
         return ResponseEntity.ok(PostConvert.convertToPostReq(adminServ.getHidePost(userid, offset.intValue())));
     }
 
-    @GetMapping(path = "report_posts")
-    public ResponseEntity<?> getReportPost(HttpServletRequest request,
-            @RequestParam(defaultValue = "0", name = "offset") Long offset)
-            throws Exception {
-        Long userid = (long) request.getAttribute("userId");
-        return ResponseEntity.ok(PostConvert.convertToPostReq(adminServ.getHidePost(userid, offset.intValue())));
+    @GetMapping(path = "reported")
+    public List<Map<String, Object>> getReported(@RequestParam(defaultValue = "0", name = "offset") Long offset,
+            @RequestParam(name = "type") String type) throws Exception {
+        if (type.equals("user")) {
+            return reportSer.findReportUser(offset.intValue());
+        } else if (type.equals("post")) {
+            return reportSer.findReportPost(offset.intValue());
+        }
+        return null;
+
     }
 }

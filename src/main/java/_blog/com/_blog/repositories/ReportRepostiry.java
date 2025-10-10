@@ -1,17 +1,78 @@
 package _blog.com._blog.repositories;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import _blog.com._blog.Entity.Report;
 
+@Repository
 public interface ReportRepostiry extends JpaRepository<Report, Long> {
-    @Query(value = "SELECT * FROM report WHERE post_id = null ORDER BY created_at GROUP BY user_id LIMIT 20 OFFSET :offset")
-    List<Report> findReportsUser(@Param("offset") int offset);
+    @Query(value = """
+            SELECT
+                r.reason,
+                u1.username AS reporter_username,
+                u1.uuid AS reporter_uuid,
+                u1.name AS reporter_name,
+                u1.last_name AS reporter_last_name,
+                u2.username AS reported_username,
+                u2.uuid AS reported_uuid,
+                u2.name AS reported_name,
+                u2.last_name AS reported_last_name,
+                u2.url_photo AS reported_url_photo,
+                COUNT(r.id) AS report_count
+            FROM report r
+            JOIN users AS u1 ON u1.id = r.user_id       -- reporter
+            JOIN users AS u2 ON u2.id = r.to_userid     -- reported user
+            WHERE r.post_id IS NULL
+            GROUP BY
+                r.reason,
+                u1.username, u1.uuid, u1.name, u1.last_name,
+                u2.username, u2.uuid, u2.name, u2.last_name, u2.url_photo
+            ORDER BY MAX(r.created_at) DESC
+            LIMIT 20 OFFSET :offset
+            """, nativeQuery = true)
+    List<Map<String, Object>> findReportsUser(@Param("offset") int offset);
 
-    @Query(value = "SELECT * FROM report WHERE to_userid = null ORDER BY created_at GROUP BY user_id LIMIT 20 OFFSET :offset")
-    List<Report> findReportsPost(@Param("offset") int offset);
+    @Query(value = """
+            SELECT
+                r.reason,
+                u1.username AS reporter_username,
+                u1.uuid AS reporter_uuid,
+                u1.name AS reporter_name,
+                u1.last_name AS reporter_last_name,
+
+                u2.username AS reported_username,
+                u2.uuid AS reported_uuid,
+                u2.name AS reported_name,
+                u2.last_name AS reported_last_name,
+                u2.url_photo AS reported_url_photo,
+
+                p.content AS post_content,
+                p.type_photo AS post_type_photo,
+                p.url_photo AS post_url_photo,
+
+                COUNT(r.id) AS report_count
+
+            FROM report r
+            JOIN users AS u1 ON u1.id = r.user_id
+            JOIN posts AS p ON p.id = r.post_id
+            JOIN users AS u2 ON u2.id = p.user_id
+
+            WHERE r.to_userid IS NULL
+
+            GROUP BY
+                r.reason,
+                u1.username, u1.uuid, u1.name, u1.last_name,
+                u2.username, u2.uuid, u2.name, u2.last_name, u2.url_photo,
+                p.content, p.type_photo, p.url_photo
+
+            ORDER BY MAX(r.created_at) DESC
+            LIMIT 20 OFFSET :offset
+            """, nativeQuery = true)
+    List<Map<String, Object>> findReportsPost(@Param("offset") int offset);
 }

@@ -23,11 +23,10 @@ public class UserReq {
     private String dateOfBirth;
     @NotBlank(message = "name must be not null")
     @Size(max = 10, min = 3, message = "Name should be min 3 and max 6")
-    @NotBlank
     @NameValid
     private String name;
     @Size(max = 10, min = 3, message = "Last Name should be  min 3 and max 10")
-    @NotBlank
+    @NotBlank(message = "last name must be not null")
     @NameValid
     private String lastName;
     @JsonIgnore
