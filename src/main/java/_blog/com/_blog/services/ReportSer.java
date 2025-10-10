@@ -9,7 +9,6 @@ import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.Report;
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.Exception.ProgramExeption;
-import _blog.com._blog.dto.ReportConvet;
 import _blog.com._blog.repositories.PostRepositery;
 import _blog.com._blog.repositories.ReportRepostiry;
 import _blog.com._blog.repositories.UserRepository;
