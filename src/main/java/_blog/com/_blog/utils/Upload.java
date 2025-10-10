@@ -7,31 +7,31 @@ import java.awt.image.BufferedImage;
 import java.util.UUID;
 import javax.imageio.ImageIO;
 import org.springframework.web.multipart.MultipartFile;
-import _blog.com._blog.Exception.UserExeption;
+import _blog.com._blog.Exception.ProgramExeption;
 
 public class Upload {
 
     private static final String UPLOAD_DIR_Photo = "uploads/images";
     private static final String UPLOAD_DIR_video = "uploads/video";
 
-    public static boolean isRealPhoto(MultipartFile file) throws UserExeption {
+    public static boolean isRealPhoto(MultipartFile file) throws ProgramExeption {
         if (file == null || file.isEmpty()) {
-            throw new UserExeption(400, "Image file is required");
+            throw new ProgramExeption(400, "Image file is required");
         }
 
         String contentType = file.getContentType();
         if (contentType == null || !contentType.startsWith("image/")) {
-            throw new UserExeption(400, "File is not an image");
+            throw new ProgramExeption(400, "File is not an image");
         }
 
         try {
             byte[] bytes = file.getBytes();
             if (!isValidImage(bytes)) {
-                throw new UserExeption(400, "Invalid image content");
+                throw new ProgramExeption(400, "Invalid image content");
             }
             return true;
         } catch (IOException e) {
-            throw new UserExeption(400, "Failed to read image data");
+            throw new ProgramExeption(400, "Failed to read image data");
         }
     }
 
@@ -44,7 +44,7 @@ public class Upload {
         }
     }
 
-    public static String saveImage(MultipartFile file) throws UserExeption {
+    public static String saveImage(MultipartFile file) throws ProgramExeption {
         isRealPhoto(file);
 
         String projectDir = System.getProperty("user.dir");
@@ -62,7 +62,7 @@ public class Upload {
             file.transferTo(destination);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new UserExeption(500, "Failed to save image");
+            throw new ProgramExeption(500, "Failed to save image");
         }
 
         return fileName;
@@ -90,9 +90,9 @@ public class Upload {
         }
     }
 
-    public static String saveVideo(MultipartFile file) throws UserExeption {
+    public static String saveVideo(MultipartFile file) throws ProgramExeption {
         if (!isLikelyVideo(file)) {
-            throw new UserExeption(400, "File is not an video");
+            throw new ProgramExeption(400, "File is not an video");
         }
         String projectDir = System.getProperty("user.dir");
         File dir = new File(projectDir, UPLOAD_DIR_video);
@@ -106,7 +106,7 @@ public class Upload {
             file.transferTo(destination);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new UserExeption(500, "Failed to save video");
+            throw new ProgramExeption(500, "Failed to save video");
         }
         return fileName;
     }

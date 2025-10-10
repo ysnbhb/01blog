@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -26,9 +27,16 @@ public class Report {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User reporter;
     @ManyToOne
-    @JoinColumn(name = "to_userid", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "to_userid", referencedColumnName = "id")
     private User reportedUser;
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
+
+    @PrePersist
+    void PrePersist() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+    }
 }

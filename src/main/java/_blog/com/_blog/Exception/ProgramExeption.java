@@ -1,10 +1,10 @@
 package _blog.com._blog.Exception;
 
-public class UserExeption extends Exception {
+public class ProgramExeption extends Exception {
     private int status;
     private String message;
 
-    public UserExeption(int status, String message) {
+    public ProgramExeption(int status, String message) {
         this.status = status;
         this.message = message;
     }

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.User;
-import _blog.com._blog.Exception.UserExeption;
+import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.dto.PostConvert;
 import _blog.com._blog.repositories.PostRepositery;
 import _blog.com._blog.utils.PostReq;
@@ -20,7 +20,7 @@ public class PostServ {
         this.postRepositery = PostRepositery;
     }
 
-    public Post save(PostReq postReq, User user) throws UserExeption {
+    public Post save(PostReq postReq, User user) throws ProgramExeption {
         var photo = postReq.getPhoto();
         if (photo != null) {
 
@@ -37,28 +37,25 @@ public class PostServ {
         return postRepositery.save(post);
     }
 
-    public void delete(long Postid, User user) throws UserExeption {
+    public void delete(long Postid, User user) throws ProgramExeption {
         User ownrPost = postRepositery.findById(Postid)
                 .map(Post::getUser)
-                .orElseThrow(() -> new UserExeption(404, "Post not found"));
+                .orElseThrow(() -> new ProgramExeption(404, "Post not found"));
 
         if (ownrPost.getId() == user.getId() || user.getRole() == "ADMIN") {
             postRepositery.deleteById(Postid);
         } else {
-            throw new UserExeption(400, "you can't delet this post");
+            throw new ProgramExeption(400, "you can't delet this post");
         }
     }
 
-    public List<Map<String, Object>> getPost(Long userid, int offset) throws UserExeption {
+    public List<Map<String, Object>> getPost(Long userid, int offset) throws ProgramExeption {
         try {
-            return postRepositery.getPostsNothide(userid, offset);
-
+            return postRepositery.getPosts(userid, offset, false);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new UserExeption(500, "some unexpacte error");
+            throw new ProgramExeption(500, "some unexpacte error");
         }
     }
-
-  
 
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import _blog.com._blog.Entity.User;
-import _blog.com._blog.Exception.UserExeption;
+import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.services.JwtService;
 import _blog.com._blog.services.UserServ;
 import _blog.com._blog.utils.UserReq;
@@ -24,14 +24,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @ModelAttribute UserReq userReq) throws UserExeption {
+    public ResponseEntity<?> registerUser(@Valid @ModelAttribute UserReq userReq) throws ProgramExeption {
         User user = userServ.save(userReq);
         String token = jwtService.generateToken(user);
         return ResponseEntity.ok(token);
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserReq userReq) throws UserExeption {
+    public ResponseEntity<String> loginUser(@Valid @RequestBody UserReq userReq) throws ProgramExeption {
 
         User user = userServ.login(userReq);
         System.out.println(user.toString());

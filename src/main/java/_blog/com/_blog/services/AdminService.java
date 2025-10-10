@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.User;
-import _blog.com._blog.Exception.UserExeption;
+import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.dto.UserConvert;
 import _blog.com._blog.repositories.PostRepositery;
 import _blog.com._blog.repositories.UserRepository;
@@ -24,9 +24,9 @@ public class AdminService {
     }
 
     @Transactional
-    public void delete(String uuid) throws UserExeption {
+    public void delete(String uuid) throws ProgramExeption {
         User user = userRepository.findByUuid(uuid)
-                .orElseThrow(() -> new UserExeption(400, "User not found"));
+                .orElseThrow(() -> new ProgramExeption(400, "User not found"));
         postRepository.deleteAllByUser(user);
         userRepository.delete(user);
     }
@@ -37,17 +37,19 @@ public class AdminService {
         return listuser;
     }
 
-    public boolean hidePost(Long post_id) throws UserExeption {
-        Post post = postRepository.findById(post_id).orElseThrow(() -> new UserExeption(400, "Post not found"));
+    public boolean hidePost(Long post_id) throws ProgramExeption {
+        Post post = postRepository.findById(post_id).orElseThrow(() -> new ProgramExeption(400, "Post not found"));
         postRepository.updateHideStatus(post_id, post.isHide());
         return !post.isHide();
     }
 
-    public List<Map<String, Object>> getPost(Long userid, int offset) throws UserExeption {
+
+
+    public List<Map<String, Object>> getHidePost(Long userid, int offset) throws ProgramExeption {
         try {
-            return postRepository.getPosts(userid, offset);
+            return postRepository.getPosts(userid, offset, true);
         } catch (Exception e) {
-            throw new UserExeption(500, "some unexpacte error");
+            throw new ProgramExeption(500, "some unexpacte error");
         }
     }
 }

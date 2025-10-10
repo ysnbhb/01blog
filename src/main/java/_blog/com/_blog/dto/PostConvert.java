@@ -36,7 +36,6 @@ public class PostConvert {
             postReq.setNumOfcomment(((Number) post.get("total_comments")).intValue());
             postReq.setNumOflike(((Number) post.get("total_likes")).intValue());
             postReq.setIsliked((Boolean) post.get("isLiked"));
-            postReq.setHide((Boolean) post.get("Ishide"));
             postReq.setCreatedAt(((java.sql.Timestamp) post.get("createdAt")).toLocalDateTime());
             UserReq user = new UserReq();
             user.setUsername((String) post.get("username"));

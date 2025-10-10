@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import _blog.com._blog.Entity.User;
-import _blog.com._blog.Exception.UserExeption;
+import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.services.ReactionServer;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -25,7 +25,7 @@ public class ReactionContraler {
     @PostMapping("like")
     public Map<String, Object> like(@RequestParam(defaultValue = "0", name = "postId") long post_id,
             HttpServletRequest request)
-            throws UserExeption {
+            throws ProgramExeption {
         User user = (User) request.getAttribute("user");
         return reactionServer.like(post_id, user);
     }

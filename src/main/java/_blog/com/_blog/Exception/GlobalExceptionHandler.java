@@ -10,7 +10,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import jakarta.servlet.ServletException;
 
 import org.springframework.web.bind.MissingServletRequestParameterException;
-
+import jakarta.validation.ValidationException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,8 +31,8 @@ public class GlobalExceptionHandler {
                                 .body(Map.of("error", message));
         }
 
-        @ExceptionHandler(UserExeption.class)
-        public ResponseEntity<Map<String, String>> handleUserException(UserExeption ex) {
+        @ExceptionHandler(ProgramExeption.class)
+        public ResponseEntity<Map<String, String>> handleUserException(ProgramExeption ex) {
                 return ResponseEntity
                                 .status(ex.getStatus())
                                 .body(Map.of("error", ex.getMessage()));
@@ -75,8 +75,16 @@ public class GlobalExceptionHandler {
                                 .body(Map.of("error", "File processing failed: " + ex.getMessage()));
         }
 
+        @ExceptionHandler(ValidationException.class)
+        public ResponseEntity<Map<String, String>> handleGeneralExceptionValidEntity(ValidationException ex) {
+                Map<String, String> response = new HashMap<>();
+                response.put("error", "invalid input");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
         @ExceptionHandler(Exception.class)
         public ResponseEntity<Map<String, String>> handleGeneralException(Exception ex) {
+                // ex.printStackTrace();
                 Map<String, String> response = new HashMap<>();
                 response.put("error", "Unexpected error");
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);

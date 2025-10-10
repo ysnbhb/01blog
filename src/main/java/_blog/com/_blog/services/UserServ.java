@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import _blog.com._blog.utils.Upload;
 import _blog.com._blog.utils.UserReq;
 import _blog.com._blog.Entity.User;
-import _blog.com._blog.Exception.UserExeption;
+import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.dto.UserConvert;
 import _blog.com._blog.repositories.UserRepository;
 
@@ -24,13 +24,13 @@ public class UserServ {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User save(UserReq userReq) throws UserExeption {
+    public User save(UserReq userReq) throws ProgramExeption {
         if (userRepository.existsByEmail(userReq.getEmail())) {
-            throw new UserExeption(400, "email already exists try other one");
+            throw new ProgramExeption(400, "email already exists try other one");
         }
         String userName = userReq.getUsername();
         if (userName != null && userRepository.existsByUsername(userName)) {
-            throw new UserExeption(400, "username already exists try other one");
+            throw new ProgramExeption(400, "username already exists try other one");
 
         }
         userReq.setPassword(passwordEncoder.encode(userReq.getPassword()));
@@ -51,11 +51,11 @@ public class UserServ {
         return userRepository.save(user);
     }
 
-    public User login(UserReq userReq) throws UserExeption {
+    public User login(UserReq userReq) throws ProgramExeption {
         User user = userRepository.findByEmail(userReq.getEmail())
-                .orElseThrow(() -> new UserExeption(400, "user not found or password not correct"));
+                .orElseThrow(() -> new ProgramExeption(400, "user not found or password not correct"));
         if (passwordEncoder.matches(user.getPassword(), userReq.getPassword())) {
-            throw new UserExeption(400, "user not found or password not correct");
+            throw new ProgramExeption(400, "user not found or password not correct");
         }
         return user;
     }

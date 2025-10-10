@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import _blog.com._blog.Exception.UserExeption;
+import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.dto.PostConvert;
 import _blog.com._blog.services.AdminService;
 import _blog.com._blog.utils.UserReq;
@@ -26,7 +26,7 @@ public class AdminControl {
     }
 
     @DeleteMapping("/delete_user")
-    public ResponseEntity<?> deleteUser(@RequestParam("uuid") String uuid) throws UserExeption {
+    public ResponseEntity<?> deleteUser(@RequestParam("uuid") String uuid) throws ProgramExeption {
         adminServ.delete(uuid);
         return ResponseEntity.ok(uuid);
     }
@@ -38,15 +38,15 @@ public class AdminControl {
     }
 
     @PutMapping("/hide_post")
-    public boolean hidePost(@RequestParam(defaultValue = "0", name = "offset") Long post_id) throws UserExeption {
+    public boolean hidePost(@RequestParam(defaultValue = "0", name = "offset") Long post_id) throws ProgramExeption {
         return adminServ.hidePost(post_id);
     }
 
-    @GetMapping(path = "posts")
-    public ResponseEntity<?> getPost(HttpServletRequest request,
+    @GetMapping(path = "hide_posts")
+    public ResponseEntity<?> getHidePost(HttpServletRequest request,
             @RequestParam(defaultValue = "0", name = "offset") Long offset)
             throws Exception {
         Long userid = (long) request.getAttribute("userId");
-        return ResponseEntity.ok(PostConvert.convertToPostReq(adminServ.getPost(userid, offset.intValue())));
+        return ResponseEntity.ok(PostConvert.convertToPostReq(adminServ.getHidePost(userid, offset.intValue())));
     }
 }
