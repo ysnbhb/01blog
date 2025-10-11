@@ -23,7 +23,6 @@ public class AdminInitializer implements ApplicationRunner {
     }
 
     @Override
-    @Valid
     public void run(ApplicationArguments args) {
         if (!args.containsOption("admin")) {
             return;
@@ -32,6 +31,7 @@ public class AdminInitializer implements ApplicationRunner {
         new Thread(this::createAdmin).start();
     }
 
+    @Valid
     private void createAdmin() {
         Scanner scanner = new Scanner(System.in);
 
@@ -49,6 +49,7 @@ public class AdminInitializer implements ApplicationRunner {
             String password = scanner.nextLine().trim();
             String url_photo = "default-avatar.jpg";
             User admin = new User();
+
             admin.setEmail(email);
             admin.setDateOfBirth("2005-06-24");
             admin.setUsername(username);

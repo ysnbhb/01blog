@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 public class UserReq {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotBlank(message = "password must be not null")
+    @Size(min = 8, message = "password must be nore than 7 character")
     private String password;
     @NotBlank(message = "name must be not null")
     @Email(message = "Email should be valid")

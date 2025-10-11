@@ -22,6 +22,7 @@ public class PostConvert {
         if (postReq == null)
             return null;
         PostReq post = new PostReq();
+        post.setId(postReq.getId());
         post.setContent(postReq.getContent());
         post.setUrlPhot(postReq.getUrlPhoto());
         post.setUser(UserConvert.convertToUserReq(postReq.getUser()));

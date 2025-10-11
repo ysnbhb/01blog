@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 
 @Entity
@@ -25,6 +26,7 @@ public class User {
     @Column(unique = true, nullable = false, updatable = false)
     private String uuid;
     @Column(unique = true, nullable = false)
+    @Email(message = "Email should be valid")
     private String email;
     @Column(unique = true, nullable = false)
     private String username;
