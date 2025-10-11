@@ -1,6 +1,7 @@
 package _blog.com._blog.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class NotifacationSer {
     private final NotifacationRepo notifacationRepo;
     private final ConnectionRepo connectionRepo;
     private final UserRepository userRepository;
+
     @Transactional
     public void saveNotifiction(User from, User user, String type, String content, Post post) {
         Notifacation notifacation = new Notifacation();
@@ -55,5 +57,9 @@ public class NotifacationSer {
 
             offset += 10;
         } while (listOfIds.size() == 10);
+    }
+
+    public List<Map<String, Object>> findAllNotifactions(Long userid) {
+        return notifacationRepo.findAllNotifactions(userid);
     }
 }
