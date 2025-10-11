@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.Exception.ProgramExeption;
@@ -11,7 +13,6 @@ import _blog.com._blog.dto.UserConvert;
 import _blog.com._blog.repositories.PostRepositery;
 import _blog.com._blog.repositories.UserRepository;
 import _blog.com._blog.utils.UserReq;
-import jakarta.transaction.Transactional;
 
 @Service
 public class AdminService {

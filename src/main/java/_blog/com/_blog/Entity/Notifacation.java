@@ -28,6 +28,7 @@ public class Notifacation {
     @ManyToOne
     @JoinColumn(name = "from_id", referencedColumnName = "id", nullable = false)
     private User from;
+    @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
     @Column(name = "created_at", nullable = false)
