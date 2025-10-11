@@ -1,5 +1,7 @@
 package _blog.com._blog.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +23,7 @@ public interface ConnectionRepo extends JpaRepository<Connection, Long> {
 
     @Query(value = "SELECT COUNT(*) FROM connectio WHERE  following_id = :userId", nativeQuery = true)
     int countOffolloewr(@Param("userId") Long userId);
+
+    @Query(value = "SELECT follower_id FROM connectio WHERE  following_id = :userId LIMIT 10 OFFSET :offset", nativeQuery = true)
+    List<Long> getFollowes(@Param("userId") Long userid, @Param("offset") int offset);
 }

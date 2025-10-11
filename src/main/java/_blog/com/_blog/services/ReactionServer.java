@@ -3,6 +3,7 @@ package _blog.com._blog.services;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.Reaction;
@@ -21,6 +22,7 @@ public class ReactionServer {
         this.reactionRepositery = reactionRepositery;
     }
 
+    @Transactional
     public Map<String, Object> like(Long post_id, User user) throws ProgramExeption {
         if (post_id == 0) {
             throw new ProgramExeption(400, "Post not found");

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.Report;
@@ -25,7 +26,7 @@ public class ReportSer {
         this.userRepository = userRepository;
         this.reportRepostiry = reportRepostiry;
     }
-
+    @Transactional
     public void reportPost(ReportReq report, User user) throws ProgramExeption {
         if (report.getPostId() == null)
             return;
@@ -37,7 +38,7 @@ public class ReportSer {
         report2.setReporter(user);
         reportRepostiry.save(report2);
     }
-
+    @Transactional
     public void reportUser(ReportReq report, User user) throws ProgramExeption {
         User user2 = userRepository.findByUuid(report.getUuid())
                 .orElseThrow(() -> new ProgramExeption(400, "Post not found"));

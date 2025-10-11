@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.Exception.ProgramExeption;
@@ -15,11 +17,13 @@ import _blog.com._blog.utils.Upload;
 @Service
 public class PostServ {
     private final PostRepositery postRepositery;
+    private final NotifacationSer notifacationSer;
 
-    public PostServ(PostRepositery PostRepositery) {
+    public PostServ(PostRepositery PostRepositery, NotifacationSer notifacationSer) {
         this.postRepositery = PostRepositery;
+        this.notifacationSer = notifacationSer;
     }
-
+    @Transactional
     public Post save(PostReq postReq, User user) throws ProgramExeption {
         var photo = postReq.getPhoto();
         if (photo != null) {
@@ -34,9 +38,11 @@ public class PostServ {
         }
         Post post = PostConvert.convertToPost(postReq);
         post.setUser(user);
-        return postRepositery.save(post);
+        post = postRepositery.save(post);
+        notifacationSer.setNotification(user, post);
+        return post;
     }
-
+    @Transactional
     public void delete(long Postid, User user) throws ProgramExeption {
         User ownrPost = postRepositery.findById(Postid)
                 .map(Post::getUser)

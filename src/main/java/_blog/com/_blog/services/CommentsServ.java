@@ -3,6 +3,7 @@ package _blog.com._blog.services;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Comment;
 import _blog.com._blog.Entity.Post;
@@ -24,6 +25,7 @@ public class CommentsServ {
 
     }
 
+    @Transactional
     public Comment save(CommentReq commentReq, User user) throws ProgramExeption {
         Post post = postRepositery.findById(commentReq.getPost_id())
                 .orElseThrow(() -> new ProgramExeption(400, "post not found"));

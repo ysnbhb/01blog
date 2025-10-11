@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.utils.Upload;
 import _blog.com._blog.utils.UserReq;
@@ -23,7 +24,7 @@ public class UserServ {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
+    @Transactional
     public User save(UserReq userReq) throws ProgramExeption {
         if (userRepository.existsByEmail(userReq.getEmail())) {
             throw new ProgramExeption(400, "email already exists try other one");

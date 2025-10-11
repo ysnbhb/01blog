@@ -36,13 +36,13 @@ public class AdminService {
                 .toList();
         return listuser;
     }
-
+    @Transactional
     public boolean hidePost(Long post_id) throws ProgramExeption {
         Post post = postRepository.findById(post_id).orElseThrow(() -> new ProgramExeption(400, "Post not found"));
         postRepository.updateHideStatus(post_id, post.isHide());
         return !post.isHide();
     }
-
+    @Transactional
     public boolean banneUser(String uuid) throws ProgramExeption {
         User user = userRepository.findByUuid(uuid).orElseThrow(() -> new ProgramExeption(400, "User not found"));
         userRepository.updateUserStatus(uuid, user.getStatus() != "BANNED" ? "BANNED" : null);
