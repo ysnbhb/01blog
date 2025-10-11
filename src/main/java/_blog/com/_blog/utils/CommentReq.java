@@ -1,5 +1,7 @@
 package _blog.com._blog.utils;
 
+import java.time.LocalDateTime;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -13,6 +15,6 @@ public class CommentReq {
     private Long post_id;
     private UserReq user;
     private int numOflike;
-    private int numOfcomment;
+    private LocalDateTime createdAt;
     private boolean isliked;
 }
