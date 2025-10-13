@@ -54,6 +54,7 @@ public class UserServ {
         }
         User user = UserConvert.convertToUser(userReq);
         user.setRole("USER");
+        user.setStatus("ACTIVE");
         return userRepository.save(user);
     }
 

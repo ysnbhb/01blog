@@ -58,6 +58,7 @@ public class AdminInitializer implements ApplicationRunner {
             admin.setRole("ADMIN");
             admin.setLastName(lastname);
             admin.setName(firstname);
+            admin.setStatus("ACTIVE");
             userRepository.save(admin);
 
             System.out.println("✅ Admin created successfully!");
