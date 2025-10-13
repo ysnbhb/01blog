@@ -1,6 +1,5 @@
 package _blog.com._blog.dto;
 
-import java.util.List;
 import java.util.Map;
 
 import _blog.com._blog.Entity.Post;
@@ -30,26 +29,25 @@ public class PostConvert {
         return post;
     }
 
-    public static List<PostReq> convertToPostReq(List<Map<String, Object>> posList) {
-        return posList.stream().map((post) -> {
-            PostReq postReq = new PostReq();
-            postReq.setId(((Long) post.get("id")));
-            postReq.setContent((String) post.get("content"));
-            postReq.setUrlPhot((String) post.get("urlPhoto"));
-            postReq.setTypePhoto((String) post.get("typePhoto"));
-            postReq.setNumOfcomment(((Number) post.get("total_comments")).intValue());
-            postReq.setNumOflike(((Number) post.get("total_likes")).intValue());
-            postReq.setIsliked((Boolean) post.get("isLiked"));
-            postReq.setCreatedAt(((java.sql.Timestamp) post.get("createdAt")).toLocalDateTime());
-            UserReq user = new UserReq();
-            user.setUsername((String) post.get("username"));
-            user.setName((String) post.get("name"));
-            user.setLastName((String) post.get("lastName"));
-            user.setUrlPhoto((String) post.get("userPhoto"));
-            user.setUuid((String) post.get("uuid"));
-            postReq.setUser(user);
-            return postReq;
-        }).toList();
+    public static PostReq convertToPostReq(Map<String, Object> post) {
+        PostReq postReq = new PostReq();
+        postReq.setId(((Long) post.get("id")));
+        postReq.setContent((String) post.get("content"));
+        postReq.setUrlPhot((String) post.get("urlPhoto"));
+        postReq.setTypePhoto((String) post.get("typePhoto"));
+        postReq.setNumOfcomment(((Number) post.get("total_comments")).intValue());
+        postReq.setNumOflike(((Number) post.get("total_likes")).intValue());
+        postReq.setIsliked((Boolean) post.get("isLiked"));
+        postReq.setCreatedAt(((java.sql.Timestamp) post.get("createdAt")).toLocalDateTime());
+        UserReq user = new UserReq();
+        user.setUsername((String) post.get("username"));
+        user.setName((String) post.get("name"));
+        user.setLastName((String) post.get("lastName"));
+        user.setUrlPhoto((String) post.get("userPhoto"));
+        user.setUuid((String) post.get("uuid"));
+        postReq.setUser(user);
+        return postReq;
+
     }
 
 }

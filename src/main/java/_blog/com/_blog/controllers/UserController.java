@@ -1,8 +1,11 @@
 package _blog.com._blog.controllers;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,23 +33,27 @@ public class UserController {
     public ResponseEntity<?> registerUser(@Valid @ModelAttribute UserReq userReq) throws ProgramExeption {
         User user = userServ.save(userReq);
         String token = jwtService.generateToken(user);
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(Map.of("token", token));
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserReq userReq) throws ProgramExeption {
-
+    public ResponseEntity<Map<String, String>> loginUser(@RequestBody UserReq userReq) throws ProgramExeption {
         User user = userServ.login(userReq);
-        System.out.println(user.toString());
-        System.out.println(userReq.toString());
         String token = jwtService.generateToken(user);
-        return ResponseEntity.ok(token);
+        if (user.getStatus().equals("BANNED")) {
+            throw new ProgramExeption(400, "You are Banned From Same reason");
+        }
+        return ResponseEntity.ok(Map.of("token", token));
     }
 
-    @GetMapping("me")
-
+    @GetMapping("api/me")
     public UserReq me(@RequestAttribute("user") User user) {
         return UserConvert.convertToUserReq(user);
+    }
+
+    @GetMapping("api/profile/{uuid}")
+    public UserReq profile(@RequestAttribute("user") User user, @PathVariable("uuid") String uuid) throws Exception {
+        return userServ.profile(uuid, user);
     }
 
 }

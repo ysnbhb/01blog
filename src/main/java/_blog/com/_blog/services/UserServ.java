@@ -2,6 +2,7 @@ package _blog.com._blog.services;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,17 +14,21 @@ import _blog.com._blog.utils.UserReq;
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.dto.UserConvert;
+import _blog.com._blog.repositories.ConnectionRepo;
 import _blog.com._blog.repositories.UserRepository;
 
 @Service
 public class UserServ {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ConnectionRepo connectionRepo;
 
-    public UserServ(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServ(UserRepository userRepository, PasswordEncoder passwordEncoder, ConnectionRepo connectionRepo) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.connectionRepo = connectionRepo;
     }
+
     @Transactional
     public User save(UserReq userReq) throws ProgramExeption {
         if (userRepository.existsByEmail(userReq.getEmail())) {
@@ -57,6 +62,20 @@ public class UserServ {
                 .orElseThrow(() -> new ProgramExeption(400, "user not found or password not correct"));
         if (passwordEncoder.matches(user.getPassword(), userReq.getPassword())) {
             throw new ProgramExeption(400, "user not found or password not correct");
+        }
+        return user;
+    }
+
+    public UserReq profile(String uuid, User me) throws Exception {
+        Map<String, Object> info = userRepository.findUser(uuid);
+        if (info == null) {
+            throw new ProgramExeption(400, "User not found");
+        }
+        UserReq user = UserConvert.convertToUserReq(info);
+        user.setMayAcount(user.getUuid() == me.getUuid());
+        if (!user.isMayAcount()) {
+            boolean isfollowing = connectionRepo.isfollowing(me.getId(), (Long) info.get("id"));
+            user.setHasCon(isfollowing);
         }
         return user;
     }

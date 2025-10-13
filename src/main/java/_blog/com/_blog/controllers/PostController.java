@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,12 +42,31 @@ public class PostController {
     }
 
     @GetMapping(path = "posts")
-    public ResponseEntity<?> getPost(HttpServletRequest request,
+    public ResponseEntity<?> getPosts(HttpServletRequest request,
             @RequestParam(defaultValue = "0", name = "offset") Long offset)
             throws Exception {
         Long userid = (long) request.getAttribute("userId");
+        return ResponseEntity
+                .ok(postServ.getPosts(userid, offset.intValue()).stream().map(PostConvert::convertToPostReq));
+    }
 
-        return ResponseEntity.ok(PostConvert.convertToPostReq(postServ.getPost(userid, offset.intValue())));
+    @GetMapping(path = "users_post")
+    public ResponseEntity<?> getUserPost(@RequestAttribute("userId") Long userid,
+            @RequestParam(defaultValue = "0", name = "offset") Long offset,
+            @RequestParam(defaultValue = "0", name = "uuid") String uuid)
+            throws Exception {
+        return ResponseEntity
+                .ok(postServ.getUserPosts(userid, offset.intValue(), uuid).stream().map(PostConvert::convertToPostReq));
+    }
+
+    @GetMapping(path = "post")
+    public ResponseEntity<?> getPost(@RequestAttribute("userId") Long userid,
+            @RequestParam(defaultValue = "0", name = "uuid") Long postid)
+            throws Exception {
+        // return
+        // ResponseEntity.ok(PostConvert.convertToPostReq(postServ.getUserPosts(userid,
+        // offset.intValue(), uuid)));
+        return null;
     }
 
 }

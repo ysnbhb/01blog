@@ -23,6 +23,7 @@ public class PostServ {
         this.postRepositery = PostRepositery;
         this.notifacationSer = notifacationSer;
     }
+
     @Transactional
     public Post save(PostReq postReq, User user) throws ProgramExeption {
         var photo = postReq.getPhoto();
@@ -42,6 +43,7 @@ public class PostServ {
         notifacationSer.setNotification(user, post);
         return post;
     }
+
     @Transactional
     public void delete(long Postid, User user) throws ProgramExeption {
         User ownrPost = postRepositery.findById(Postid)
@@ -55,13 +57,12 @@ public class PostServ {
         }
     }
 
-    public List<Map<String, Object>> getPost(Long userid, int offset) throws ProgramExeption {
-        try {
-            return postRepositery.getPosts(userid, offset, false);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ProgramExeption(500, "some unexpacte error");
-        }
+    public List<Map<String, Object>> getPosts(Long userid, int offset) throws ProgramExeption {
+        return postRepositery.getPosts(userid, offset, false);
+    }
+
+    public List<Map<String, Object>> getUserPosts(Long userid, int offset, String uuid) throws ProgramExeption {
+        return postRepositery.getUserPosts(userid, offset, false, uuid);
     }
 
 }

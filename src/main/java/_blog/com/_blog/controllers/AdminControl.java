@@ -51,7 +51,8 @@ public class AdminControl {
             @RequestParam(defaultValue = "0", name = "offset") Long offset)
             throws Exception {
         Long userid = (long) request.getAttribute("userId");
-        return ResponseEntity.ok(PostConvert.convertToPostReq(adminServ.getHidePost(userid, offset.intValue())));
+        return ResponseEntity
+                .ok(adminServ.getHidePost(userid, offset.intValue()).stream().map(PostConvert::convertToPostReq));
     }
 
     @GetMapping(path = "banne_user")

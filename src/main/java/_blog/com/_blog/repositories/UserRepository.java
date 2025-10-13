@@ -1,6 +1,7 @@
 package _blog.com._blog.repositories;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,5 +37,19 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Query(value = "UPDATE users SET status = :status WHERE uuid = :uuid", nativeQuery = true)
     int updateUserStatus(@Param("uuid") String uuid, @Param("status") String status);
+
+    @Query(value = """
+            SELECT name
+                lastName ,
+                username ,
+                dateOfBirth ,
+                urlPhoto ,
+                role ,
+                id
+                (SELECT COUNT(*) FROM connection WHERE follower_id = :uuid ) AS following,
+                (SELECT COUNT(*) FROM connection WHERE following_id = :uuid ) AS follower,
+                WHERE uuid = :uuid
+            """)
+    Map<String, Object> findUser(@Param("uuid") String uuid);
 
 }

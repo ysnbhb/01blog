@@ -1,5 +1,7 @@
 package _blog.com._blog.dto;
 
+import java.util.Map;
+
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.utils.UserReq;
 
@@ -19,6 +21,23 @@ public class UserConvert {
         userReq.setUuid(user.getUuid());
         userReq.setRole(user.getRole());
         userReq.setStutes(user.getStatus());
+        return userReq;
+    }
+
+    public static UserReq convertToUserReq(Map<String, Object> info) {
+        if (info == null) {
+            return null;
+        }
+        UserReq userReq = new UserReq();
+        userReq.setDateOfBirth((String) info.get("dateOfBirth"));
+        userReq.setUsername((String) info.get("username"));
+        userReq.setName((String) info.get("name"));
+        userReq.setLastName((String) info.get("lastName"));
+        userReq.setUrlPhoto((String) info.get("urlPhoto"));
+        userReq.setUuid((String) info.get("uuid"));
+        userReq.setRole((String) info.get("role"));
+        userReq.setFollowers((Integer) info.get("follower"));
+        userReq.setFollowing((Integer) info.get("following"));
         return userReq;
     }
 

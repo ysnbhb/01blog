@@ -51,10 +51,79 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
             ORDER BY p.created_at DESC
             LIMIT 10 OFFSET :offset
             """, nativeQuery = true)
-    List<Map<String, Object>> getPosts(@Param("userId") Long userid, @Param("offset") int offset, @Param("hide") boolean hide);
+    List<Map<String, Object>> getPosts(@Param("userId") Long userid, @Param("offset") int offset,
+            @Param("hide") boolean hide);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE posts SET hide = :hide WHERE id = :PostId", nativeQuery = true)
     int updateHideStatus(@Param("postId") long post_id, @Param("hide") boolean hide);
+
+    @Query(value = """
+            SELECT
+                p.id,
+                p.content,
+                p.url_photo AS urlPhoto,
+                p.type_photo AS typePhoto,
+                p.hide as Ishide,
+                u.name AS name,
+                u.last_name AS lastName,
+                u.uuid AS uuid,
+                u.url_photo AS userPhoto,
+                u.username AS username,
+                p.created_at AS createdAt,
+                COUNT(DISTINCT cm.id) AS total_comments,
+                COUNT(DISTINCT l.id) AS total_likes,
+                EXISTS (
+                    SELECT 1
+                    FROM reactions l2
+                    WHERE l2.post_id = p.id AND l2.user_id = :userId
+                ) AS isLiked
+            FROM posts p
+            JOIN users u ON p.user_id = u.id
+            LEFT JOIN comments cm ON cm.post_id = p.id
+            LEFT JOIN reactions l ON l.post_id = p.id
+            WHERE p.hide = :hide AND u.uuid = :uuid
+            GROUP BY
+                p.id, p.content, p.url_photo, p.type_photo,
+                u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at
+            ORDER BY p.created_at DESC
+            LIMIT 10 OFFSET :offset
+            """, nativeQuery = true)
+    List<Map<String, Object>> getUserPosts(@Param("userId") Long userid, @Param("offset") int offset,
+            @Param("hide") boolean hide, @Param("uuid") String uuid);
+
+    @Query(value = """
+            SELECT
+                p.id,
+                p.content,
+                p.url_photo AS urlPhoto,
+                p.type_photo AS typePhoto,
+                p.hide as Ishide,
+                u.name AS name,
+                u.last_name AS lastName,
+                u.uuid AS uuid,
+                u.url_photo AS userPhoto,
+                u.username AS username,
+                p.created_at AS createdAt,
+                COUNT(DISTINCT cm.id) AS total_comments,
+                COUNT(DISTINCT l.id) AS total_likes,
+                EXISTS (
+                    SELECT 1
+                    FROM reactions l2
+                    WHERE l2.post_id = p.id AND l2.user_id = :userId
+                ) AS isLiked
+            FROM posts p
+            JOIN users u ON p.user_id = u.id
+            LEFT JOIN comments cm ON cm.post_id = p.id
+            LEFT JOIN reactions l ON l.post_id = p.id
+            WHERE p.hide = :hide AND p.id = :post_id
+            GROUP BY
+                p.id, p.content, p.url_photo, p.type_photo,
+                u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at
+            ORDER BY p.created_at DESC
+            LIMIT 10 OFFSET :offset
+            """, nativeQuery = true)
+    Map<String, Object> getPost(@Param("userId") Long userid, @Param("post_id") Long offset,
+            @Param("hide") boolean hide);
 }
