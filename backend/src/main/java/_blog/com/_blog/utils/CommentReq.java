@@ -12,7 +12,7 @@ public class CommentReq {
     @NotBlank(message = "content must be not null")
     @Size(min = 3, max = 255, message = "content must be between 3 and 255")
     private String content;
-    private Long post_id;
+    private Long postId;
     private UserReq user;
     private int numOflike;
     private LocalDateTime createdAt;

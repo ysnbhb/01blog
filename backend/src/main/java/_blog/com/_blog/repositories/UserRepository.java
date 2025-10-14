@@ -49,7 +49,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
                 (SELECT COUNT(*) FROM connection WHERE follower_id = :uuid ) AS following,
                 (SELECT COUNT(*) FROM connection WHERE following_id = :uuid ) AS follower,
                 WHERE uuid = :uuid
-            """)
+            """ , nativeQuery = true)
     Map<String, Object> findUser(@Param("uuid") String uuid);
+
+    @Query("""
+                SELECT u
+                FROM User u
+                WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', :query, '%'))
+                   OR LOWER(u.name) LIKE LOWER(CONCAT('%', :query, '%'))
+                   OR LOWER(u.lastName) LIKE LOWER(CONCAT('%', :query, '%'))
+            """)
+    List<User> searchUsers(@Param("query") String query);
 
 }

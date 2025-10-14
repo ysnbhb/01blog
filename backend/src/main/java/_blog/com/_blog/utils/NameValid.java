@@ -26,6 +26,8 @@ public @interface NameValid {
 class NameValidator implements ConstraintValidator<NameValid, String> {
     @Override
     public boolean isValid(String name, ConstraintValidatorContext context) {
+        if (name == null)
+            return false;
         return name.matches("^[A-Za-z]+$");
     }
 

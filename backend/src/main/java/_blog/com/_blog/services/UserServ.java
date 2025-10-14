@@ -81,6 +81,15 @@ public class UserServ {
         return user;
     }
 
+    public List<UserReq> searchUsers(String query) {
+        List<User> users = userRepository.searchUsers(query);
+        return users.stream()
+                .map((user) -> {
+                    return UserConvert.convertToUserReq(user);
+                })
+                .toList();
+    }
+
     public static String generateUsername(String name, String lastName) {
         Random rand = new Random(System.currentTimeMillis());
 

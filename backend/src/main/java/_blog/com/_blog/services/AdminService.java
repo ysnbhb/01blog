@@ -46,7 +46,7 @@ public class AdminService {
     @Transactional
     public boolean banneUser(String uuid) throws ProgramExeption {
         User user = userRepository.findByUuid(uuid).orElseThrow(() -> new ProgramExeption(400, "User not found"));
-        userRepository.updateUserStatus(uuid, user.getStatus() != "BANNED" ? "BANNED" : null);
+        userRepository.updateUserStatus(uuid, user.getStatus() != "BANNED" ? "BANNED" : "ACTIVE");
         return user.getStatus() != "BANNED";
     }
 

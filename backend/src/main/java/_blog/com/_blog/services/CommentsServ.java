@@ -27,7 +27,7 @@ public class CommentsServ {
 
     @Transactional
     public Comment save(CommentReq commentReq, User user) throws ProgramExeption {
-        Post post = postRepositery.findById(commentReq.getPost_id())
+        Post post = postRepositery.findById(commentReq.getPostId())
                 .orElseThrow(() -> new ProgramExeption(400, "post not found"));
         Comment comment = new Comment();
         comment.setContane(commentReq.getContent());
