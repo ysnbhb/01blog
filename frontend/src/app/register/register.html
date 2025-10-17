@@ -1,0 +1,112 @@
+<app-login-nav />
+<div
+  class="d-flex justify-content-center align-items-center vh-100 app"
+  style="background-color: #d6dee7"
+>
+  <div class="container bg-secondary rounded p-4 login-container">
+    <div class="text-center mb-4">
+      <h1 class="text-info">Welcome Back</h1>
+    </div>
+
+    <form #userRegistr="ngForm" (ngSubmit)="sumbet(userRegistr)">
+      <div class="mb-3">
+        <label for="name" class="form-label">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="Enter your name"
+          required
+          ngModel
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastName"
+          name="lastName"
+          placeholder="Enter your last name"
+          required
+          ngModel
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="username" class="form-label">User Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+          ngModel
+        />
+        <small>option</small>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+          pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+          email
+          ngModel
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="Enter password"
+          required
+          ngModel
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="basicDateInput" class="form-label">date Of Birth</label>
+        <input
+          type="date"
+          class="form-control"
+          id="basicDateInput"
+          name="dateOfBirth"
+          required
+          ngModel
+        />
+      </div>
+      <div class="mb-3">
+        <label for="image" class="form-label">Choose file</label>
+        <input
+          type="file"
+          class="form-control"
+          name="image"
+          accept="image/*"
+          id="image"
+          placeholder=""
+          aria-describedby="fileHelpId"
+          (change)="onFileChange($event)"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="!userRegistr.valid">
+        Register
+      </button>
+      @if (error) {
+      <div class="alert alert-danger mt-2 error" role="alert">error: {{ error }}</div>
+      }
+    </form>
+  </div>
+</div>

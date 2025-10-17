@@ -1,0 +1,49 @@
+<app-login-nav />
+<div
+  class="d-flex justify-content-center align-items-center vh-100 app"
+  style="background-color: #d6dee7"
+>
+  <div class="container bg-secondary rounded p-4 login-container">
+    <div class="text-center mb-4">
+      <h1 class="text-info">Welcome Back</h1>
+    </div>
+
+    <form #userLogin="ngForm" (ngSubmit)="sumbet(userLogin)">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+          email
+          pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+          ngModel
+          #email="ngModel"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="Enter password"
+          required
+          ngModel
+          minlength="8"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary w-100" [disabled]="!userLogin.valid">
+        Login
+      </button>
+      @if (error) {
+      <div class="alert alert-danger mt-2 error" role="alert">error: {{ error }}</div>
+      }
+    </form>
+  </div>
+</div>

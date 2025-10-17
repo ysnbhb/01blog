@@ -14,7 +14,9 @@ import java.time.format.DateTimeParseException;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidDateOfBirth {
     String message() default "Invalid date of birth or must be at least 16 years old";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
 
@@ -22,6 +24,7 @@ class DateOfBirthValidator implements ConstraintValidator<ValidDateOfBirth, Stri
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
+        System.out.println(value);
         if (value == null || value.isBlank()) {
             return false;
         }
@@ -31,9 +34,9 @@ class DateOfBirthValidator implements ConstraintValidator<ValidDateOfBirth, Stri
             LocalDate today = LocalDate.now();
             LocalDate minAgeDate = today.minusYears(16);
 
-            return dob.isBefore(minAgeDate); 
+            return dob.isBefore(minAgeDate);
         } catch (DateTimeParseException e) {
-            return false; 
+            return false;
         }
     }
 }

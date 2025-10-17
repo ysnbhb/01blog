@@ -60,6 +60,12 @@ public class NotifacationSer {
     }
 
     public List<Map<String, Object>> findAllNotifactions(Long userid) {
-        return notifacationRepo.findAllNotifactions(userid);
+        List<Map<String, Object>> notfication = notifacationRepo.findAllNotifactions(userid);
+        notifacationRepo.updateRead(userid);
+        return notfication;
+    }
+
+    public int countNotif(Long userid) {
+        return notifacationRepo.count(userid);
     }
 }

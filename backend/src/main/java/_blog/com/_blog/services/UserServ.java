@@ -40,7 +40,7 @@ public class UserServ {
 
         }
         userReq.setPassword(passwordEncoder.encode(userReq.getPassword()));
-        if (userName == null) {
+        if (userName == null || userName.isEmpty()) {
             do {
                 userName = generateUsername(userReq.getName(), userReq.getLastName());
             } while (userRepository.existsByUsername(userName));

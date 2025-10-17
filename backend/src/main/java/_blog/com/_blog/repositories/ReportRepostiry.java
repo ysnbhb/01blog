@@ -14,11 +14,6 @@ import _blog.com._blog.Entity.Report;
 public interface ReportRepostiry extends JpaRepository<Report, Long> {
     @Query(value = """
             SELECT
-                r.reason,
-                u1.username AS reporter_username,
-                u1.uuid AS reporter_uuid,
-                u1.name AS reporter_name,
-                u1.last_name AS reporter_last_name,
                 u2.username AS reported_username,
                 u2.uuid AS reported_uuid,
                 u2.name AS reported_name,
@@ -26,12 +21,9 @@ public interface ReportRepostiry extends JpaRepository<Report, Long> {
                 u2.url_photo AS reported_url_photo,
                 COUNT(r.id) AS report_count
             FROM report r
-            JOIN users AS u1 ON u1.id = r.user_id       -- reporter
-            JOIN users AS u2 ON u2.id = r.to_userid     -- reported user
+            JOIN users AS u2 ON u2.id = r.to_userid 
             WHERE r.post_id IS NULL
             GROUP BY
-                r.reason,
-                u1.username, u1.uuid, u1.name, u1.last_name,
                 u2.username, u2.uuid, u2.name, u2.last_name, u2.url_photo
             ORDER BY MAX(r.created_at) DESC
             LIMIT 20 OFFSET :offset
@@ -40,34 +32,23 @@ public interface ReportRepostiry extends JpaRepository<Report, Long> {
 
     @Query(value = """
             SELECT
-                r.reason,
-                u1.username AS reporter_username,
-                u1.uuid AS reporter_uuid,
-                u1.name AS reporter_name,
-                u1.last_name AS reporter_last_name,
-
-                u2.username AS reported_username,
-                u2.uuid AS reported_uuid,
-                u2.name AS reported_name,
-                u2.last_name AS reported_last_name,
-                u2.url_photo AS reported_url_photo,
-
+                u2.username AS username,
+                u2.uuid AS uuid,
+                u2.name AS name,
+                u2.last_name AS last_name,
+                u2.url_photo AS url_photo,
                 p.content AS post_content,
-                p.type_photo AS post_type_photo,
+                p.type_photo AS type_photo,
                 p.url_photo AS post_url_photo,
-
                 COUNT(r.id) AS report_count
 
             FROM report r
-            JOIN users AS u1 ON u1.id = r.user_id
             JOIN posts AS p ON p.id = r.post_id
             JOIN users AS u2 ON u2.id = p.user_id
-
             WHERE r.to_userid IS NULL
 
             GROUP BY
                 r.reason,
-                u1.username, u1.uuid, u1.name, u1.last_name,
                 u2.username, u2.uuid, u2.name, u2.last_name, u2.url_photo,
                 p.content, p.type_photo, p.url_photo
 

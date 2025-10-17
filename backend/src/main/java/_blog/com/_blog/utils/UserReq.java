@@ -19,7 +19,6 @@ public class UserReq {
     private String email;
     private String uuid;
     @UserName
-    @Size(max = 10, min = 3, message = "invalid username")
     private String username;
     @ValidDateOfBirth
     private String dateOfBirth;

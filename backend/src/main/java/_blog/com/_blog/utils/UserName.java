@@ -26,9 +26,11 @@ public @interface UserName {
 class UserNameValid implements ConstraintValidator<UserName, String> {
     @Override
     public boolean isValid(String username, ConstraintValidatorContext context) {
-        if (username == null)
+        if (username == null || username.isEmpty()) {
             return true;
-        if (!username.matches(".*[A-Za-z].*")) return false;
+        }
+        if (!username.matches(".*[A-Za-z].*") || username.length() < 3 || username.length() > 12)
+            return false;
         return username.matches("^[A-Za-z0-9_]+$");
     }
 }

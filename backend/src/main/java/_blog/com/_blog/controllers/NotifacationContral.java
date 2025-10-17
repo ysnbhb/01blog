@@ -22,4 +22,9 @@ public class NotifacationContral {
         return notifacationSer.findAllNotifactions(id);
     }
 
+    @GetMapping("countNotif")
+    public int countNotif(@RequestAttribute("userId") Long userid) {
+        return notifacationSer.countNotif(userid);
+    }
+
 }

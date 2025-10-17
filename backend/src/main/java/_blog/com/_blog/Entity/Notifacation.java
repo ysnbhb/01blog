@@ -31,6 +31,7 @@ public class Notifacation {
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
+    private boolean read;
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
