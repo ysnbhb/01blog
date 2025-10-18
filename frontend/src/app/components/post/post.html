@@ -1,65 +1,85 @@
 <div class="container profile">
-  <div class="row">
-    <div class="col-md-6">
+  <div class="row f-flex justify-content-center">
+    <div class="col-md-10 col-lg-7">
       <div class="card mb-3">
         <div class="card-body">
           <div class="d-flex align-items-center mb-3">
             <a href="#">
-              <img
-                src="https://bootdey.com/img/Content/avatar/avatar6.png"
-                alt=""
-                width="50"
-                class="rounded-circle"
-              />
+              <img src="{{ post.user.urlPhoto }}" alt="" width="50" class="rounded-circle" />
             </a>
             <div class="flex-fill ps-2">
-              <div class="fw-bold">
-                <a href="#" class="text-decoration-none">Clyde Stanley</a>
+              <div class="row justify-content-between align-items-center g-2">
+                <div class="fw-bold col">
+                  <a href="{{ post.user.uuid }}" class="text-decoration-none"
+                    ><small class="text-muted ms-1">@{{ post.user.username }}</small></a
+                  >
+                </div>
+                <div class="col-2 d-flex justify-content-end align-items-center dropdown">
+                  <i
+                    class="bi bi-list-task"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    role="button"
+                  ></i>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item text-primary update-item" href="#">Update</a></li>
+                    <li><a class="dropdown-item text-warning delete-item" href="#">Delete</a></li>
+                    <li><a class="dropdown-item text-danger report-item" href="#">Report</a></li>
+                  </ul>
+                </div>
               </div>
-              <div class="small text-body text-opacity-50">March 16</div>
+
+              <div class="small text-body text-opacity-50">{{ post.createdAt }}</div>
             </div>
           </div>
 
-          <p>Best vacation of 2023</p>
-          <div class="profile-img-list">
-            <div class="profile-img-list-item main">
+          <p>{{ post.content }}</p>
+          @if (post.typePhoto == "image") {
+          <div class="profile-img-list d-flex justify-content-center">
+            <div class="profile-img-list-item main w-100">
               <a href="#" class="profile-img-list-link">
-                <span
-                  class="profile-img-content"
-                  style="background-image: url(https://bootdey.com/img/Content/avatar/avatar1.png);"
-                ></span>
+                <img
+                  src="{{ post.urlPhot }}"
+                  class="img-fluid rounded-top profile-img-content justify-self-center align-self-center"
+                  alt=""
+                />
               </a>
             </div>
-           
           </div>
+          }@else if(post.typePhoto == "video") {
+          <div class="profile-img-list d-flex justify-content-center">
+            <div class="profile-img-list-item main w-100">
+              <a href="#" class="profile-img-list-link">
+                <iframe
+                  class="embed-responsive-item profile-img-content"
+                  src="{{ post.urlPhot }}"
+                  allowfullscreen
+                ></iframe>
+              </a>
+            </div>
+          </div>
+          }
 
           <hr class="mb-1 opacity-1" />
           <div class="row text-center fw-bold">
             <div class="col">
               <a href="#" class="text-body text-opacity-50 text-decoration-none d-block p-2">
-                <i class="far fa-thumbs-up me-1 d-block d-sm-inline"></i> Likes
+                <i class="bi bi-hand-thumbs-up fs-5"></i>
+                <small class="ms-1">{{ post.numboflike }}</small>
               </a>
             </div>
             <div class="col">
               <a href="#" class="text-body text-opacity-50 text-decoration-none d-block p-2">
-                <i class="far fa-comment me-1 d-block d-sm-inline"></i> Comment
-              </a>
-            </div>
-            <div class="col">
-              <a href="#" class="text-body text-opacity-50 text-decoration-none d-block p-2">
-                <i class="fa fa-share me-1 d-block d-sm-inline"></i> Share
+                <i class="bi bi-chat-left-text-fill fs-5"></i>
+                <small class="ms-1">{{ post.numbofcomment }}</small>
               </a>
             </div>
           </div>
 
           <hr class="mb-3 mt-1 opacity-1" />
           <div class="d-flex align-items-center">
-            <img
-              src="https://bootdey.com/img/Content/avatar/avatar6.png"
-              alt=""
-              width="35"
-              class="rounded-circle"
-            />
+            <img src="{{ post.user.urlPhoto }}" alt="" width="35" class="rounded-circle" />
             <div class="flex-fill ps-2">
               <div class="position-relative d-flex align-items-center">
                 <input
@@ -70,14 +90,15 @@
                 />
                 <div class="position-absolute end-0 text-center">
                   <a href="#" class="text-body text-opacity-50 me-2"><i class="fa fa-smile"></i></a>
-                  <a href="#" class="text-body text-opacity-50 me-2"><i class="fa fa-camera"></i></a>
+                  <a href="#" class="text-body text-opacity-50 me-2"
+                    ><i class="fa fa-camera"></i
+                  ></a>
                   <a href="#" class="text-body text-opacity-50 me-2"><i class="fa fa-video"></i></a>
                   <a href="#" class="text-body text-opacity-50 me-3"><i class="fa fa-paw"></i></a>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
