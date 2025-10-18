@@ -63,7 +63,7 @@ export class Register implements OnInit {
         console.log('User loaded:', this.user);
         this.router.navigate(['/']);
       } catch (error) {
-        console.error('Fetch error:', error);
+        // console.error('Fetch error:', error);
       }
     }
   }
