@@ -1,0 +1,10 @@
+.profile {
+  list-style-type: none;
+  margin: -0.1rem;
+  padding: 0;
+}
+
+.justify-self-center {
+    justify-self: center;
+}
+

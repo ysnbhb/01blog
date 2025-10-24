@@ -24,6 +24,6 @@ public interface ConnectionRepo extends JpaRepository<Connection, Long> {
     @Query(value = "SELECT COUNT(*) FROM connectio WHERE  following_id = :userId", nativeQuery = true)
     int countOffolloewr(@Param("userId") Long userId);
 
-    @Query(value = "SELECT follower_id FROM connectio WHERE  following_id = :userId LIMIT 10 OFFSET :offset", nativeQuery = true)
+    @Query(value = "SELECT follower_id FROM connection WHERE  following_id = :userId LIMIT 10 OFFSET :offset", nativeQuery = true)
     List<Long> getFollowes(@Param("userId") Long userid, @Param("offset") int offset);
 }

@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { User } from '../../../model/User.model';
+import { Component, EventEmitter, Input, input, Output } from '@angular/core';
 import { PostReq } from '../../../model/Post.model';
 
 @Component({
@@ -8,27 +7,37 @@ import { PostReq } from '../../../model/Post.model';
   templateUrl: './post.html',
   styleUrl: './post.css',
 })
-export class Post {
-  post: PostReq = {
-    id: 1,
-    content:
-      'Just finished building my first Spring Boot + Angular project! 🚀\n hgshdghjsgdhjsdhfghfds sd hgdhsgfsdhgf dfsgfsdhghsdgfhgsdh gs dhgfsdhgfhdsgfghf dshgfsdhgfsdh gfhgsdf hgfsdhfhgfsdf hgfhsdgfhgfsdhhgsdf hgfhgsd',
-    urlPhot: 'https://picsum.photos/600/400', // random placeholder image
-    typePhoto: 'image',
-    createdAt: '2025-10-15T10:30:00Z',
-    numbofcomment: 10,
-    numboflike: 10,
-    user: {
-      username: 'dev_master',
-      name: 'John',
-      lastName: 'Doe',
-      uuid: '123e4567-e89b-12d3-a456-426614174000',
-      urlPhoto: 'https://i.pravatar.cc/150?img=12',
-      email: 'john.doe@example.com',
-      role: 'USER',
-      followersCount: 0,
-      followingCount: 10,
-      dateOfBirth: '',
-    },
-  };
+export class PostComponent {
+  @Input() post!: PostReq;
+  @Output() deleted = new EventEmitter<number>();
+
+  async removepost() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('No token found');
+      return;
+    }
+
+    try {
+      console.log('Deleting post ID:', this.post.id);
+
+      const res = await fetch(`http://localhost:8080/api/delete_post?postId=${this.post.id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        console.log('Post deleted successfully');
+        // if (this.removePost) this.removePost(this.post.id);
+        this.deleted.emit(this.post.id);
+      } else {
+        const text = await res.text(); // safer than res.json() here
+        console.error('Failed to delete post:', text);
+      }
+    } catch (err) {
+      console.error('Error deleting post:', err);
+    }
+  }
 }

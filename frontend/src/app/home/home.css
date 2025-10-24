@@ -1,10 +1,9 @@
 /* Global layout container */
 .app-layout {
   display: flex;
-  height: 100vh; 
+  height: 100vh;
   overflow: hidden;
 }
-
 
 /* app-sidebar {
   width: 250px; 
@@ -14,12 +13,19 @@
   overflow-y: auto;
 } */
 
-
-app-post {
+app-posts-container {
   flex-grow: 1;
-  background-color: #f8f9fa;
-  overflow-y: auto;
+  background-color: #c3d2e2;
   padding: 20px;
+}
+
+.posts::-webkit-scrollbar {
+  display: none;
+}
+
+.posts {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 @media (max-width: 768px) {

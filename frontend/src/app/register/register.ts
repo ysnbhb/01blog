@@ -55,7 +55,7 @@ export class Register implements OnInit {
 
         if (!res.ok) {
           console.error('Failed to fetch user info:', res.statusText);
-          this.router.navigate(['/login']);
+          // this.router.navigate(['/login']);
           return;
         }
 

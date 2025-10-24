@@ -36,6 +36,7 @@ public class PostController {
     @DeleteMapping(path = "delete_post")
     public ResponseEntity<?> delete(@RequestParam(defaultValue = "0", name = "postId") Long id,
             HttpServletRequest request) throws Exception {
+        System.out.println(id);
         User user = (User) request.getAttribute("user");
         postServ.delete(id, user);
         return ResponseEntity.ok(id);

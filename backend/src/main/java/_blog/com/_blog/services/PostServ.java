@@ -48,7 +48,7 @@ public class PostServ {
     public void delete(long Postid, User user) throws ProgramExeption {
         User ownrPost = postRepositery.findById(Postid)
                 .map(Post::getUser)
-                .orElseThrow(() -> new ProgramExeption(404, "Post not found"));
+                .orElseThrow(() -> new ProgramExeption(400, "Post not found"));
 
         if (ownrPost.getId() == user.getId() || user.getRole() == "ADMIN") {
             postRepositery.deleteById(Postid);
