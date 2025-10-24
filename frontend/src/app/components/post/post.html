@@ -4,7 +4,12 @@
     <div class="card-body">
       <div class="d-flex align-items-center mb-3">
         <a href="#">
-          <img src="{{ post.user.urlPhoto }}" alt="" width="50" class="rounded-circle" />
+          <img
+            src="http://localhost:8080/image/{{ post.user.urlPhoto }}"
+            alt=""
+            width="50"
+            class="rounded-circle"
+          />
         </a>
         <div class="flex-fill ps-2">
           <div class="row justify-content-between align-items-center g-2">
@@ -41,10 +46,10 @@
       @if (post.typePhoto == "image") {
       <div class="profile-img-list d-flex justify-content-center">
         <div class="profile-img-list-item main w-100">
-          <a href="#" class="profile-img-list-link">
+          <a class="profile-img-list-link">
             <img
-              src="{{ post.urlPhot }}"
-              class="img-fluid rounded-top profile-img-content justify-self-center align-self-center"
+              src="http://localhost:8080/image/{{ post.urlPhot }}"
+              class="img-fluid rounded-top profile-img-content justify-self-center align-self-center post-media pixel-perfect"
               alt=""
             />
           </a>
@@ -53,36 +58,46 @@
       }@else if(post.typePhoto == "video") {
       <div class="profile-img-list d-flex justify-content-center">
         <div class="profile-img-list-item main w-100">
-          <a href="#" class="profile-img-list-link">
-            <iframe
-              class="embed-responsive-item profile-img-content"
-              src="{{ post.urlPhot }}"
-              allowfullscreen
-            ></iframe>
+          <a class="profile-img-list-link">
+            <video
+              class="embed-responsive-item profile-img-content post-media"
+              [src]="'http://localhost:8080/video/' + post.urlPhot"
+              controls
+            ></video>
           </a>
         </div>
       </div>
       }
-
-      <hr class="mb-1 opacity-1" />
-      <div class="row text-center fw-bold">
-        <div class="col">
-          <a href="#" class="text-body text-opacity-50 text-decoration-none d-block p-2">
-            <i class="bi bi-hand-thumbs-up fs-5"></i>
-            <small class="ms-1">{{ post.numOflike }}</small>
+      <div class="row text-center fw-bold post-actions">
+        <!-- Like Button -->
+        <div class="col-6">
+          <a
+            href="#"
+            class="text-decoration-none d-flex justify-content-center align-items-center p-2 action-btn"
+            [ngClass]="{ liked: post.isliked}"
+          >
+            <i
+              class="bi"
+              [ngClass]="post.isliked ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'"
+            ></i>
+            <small class="ms-2">{{ post.numOflike }}</small>
           </a>
         </div>
-        <div class="col">
-          <a href="#" class="text-body text-opacity-50 text-decoration-none d-block p-2">
-            <i class="bi bi-chat-left-text-fill fs-5"></i>
-            <small class="ms-1">{{ post.numOfcomment }}</small>
+
+        <!-- Comment Button -->
+        <div class="col-6">
+          <a
+            href="#"
+            class="text-decoration-none d-flex justify-content-center align-items-center p-2 action-btn"
+          >
+            <i class="bi bi-chat-left-text"></i>
+            <small class="ms-2">{{ post.numOfcomment }}</small>
           </a>
         </div>
       </div>
 
       <hr class="mb-3 mt-1 opacity-1" />
       <div class="d-flex align-items-center">
-        <img src="{{ post.user.urlPhoto }}" alt="" width="35" class="rounded-circle" />
         <div class="flex-fill ps-2">
           <div class="position-relative d-flex align-items-center">
             <input
@@ -91,12 +106,6 @@
               style="padding-right: 120px"
               placeholder="Write a comment..."
             />
-            <div class="position-absolute end-0 text-center">
-              <a href="#" class="text-body text-opacity-50 me-2"><i class="fa fa-smile"></i></a>
-              <a href="#" class="text-body text-opacity-50 me-2"><i class="fa fa-camera"></i></a>
-              <a href="#" class="text-body text-opacity-50 me-2"><i class="fa fa-video"></i></a>
-              <a href="#" class="text-body text-opacity-50 me-3"><i class="fa fa-paw"></i></a>
-            </div>
           </div>
         </div>
       </div>

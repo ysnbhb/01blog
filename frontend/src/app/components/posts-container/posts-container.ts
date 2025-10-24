@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PostReq } from '../../../model/Post.model';
 import { PostComponent } from '../post/post';
+import { PostForm } from '../post-form/post-form';
 
 @Component({
   selector: 'app-posts-container',
-  imports: [PostComponent],
+  imports: [PostComponent, PostForm],
   templateUrl: './posts-container.html',
   styleUrl: './posts-container.css',
 })
@@ -38,5 +39,9 @@ export class PostsContainer implements OnInit {
   onPostDeleted(id: number) {
     this.posts = this.posts.filter((p) => p.id !== id);
     console.log('removed locally', id, this.posts.length);
+  }
+
+  onPostAdd(post: PostReq) {
+    this.posts = [post, ...this.posts];
   }
 }

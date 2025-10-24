@@ -1,13 +1,16 @@
-import { Component, EventEmitter, Input, input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
 import { PostReq } from '../../../model/Post.model';
+import { getTimeDifferenceInHours } from '../../../utils/formatDate';
+import { CommonModule } from '@angular/common';
+// import { NgClass } from "@angular/common/common_module.d";
 
 @Component({
   selector: 'app-post',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './post.html',
   styleUrl: './post.css',
 })
-export class PostComponent {
+export class PostComponent implements OnInit {
   @Input() post!: PostReq;
   @Output() deleted = new EventEmitter<number>();
 
@@ -30,14 +33,16 @@ export class PostComponent {
 
       if (res.ok) {
         console.log('Post deleted successfully');
-        // if (this.removePost) this.removePost(this.post.id);
         this.deleted.emit(this.post.id);
       } else {
-        const text = await res.text(); // safer than res.json() here
-        console.error('Failed to delete post:', text);
+        console.error('Failed to delete post:');
       }
     } catch (err) {
       console.error('Error deleting post:', err);
     }
+  }
+
+  ngOnInit(): void {
+      this.post.createdAt = getTimeDifferenceInHours(this.post.createdAt)
   }
 }
