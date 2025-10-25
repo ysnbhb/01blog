@@ -9,13 +9,23 @@ import { PostReq } from '../../../model/Post.model';
   styleUrl: './post-form.css',
 })
 export class PostForm {
-  error!: String;
-  selectedFile!: File | null;
+  error: string = '';
+  selectedFile: File | null = null;
+  previewUrl: string | null = null;
+  isImage: boolean = false;
   @Output() addPost = new EventEmitter<PostReq>();
-  onFileChange(event: Event) {
+  onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      this.selectedFile = file;
+      this.isImage = file.type.startsWith('image/');
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.previewUrl = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
     }
   }
 
@@ -28,8 +38,6 @@ export class PostForm {
       data.append('photo', this.selectedFile);
     }
     let token = localStorage.getItem('token');
-    console.log(data);
-
     let res = await fetch('http://localhost:8080/api/creat_post', {
       method: 'POST',
       body: data,
@@ -44,6 +52,16 @@ export class PostForm {
       this.selectedFile = null;
     } else {
       this.error = post.error;
+    }
+  }
+
+  removeFile(): void {
+    this.selectedFile = null;
+    this.previewUrl = null;
+    this.isImage = false;
+    const fileInput = document.getElementById('image') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
     }
   }
 }

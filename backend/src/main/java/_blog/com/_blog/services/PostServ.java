@@ -10,7 +10,9 @@ import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.dto.PostConvert;
+import _blog.com._blog.repositories.CommentsRepositories;
 import _blog.com._blog.repositories.PostRepositery;
+import _blog.com._blog.repositories.ReactionRepo;
 import _blog.com._blog.utils.PostReq;
 import _blog.com._blog.utils.Upload;
 
@@ -18,10 +20,15 @@ import _blog.com._blog.utils.Upload;
 public class PostServ {
     private final PostRepositery postRepositery;
     private final NotifacationSer notifacationSer;
+    private final ReactionRepo reactionRepo;
+    private final CommentsRepositories commentsRepositories;
 
-    public PostServ(PostRepositery PostRepositery, NotifacationSer notifacationSer) {
+    public PostServ(PostRepositery PostRepositery, NotifacationSer notifacationSer, ReactionRepo reactionRepo,
+            CommentsRepositories commentsRepositories) {
         this.postRepositery = PostRepositery;
         this.notifacationSer = notifacationSer;
+        this.reactionRepo = reactionRepo;
+        this.commentsRepositories = commentsRepositories;
     }
 
     @Transactional
@@ -46,11 +53,13 @@ public class PostServ {
 
     @Transactional
     public void delete(long Postid, User user) throws ProgramExeption {
-        User ownrPost = postRepositery.findById(Postid)
-                .map(Post::getUser)
+        Post Post = postRepositery.findById(Postid)
                 .orElseThrow(() -> new ProgramExeption(400, "Post not found"));
 
-        if (ownrPost.getId() == user.getId() || user.getRole() == "ADMIN") {
+        if (Post.getUser().getId() == user.getId() || user.getRole() == "ADMIN") {
+            reactionRepo.deleteByPost(Postid);
+            notifacationSer.deleteNotifactionByPostid(Postid);
+            commentsRepositories.deleteByPostid(Postid);
             postRepositery.deleteById(Postid);
         } else {
             throw new ProgramExeption(400, "you can't delet this post");

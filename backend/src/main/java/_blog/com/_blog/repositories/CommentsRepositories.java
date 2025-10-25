@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Comment;
 
@@ -41,4 +43,9 @@ public interface CommentsRepositories extends JpaRepository<Comment, Long> {
             @Param("offset") int offset,
             @Param("hide") boolean hide,
             @Param("postId") Long postId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM comments WHERE post_id=:post_id ", nativeQuery = true)
+    void deleteByPostid(@Param("post_id") Long post_id);
 }

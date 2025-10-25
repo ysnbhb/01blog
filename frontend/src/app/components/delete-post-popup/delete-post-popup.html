@@ -1,0 +1,28 @@
+<div class="modal-backdrop" tabindex="-1" aria-labelledby="modalLabel">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">
+          <i class="bi bi-info-circle"></i>
+          Confirm Action
+        </h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="reset()"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Are you sure you want to proceed with this action? This will delete this post for ever.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="reset()">
+          <i class="bi bi-x-lg"></i>
+          Close
+        </button>
+        <button type="button" class="btn btn-danger" (click)="removepost()">
+          <i class="bi bi-check-lg"></i>
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,15 +1,15 @@
-<div class="container bg-secondary rounded p-4 form-container">
+<div class="container bg-secondary rounded p-4 form-container mb-4">
   <form #post="ngForm" (ngSubmit)="sumbet(post)">
     <div class="mb-3">
       <div class="mb-3">
         <label for="content" class="form-label">Content for your Post</label>
-        <textarea
-          class="form-control"
-          name="content"
-          id="content"
-          rows="3"
-          minlength="3"
-          required
+        <textarea 
+          class="form-control" 
+          name="content" 
+          id="content" 
+          rows="3" 
+          minlength="3" 
+          required 
           ngModel
         ></textarea>
       </div>
@@ -17,20 +17,54 @@
 
     <div class="mb-3">
       <label for="image" class="form-label">Choose image/video</label>
-      <input
-        type="file"
-        class="form-control"
-        id="image"
-        placeholder="Show your image"
-        aria-describedby="fileHelpId"
-        accept="image/*,video/*"
+      <input 
+        type="file" 
+        class="d-none" 
+        id="image" 
+        accept="image/*,video/*" 
         (change)="onFileChange($event)"
+        #fileInput
       />
+            <div class="file-upload-wrapper">
+        <button 
+          type="button" 
+          class="btn btn-outline-light w-100 file-upload-btn"
+          (click)="fileInput.click()"
+        >
+          <i class="bi bi-image"></i> Select Image/Video
+        </button>
+      </div>
+
+      @if (selectedFile) {
+        <div class="preview-container mt-3">
+          @if (isImage) {
+            <img [src]="previewUrl" alt="Preview" class="preview-image">
+          } @else {
+            <video [src]="previewUrl" class="preview-video" controls></video>
+          }
+          <button 
+            type="button" 
+            class="btn btn-danger btn-sm remove-btn"
+            (click)="removeFile()"
+          >
+            <i class="bi bi-x-circle"></i> Remove
+          </button>
+        </div>
+      }
     </div>
 
-    <button type="submit" class="btn btn-primary w-100" [disabled]="!post.valid">Post</button>
+    <button 
+      type="submit" 
+      class="btn btn-primary w-100" 
+      [disabled]="!post.valid"
+    >
+      Post
+    </button>
+
     @if (error) {
-    <div class="alert alert-danger mt-2 error" role="alert">error: {{ error }}</div>
+      <div class="alert alert-danger mt-2 error" role="alert">
+        error: {{ error }}
+      </div>
     }
   </form>
 </div>

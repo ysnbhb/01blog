@@ -37,6 +37,10 @@ public class NotifacationSer {
         notifacationRepo.deleteNotifaction(userid, fromid);
     }
 
+    public void deleteNotifactionByPostid(Long postid) {
+        notifacationRepo.deleteNotifactionByPostid(postid);
+    }
+
     @Async
     @Transactional
     public void setNotification(User sender, Post post) {

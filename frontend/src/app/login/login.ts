@@ -26,6 +26,7 @@ export class Login implements OnInit {
     let json = await res.json();
     if (res.ok) {
       localStorage.setItem('token', json.token);
+      this.router.navigate(['/']);
     } else {
       this.error = json.error;
     }

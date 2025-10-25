@@ -19,4 +19,9 @@ public interface ReactionRepo extends JpaRepository<Reaction, Long> {
 
     @Query(value = "SELECT COUNT(*) FROM reactions WHERE post_id = :postId ", nativeQuery = true)
     int countOfLikedPost(@Param("postId") long post_id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE  FROM reactions WHERE post_id = :postId", nativeQuery = true)
+    void deleteByPost(@Param("postId") long post_id);
 }

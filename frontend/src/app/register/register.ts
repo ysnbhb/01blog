@@ -13,12 +13,20 @@ import { Router } from '@angular/router';
 })
 export class Register implements OnInit {
   user!: User;
-  selectedFile!: File;
+  selectedFile!: File | null;
   error!: string;
-  onFileChange(event: Event) {
+  previewUrl!: string | null;
+  onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.previewUrl = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
     }
   }
   constructor(private router: Router) {}
@@ -35,6 +43,7 @@ export class Register implements OnInit {
     let json = await res.json();
     if (res.ok) {
       localStorage.setItem('token', json.token);
+      this.router.navigate(['/']);
     } else {
       this.error = json.error;
     }
@@ -55,16 +64,22 @@ export class Register implements OnInit {
 
         if (!res.ok) {
           console.error('Failed to fetch user info:', res.statusText);
-          // this.router.navigate(['/login']);
           return;
         }
 
         this.user = await res.json();
         console.log('User loaded:', this.user);
         this.router.navigate(['/']);
-      } catch (error) {
-        // console.error('Fetch error:', error);
-      }
+      } catch (error) {}
+    }
+  }
+
+  removeFile(): void {
+    this.selectedFile = null;
+    this.previewUrl = null;
+    const fileInput = document.getElementById('image') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
     }
   }
 }

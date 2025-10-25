@@ -1,3 +1,10 @@
+@if (post_id) {
+<app-delete-post-popup (deleted)="onPostDeleted($event)" [id]="post_id" (error)="setError($event)"></app-delete-post-popup>
+}
+
+ @if(errro) {
+<app-error-show [error]="errro"></app-error-show>
+}
 <div class="container profile">
   <div class="row f-flex justify-content-center">
     <app-post-form (addPost)="onPostAdd($event)"></app-post-form>
@@ -5,7 +12,7 @@
     <app-post
       class="d-flex justify-content-center align-items-center flex-column"
       [post]="post"
-      (deleted)="onPostDeleted($event)"
+      (addPost)="addPost($event)"
     />
     }
   </div>
