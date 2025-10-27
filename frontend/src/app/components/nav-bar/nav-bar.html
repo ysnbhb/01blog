@@ -13,7 +13,7 @@
       id="menu"
     >
       <li class="nav-item">
-        <a href="#" class="nav-link align-middle px-0">
+        <a routerLink="/" class="nav-link align-middle px-0">
           <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
         </a>
       </li>
@@ -29,17 +29,17 @@
         >
       </li>
       <li class="nav-item">
-        <a href="#submenu2" class="nav-link px-0 align-middle">
+        <a routerLink="/profile/{{ user.uuid }}" class="nav-link px-0 align-middle">
           <i class="fs-4 bi-person"></i>
           <span class="ms-1 d-none d-sm-inline">Profile</span></a
         >
       </li>
-      @if (user.role == "ADMIN") { 
-        <li class="nav-item">
-          <a href="#submenu3" class="nav-link px-0 align-middle">
-            <i class="fs-4 bi-sliders"></i> <span class="ms-1 d-none d-sm-inline">DashBord</span>
-          </a>
-        </li>
+      @if (user.role == "ADMIN") {
+      <li class="nav-item">
+        <a href="#submenu3" class="nav-link px-0 align-middle">
+          <i class="fs-4 bi-sliders"></i> <span class="ms-1 d-none d-sm-inline">DashBord</span>
+        </a>
+      </li>
 
       }
       <li class="nav-item">
@@ -52,14 +52,20 @@
     <hr />
     <div class="dropdown pb-4">
       <a
-        routerLink="/profile/{{user.uuid}}"
+        routerLink="/profile/{{ user.uuid }}"
         class="d-flex align-items-center text-white text-decoration-none"
         id="dropdownUser1"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <img src="http://localhost:8080/image/{{user.urlPhoto}}" alt="hugenerd" width="30" height="30" class="rounded-circle" />
-        <span class="d-none d-sm-inline mx-1">{{user.username}}</span>
+        <img
+          src="http://localhost:8080/image/{{ user.urlPhoto }}"
+          alt="hugenerd"
+          width="30"
+          height="30"
+          class="rounded-circle"
+        />
+        <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>
       </a>
     </div>
   </div>

@@ -15,7 +15,7 @@ public class PostReq {
     private long id;
     private UserReq user;
     @NotBlank(message = "content must be not null")
-    @Size(min = 3, max = 500, message = "content must be between 3 and 500")
+    @Size(min = 3, max = 1000, message = "content must be between 3 and 500")
     private String content;
     private String urlPhot;
     private String typePhoto;

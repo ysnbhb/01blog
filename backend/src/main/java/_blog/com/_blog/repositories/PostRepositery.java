@@ -32,6 +32,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
                 u.uuid AS uuid,
                 u.url_photo AS userPhoto,
                 u.username AS username,
+                u.role,
                 p.created_at AS createdAt,
                 COUNT(DISTINCT cm.id) AS total_comments,
                 COUNT(DISTINCT l.id) AS total_likes,
@@ -47,7 +48,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
             WHERE p.hide = :hide
             GROUP BY
                 p.id, p.content, p.url_photo, p.type_photo,
-                u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at
+                u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at, u.role
             ORDER BY p.created_at DESC
             LIMIT 10 OFFSET :offset
             """, nativeQuery = true)
@@ -69,6 +70,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
                 u.name AS name,
                 u.last_name AS lastName,
                 u.uuid AS uuid,
+                u.role,
                 u.url_photo AS userPhoto,
                 u.username AS username,
                 p.created_at AS createdAt,
@@ -86,7 +88,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
             WHERE p.hide = :hide AND u.uuid = :uuid
             GROUP BY
                 p.id, p.content, p.url_photo, p.type_photo,
-                u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at
+                u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at , u.role
             ORDER BY p.created_at DESC
             LIMIT 10 OFFSET :offset
             """, nativeQuery = true)
@@ -105,6 +107,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
                 u.uuid AS uuid,
                 u.url_photo AS userPhoto,
                 u.username AS username,
+                u.role,
                 p.created_at AS createdAt,
                 COUNT(DISTINCT cm.id) AS total_comments,
                 COUNT(DISTINCT l.id) AS total_likes,
@@ -120,7 +123,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
             WHERE p.hide = :hide AND p.id = :post_id
             GROUP BY
                 p.id, p.content, p.url_photo, p.type_photo,
-                u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at
+                u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at , u.role
             ORDER BY p.created_at DESC
             LIMIT 10 OFFSET :offset
             """, nativeQuery = true)

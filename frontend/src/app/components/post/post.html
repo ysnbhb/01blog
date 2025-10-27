@@ -12,12 +12,18 @@
             height="50"
             class="rounded-circle user-avatar"
           />
+          <mark></mark>
         </a>
         <div class="flex-fill ps-3">
           <div class="d-flex justify-content-between align-items-start">
             <div class="user-info">
               <a href="{{ post.user.uuid }}" class="text-decoration-none">
-                <div class="username-display">@{{ post.user.username }}</div>
+                <div class="username-display d-flex align-items-center">
+                  @{{ post.user.username }}
+                  @if (post.user.role == 'ADMIN') {
+                  <i class="bi bi-shield-fill-check admin-icon ms-2" title="Admin User"></i>
+                  }
+                </div>
               </a>
               <small class="text-muted post-timestamp">
                 <i class="bi bi-clock me-1"></i>{{ post.createdAt }}
@@ -65,7 +71,8 @@
       </div>
 
       <!-- Post Content -->
-      <p class="post-content mb-3">{{ post.content }}</p>
+      <!-- <p class="post-content mb-3">{{ post.content }}</p> -->
+       <markdown [data]="post.content" class="post-content mb-3"></markdown>
 
       <!-- Media Section -->
       @if (post.typePhoto == "image") {
@@ -125,16 +132,29 @@
             height="36"
             class="rounded-circle"
           />
-          <div class="flex-fill position-relative">
+          <form
+            class="flex-fill position-relative"
+            (ngSubmit)="submitComment(commentForm)"
+            #commentForm="ngForm"
+          >
             <input
               type="text"
               class="form-control comment-input rounded-pill"
               placeholder="Write a comment..."
+              ngModel
+              name="content"
+              required
+              maxlength="250"
+              minlength="5"
             />
-            <button class="btn btn-link comment-submit-btn" type="button">
+            <button
+              class="btn btn-link comment-submit-btn"
+              type="submit"
+              [disabled]="commentForm.invalid"
+            >
               <i class="bi bi-send-fill"></i>
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

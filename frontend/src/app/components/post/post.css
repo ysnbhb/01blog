@@ -213,3 +213,20 @@
 .btn-action.liked i {
   animation: likeAnimation 0.4s ease;
 }
+
+.admin-icon {
+  font-size: 0.9rem;
+  color: #0d6efd; /* Matches primary color for consistency */
+  transition: color 0.2s ease;
+}
+
+.admin-icon:hover {
+  color: #0a58ca; /* Slightly darker shade on hover */
+}
+
+/* Ensure alignment on smaller screens */
+@media (max-width: 768px) {
+  .admin-icon {
+    font-size: 0.85rem;
+  }
+}

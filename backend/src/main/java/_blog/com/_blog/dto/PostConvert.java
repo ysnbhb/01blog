@@ -31,6 +31,7 @@ public class PostConvert {
     }
 
     public static PostReq convertToPostReq(Map<String, Object> post) {
+        System.out.println(post.toString());
         PostReq postReq = new PostReq();
         postReq.setId(((Long) post.get("id")));
         postReq.setContent((String) post.get("content"));
@@ -46,6 +47,7 @@ public class PostConvert {
         user.setLastName((String) post.get("lastName"));
         user.setUrlPhoto((String) post.get("userPhoto"));
         user.setUuid((String) post.get("uuid"));
+        user.setRole((String) post.get("role"));
         postReq.setUser(user);
         return postReq;
 
