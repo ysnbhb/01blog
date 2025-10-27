@@ -72,7 +72,7 @@
 
       <!-- Post Content -->
       <!-- <p class="post-content mb-3">{{ post.content }}</p> -->
-       <markdown [data]="post.content" class="post-content mb-3"></markdown>
+      <markdown [data]="post.content" class="post-content mb-3"></markdown>
 
       <!-- Media Section -->
       @if (post.typePhoto == "image") {
@@ -122,42 +122,11 @@
           <span>Comment</span>
         </button>
       </div>
-
-      <div class="comment-section pt-3 border-top">
-        <div class="d-flex align-items-center gap-2">
-          <img
-            src="http://localhost:8080/image/{{ user.urlPhoto }}"
-            alt="Your avatar"
-            width="36"
-            height="36"
-            class="rounded-circle"
-          />
-          <form
-            class="flex-fill position-relative"
-            (ngSubmit)="submitComment(commentForm)"
-            #commentForm="ngForm"
-          >
-            <input
-              type="text"
-              class="form-control comment-input rounded-pill"
-              placeholder="Write a comment..."
-              ngModel
-              name="content"
-              required
-              maxlength="250"
-              minlength="5"
-            />
-            <button
-              class="btn btn-link comment-submit-btn"
-              type="submit"
-              [disabled]="commentForm.invalid"
-            >
-              <i class="bi bi-send-fill"></i>
-            </button>
-          </form>
-        </div>
-      </div>
     </div>
   </div>
 </div>
+} @if (errro) {
+<app-error-show [error]="errro"></app-error-show>
+}@else if (succes) {
+<app-succues-show [succues]="succes"></app-succues-show>
 }

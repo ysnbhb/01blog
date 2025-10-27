@@ -1,0 +1,34 @@
+<div class="comment-section pt-3 border-top">
+  <div class="d-flex align-items-center gap-2">
+    <img
+      src="http://localhost:8080/image/{{ image }}"
+      alt="Your avatar"
+      width="36"
+      height="36"
+      class="rounded-circle"
+    />
+    <form
+      class="flex-fill position-relative"
+      (ngSubmit)="submitComment(commentForm)"
+      #commentForm="ngForm"
+    >
+      <input
+        type="text"
+        class="form-control comment-input rounded-pill"
+        placeholder="Write a comment..."
+        ngModel
+        name="content"
+        required
+        maxlength="250"
+        minlength="5"
+      />
+      <button
+        class="btn btn-link comment-submit-btn"
+        type="submit"
+        [disabled]="commentForm.invalid"
+      >
+        <i class="bi bi-send-fill"></i>
+      </button>
+    </form>
+  </div>
+</div>
