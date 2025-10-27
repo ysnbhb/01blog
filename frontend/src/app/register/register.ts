@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginNav } from '../components/login-nav/login-nav';
 import { FormsModule, NgForm } from '@angular/forms';
-import { User } from '../../model/User.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +11,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.css'],
 })
 export class Register implements OnInit {
-  user!: User;
   selectedFile!: File | null;
   error!: string;
   previewUrl!: string | null;
@@ -66,9 +64,6 @@ export class Register implements OnInit {
           console.error('Failed to fetch user info:', res.statusText);
           return;
         }
-
-        this.user = await res.json();
-        console.log('User loaded:', this.user);
         this.router.navigate(['/']);
       } catch (error) {}
     }

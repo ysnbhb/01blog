@@ -1,19 +1,29 @@
 @if (post_id) {
-<app-delete-post-popup (deleted)="onPostDeleted($event)" [id]="post_id" (error)="setError($event)"></app-delete-post-popup>
-}
-
- @if(errro) {
+<app-delete-post-popup (confirm)="confirmDelete($event)"></app-delete-post-popup>
+} @if(errro) {
 <app-error-show [error]="errro"></app-error-show>
+} @if (succues) {
+<app-succues-show [succues]="succues"></app-succues-show>
 }
-<div class="container profile">
-  <div class="row f-flex justify-content-center">
+<div class="container profile" >
+  <div class="row f-flex justify-content-center scrollable-row" (scroll)="handleScroll($event)">
     <app-post-form (addPost)="onPostAdd($event)"></app-post-form>
     @for ( post of posts; track post.id) {
     <app-post
       class="d-flex justify-content-center align-items-center flex-column"
       [post]="post"
-      (addPost)="addPost($event)"
+      (remove)="addPost($event)"
+      [user]="user"
+      (report)="setReport($event)"
     />
     }
   </div>
 </div>
+@if (isreport) {
+<app-report-popup
+  (confirmreport)="reported($event)"
+  (error)="setError($event)"
+  (succues)="setSuccues($event)"
+  [postId]="post_id"
+></app-report-popup>
+}

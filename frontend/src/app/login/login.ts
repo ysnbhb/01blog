@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LoginNav } from '../components/login-nav/login-nav';
 import { Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
-import { User } from '../../model/User.model';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +11,6 @@ import { User } from '../../model/User.model';
 })
 export class Login implements OnInit {
   error!: string;
-  user!: User;
   constructor(private router: Router) {}
   async sumbet(val: NgForm) {
     let res = await fetch('http://localhost:8080/login', {
@@ -50,9 +48,6 @@ export class Login implements OnInit {
           this.router.navigate(['/login']);
           return;
         }
-
-        this.user = await res.json();
-        console.log('User loaded:', this.user);
         this.router.navigate(['/']);
       } catch (error) {
         // console.error('Fetch error:', error);

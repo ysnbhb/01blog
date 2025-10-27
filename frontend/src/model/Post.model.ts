@@ -1,4 +1,4 @@
-import { User } from './User.model';
+import { UserRes } from './User.model';
 
 export interface PostReq {
   id: number;
@@ -6,7 +6,7 @@ export interface PostReq {
   urlPhot: string;
   typePhoto?: 'image' | 'video' | string;
   createdAt: string;
-  user: User;
+  user: UserRes;
   numOflike: number;
   numOfcomment: number;
   isliked: boolean;

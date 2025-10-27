@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/
 import { PostReq } from '../../../model/Post.model';
 import { getTimeDifferenceInHours } from '../../../utils/formatDate';
 import { CommonModule } from '@angular/common';
+import { UserRes } from '../../../model/User.model';
 
 @Component({
   selector: 'app-post',
@@ -11,10 +12,16 @@ import { CommonModule } from '@angular/common';
 })
 export class PostComponent implements OnInit {
   @Input() post!: PostReq;
-  @Output() addPost = new EventEmitter<number>();
+  @Output() remove = new EventEmitter<number>();
+  @Output() report = new EventEmitter<number>();
+  @Input() user!: UserRes;
   errro!: String;
-  async removepost() {
-    this.addPost.emit(this.post.id);
+  removepost() {
+    this.remove.emit(this.post.id);
+  }
+
+  reportpost() {
+    this.report.emit(this.post.id);
   }
 
   ngOnInit(): void {

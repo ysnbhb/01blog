@@ -1,4 +1,4 @@
-export interface User {
+export interface UserRes {
     uuid: string;
     name: string;
     lastName: string;

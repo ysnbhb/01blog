@@ -17,7 +17,7 @@ public class ReportReq {
     @Null(message = "must be null")
     private UserReq userReported;
     @NotBlank(message = "must be correct")
-    @Size(min = 3 , message =  "must be more than 3")
+    @Size(min = 10 , message =  "must be more than 3")
     private String reason;
     @Null(message = "must be null")
     private String text;

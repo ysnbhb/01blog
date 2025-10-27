@@ -7,33 +7,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './delete-post-popup.css',
 })
 export class DeletePostPopup {
-  @Input() id!: number;
-  @Output() deleted = new EventEmitter<number>();
-  @Output() error = new EventEmitter<string>();
-  // errro!: String;
+  @Output() confirm = new EventEmitter<boolean>();
 
-  reset() {
-    this.deleted.emit(0);
-  }
-
-  async removepost() {
-    const token = localStorage.getItem('token');
-    try {
-      const res = await fetch(`http://localhost:8080/api/delete_post?postId=${this.id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.ok) {
-        this.deleted.emit(this.id);
-      } else {
-        let data = await res.json();
-        this.error.emit(data.error)
-      }
-    } catch (err) {
-      console.error('Error deleting post:', err);
-    }
+  reset(confirm: boolean) {
+    this.confirm.emit(confirm);
   }
 }

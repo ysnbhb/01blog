@@ -1,111 +1,139 @@
 @if (post) {
 <div class="col-md-10 col-lg-7">
-  <div class="card mb-3">
-    <div class="card-body">
+  <div class="card post-card mb-4 shadow-sm border-0">
+    <div class="card-body p-4">
+      <!-- User Header -->
       <div class="d-flex align-items-center mb-3">
-        <a href="#">
+        <a href="#" class="user-avatar-link">
           <img
             src="http://localhost:8080/image/{{ post.user.urlPhoto }}"
-            alt=""
+            alt="User avatar"
             width="50"
-            class="rounded-circle"
+            height="50"
+            class="rounded-circle user-avatar"
           />
         </a>
-        <div class="flex-fill ps-2">
-          <div class="row justify-content-between align-items-center g-2">
-            <div class="fw-bold col">
-              <a href="{{ post.user.uuid }}" class="text-decoration-none"
-                ><small class="text-muted ms-1">@{{ post.user.username }}</small></a
-              >
+        <div class="flex-fill ps-3">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="user-info">
+              <a href="{{ post.user.uuid }}" class="text-decoration-none">
+                <div class="username-display">@{{ post.user.username }}</div>
+              </a>
+              <small class="text-muted post-timestamp">
+                <i class="bi bi-clock me-1"></i>{{ post.createdAt }}
+              </small>
             </div>
-            <div class="col-2 d-flex justify-content-end align-items-center dropdown">
-              <i
-                class="bi bi-list-task"
+
+            <!-- Dropdown Menu -->
+            <div class="dropdown">
+              <button
+                class="btn btn-link text-secondary p-0 dropdown-toggle-custom"
                 id="dropdownMenuButton"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-                role="button"
-              ></i>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item text-primary update-item" href="#">Update</a></li>
+              >
+                <i class="bi bi-three-dots"></i>
+              </button>
+              <ul
+                class="dropdown-menu dropdown-menu-end shadow-sm"
+                aria-labelledby="dropdownMenuButton"
+              >
+                @if (post.user.uuid == user.uuid || user.role == 'ADMIN') { @if (post.user.uuid ==
+                user.uuid) {
                 <li>
-                  <a class="dropdown-item text-warning delete-item" href="#" (click)="removepost()"
-                    >Delete</a
-                  >
+                  <a class="dropdown-item" href="#">
+                    <i class="bi bi-pencil-square me-2 text-primary"></i>Update
+                  </a>
                 </li>
-                <li><a class="dropdown-item text-danger report-item" href="#">Report</a></li>
+                }
+                <li>
+                  <a class="dropdown-item" href="#" (click)="removepost()">
+                    <i class="bi bi-trash me-2 text-danger"></i>Delete
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                }
+                <li>
+                  <a class="dropdown-item" href="#" (click)="reportpost()">
+                    <i class="bi bi-flag me-2 text-warning"></i>Report
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
-
-          <div class="small text-body text-opacity-50">{{ post.createdAt }}</div>
         </div>
       </div>
 
-      <p>{{ post.content }}</p>
+      <!-- Post Content -->
+      <p class="post-content mb-3">{{ post.content }}</p>
+
+      <!-- Media Section -->
       @if (post.typePhoto == "image") {
-      <div class="profile-img-list d-flex justify-content-center">
-        <div class="profile-img-list-item main w-100">
-          <a class="profile-img-list-link">
-            <img
-              src="http://localhost:8080/image/{{ post.urlPhot }}"
-              class="img-fluid rounded-top profile-img-content justify-self-center align-self-center post-media pixel-perfect"
-              alt=""
-            />
-          </a>
-        </div>
+      <div class="post-media-container mb-3">
+        <a class="post-media-link" data-bs-toggle="modal" data-bs-target="#imageModal">
+          <img
+            src="http://localhost:8080/image/{{ post.urlPhot }}"
+            class="img-fluid rounded post-image"
+            alt="Post image"
+          />
+        </a>
       </div>
       }@else if(post.typePhoto == "video") {
-      <div class="profile-img-list d-flex justify-content-center">
-        <div class="profile-img-list-item main w-100">
-          <a class="profile-img-list-link">
-            <video
-              class="embed-responsive-item profile-img-content post-media"
-              [src]="'http://localhost:8080/video/' + post.urlPhot"
-              controls
-            ></video>
-          </a>
-        </div>
+      <div class="post-media-container mb-3">
+        <video
+          class="post-video rounded"
+          [src]="'http://localhost:8080/video/' + post.urlPhot"
+          controls
+        ></video>
       </div>
       }
-      <div class="d-flex justify-content-around align-items-center border-top pt-2 mt-2">
-        <!-- Like -->
-        <button
-          type="button"
-          class="btn btn-link text-decoration-none d-flex align-items-center gap-1 p-0"
-          (click)="like()"
-        >
+
+      <!-- Interaction Stats -->
+      <div class="interaction-stats d-flex gap-4 pb-3 border-bottom">
+        <span class="stat-item">
+          <i class="bi bi-hand-thumbs-up-fill text-primary"></i>
+          <small class="ms-1">{{ post.numOflike }}</small>
+        </span>
+        <span class="stat-item">
+          <i class="bi bi-chat-left-text-fill text-secondary"></i>
+          <small class="ms-1">{{ post.numOfcomment }} comments</small>
+        </span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons d-flex justify-content-around py-2">
+        <button type="button" class="btn btn-action flex-fill" (click)="like()">
           <i
-            class="bi"
-            [ngClass]="
-              post.isliked
-                ? 'bi-hand-thumbs-up-fill text-primary'
-                : 'bi-hand-thumbs-up text-secondary'
-            "
+            class="bi me-2"
+            [ngClass]="post.isliked ? 'bi-hand-thumbs-up-fill text-primary' : 'bi-hand-thumbs-up'"
           ></i>
-          <small class="fw-semibold text-secondary">{{ post.numOflike }}</small>
+          <span [ngClass]="post.isliked ? 'text-primary fw-semibold' : ''">Like</span>
         </button>
 
-        <!-- Comment -->
-        <button
-          type="button"
-          class="btn btn-link text-decoration-none d-flex align-items-center gap-1 p-0"
-        >
-          <i class="bi bi-chat-left-text text-secondary"></i>
-          <small class="fw-semibold text-secondary">{{ post.numOfcomment }}</small>
+        <button type="button" class="btn btn-action flex-fill">
+          <i class="bi bi-chat-left-text me-2"></i>
+          <span>Comment</span>
         </button>
       </div>
 
-      <hr class="mb-3 mt-1 opacity-1" />
-      <div class="d-flex align-items-center">
-        <div class="flex-fill ps-2">
-          <div class="position-relative d-flex align-items-center">
+      <div class="comment-section pt-3 border-top">
+        <div class="d-flex align-items-center gap-2">
+          <img
+            src="http://localhost:8080/image/{{ user.urlPhoto }}"
+            alt="Your avatar"
+            width="36"
+            height="36"
+            class="rounded-circle"
+          />
+          <div class="flex-fill position-relative">
             <input
               type="text"
-              class="form-control rounded-pill bg-white bg-opacity-15"
-              style="padding-right: 120px"
+              class="form-control comment-input rounded-pill"
               placeholder="Write a comment..."
             />
+            <button class="btn btn-link comment-submit-btn" type="button">
+              <i class="bi bi-send-fill"></i>
+            </button>
           </div>
         </div>
       </div>

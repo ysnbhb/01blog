@@ -1,6 +1,7 @@
 package _blog.com._blog.Exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 //handel global exception 
 @ControllerAdvice
@@ -72,6 +74,7 @@ public class GlobalExceptionHandler {
         public ResponseEntity<Map<String, String>> handleIOException(IOException ex) {
                 return ResponseEntity
                                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .contentType(MediaType.APPLICATION_JSON) // Add this line
                                 .body(Map.of("error", "File processing failed: " + ex.getMessage()));
         }
 
@@ -80,6 +83,14 @@ public class GlobalExceptionHandler {
                 Map<String, String> response = new HashMap<>();
                 response.put("error", "invalid input");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        @ExceptionHandler(MaxUploadSizeExceededException.class)
+        public ResponseEntity<Map<String, String>> handleMaxSizeException(
+                        MaxUploadSizeExceededException ex) {
+                Map<String, String> response = new HashMap<>();
+                response.put("error", "File size exceeds limit!");
+                return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body(response);
         }
 
         @ExceptionHandler(Exception.class)

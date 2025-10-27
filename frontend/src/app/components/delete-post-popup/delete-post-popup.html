@@ -6,7 +6,7 @@
           <i class="bi bi-info-circle"></i>
           Confirm Action
         </h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="reset()"></button>
+        <button type="button" class="btn-close" aria-label="Close" (click)="reset(false)"></button>
       </div>
       <div class="modal-body">
         <p>
@@ -14,11 +14,11 @@
         </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="reset()">
+        <button type="button" class="btn btn-secondary" (click)="reset(false)">
           <i class="bi bi-x-lg"></i>
           Close
         </button>
-        <button type="button" class="btn btn-danger" (click)="removepost()">
+        <button type="button" class="btn btn-danger" (click)="reset(true)">
           <i class="bi bi-check-lg"></i>
           Delete
         </button>

@@ -28,8 +28,10 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/image/**", "/video/**")
-                .addResourceLocations("file:uploads/images/", "file:uploads/video/")
-                .setCachePeriod(3600);
+        registry.addResourceHandler("/image/**")
+                .addResourceLocations("file:uploads/images/");
+
+        registry.addResourceHandler("/video/**")
+                .addResourceLocations("file:uploads/video/");
     }
 }

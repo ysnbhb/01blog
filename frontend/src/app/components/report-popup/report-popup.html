@@ -1,0 +1,47 @@
+<!-- Report Modal -->
+<div
+  class="modal-backdrop"
+  id="reportModal"
+  tabindex="-1"
+  aria-labelledby="reportModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="reportModalLabel">Report Post</h5>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="reportconfirm(false)"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #reportForm="ngForm" (ngSubmit)="onSubmit(reportForm)">
+          <div class="mb-3">
+            <label for="reason" class="form-label">Reason</label>
+            <textarea
+              id="reason"
+              name="reason"
+              class="form-control"
+              rows="3"
+              placeholder="Explain why you are reporting this post..."
+              required
+              ngModel
+              minlength="10"
+            ></textarea>
+          </div>
+          <div class="text-end">
+            <button type="button" class="btn btn-secondary me-2" (click)="reportconfirm(false)">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-danger" [disabled]="reportForm.invalid">
+              Submit Report
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

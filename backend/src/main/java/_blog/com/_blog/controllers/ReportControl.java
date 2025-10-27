@@ -20,9 +20,8 @@ public class ReportControl {
         this.reportSer = reportSer;
     }
 
-    @PostMapping("reportPost")
+    @PostMapping("report_post")
     public void reportPost(@Valid @RequestBody ReportReq report, @RequestAttribute("user") User user) throws Exception {
-
         reportSer.reportPost(report, user);
     }
 

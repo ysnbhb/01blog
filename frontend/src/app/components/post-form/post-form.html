@@ -1,70 +1,98 @@
-<div class="container bg-secondary rounded p-4 form-container mb-4">
-  <form #post="ngForm" (ngSubmit)="sumbet(post)">
-    <div class="mb-3">
-      <div class="mb-3">
-        <label for="content" class="form-label">Content for your Post</label>
-        <textarea 
-          class="form-control" 
-          name="content" 
-          id="content" 
-          rows="3" 
-          minlength="3" 
-          required 
-          ngModel
-        ></textarea>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label for="image" class="form-label">Choose image/video</label>
-      <input 
-        type="file" 
-        class="d-none" 
-        id="image" 
-        accept="image/*,video/*" 
-        (change)="onFileChange($event)"
-        #fileInput
-      />
-            <div class="file-upload-wrapper">
-        <button 
-          type="button" 
-          class="btn btn-outline-light w-100 file-upload-btn"
-          (click)="fileInput.click()"
-        >
-          <i class="bi bi-image"></i> Select Image/Video
-        </button>
-      </div>
-
-      @if (selectedFile) {
-        <div class="preview-container mt-3">
-          @if (isImage) {
-            <img [src]="previewUrl" alt="Preview" class="preview-image">
-          } @else {
-            <video [src]="previewUrl" class="preview-video" controls></video>
-          }
-          <button 
-            type="button" 
-            class="btn btn-danger btn-sm remove-btn"
-            (click)="removeFile()"
-          >
-            <i class="bi bi-x-circle"></i> Remove
-          </button>
+<div class="container mb-4">
+  <div class="card post-form-card shadow-sm border-0">
+    <div class="card-body p-3">
+      <h6 class="card-title mb-3">
+        <i class="bi bi-pencil-square me-2"></i>Create a Post
+      </h6>
+      
+      <form #post="ngForm" (ngSubmit)="sumbet(post)">
+        <!-- Content Textarea -->
+        <div class="mb-3">
+          <textarea
+            class="form-control content-textarea"
+            name="content"
+            id="content"
+            rows="3"
+            minlength="3"
+            required
+            ngModel
+            placeholder="What's on your mind?"
+          ></textarea>
         </div>
-      }
+
+        <!-- File Upload Section -->
+        <div class="mb-3">
+          <input
+            type="file"
+            class="d-none"
+            id="image"
+            accept="image/*,video/*"
+            (change)="onFileChange($event)"
+            #fileInput
+          />
+          
+          <!-- Upload Button -->
+          @if (!selectedFile) {
+          <button
+            type="button"
+            class="btn btn-light w-100 file-upload-btn"
+            (click)="fileInput.click()"
+          >
+            <i class="bi bi-image me-2"></i>Add Photo/Video
+          </button>
+          }
+          
+          <!-- Preview Section -->
+          @if (selectedFile) {
+          <div class="preview-card">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <small class="text-muted">
+                <i class="bi bi-file-earmark me-1"></i>{{ selectedFile.name }}
+              </small>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger"
+                (click)="removeFile()"
+              >
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+            
+            <div class="preview-media-container">
+              @if (isImage) {
+              <img 
+                [src]="previewUrl" 
+                alt="Preview" 
+                class="preview-media"
+              >
+              } @else {
+              <video 
+                [src]="previewUrl" 
+                class="preview-media" 
+                controls
+              ></video>
+              }
+            </div>
+          </div>
+          }
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="btn btn-primary w-100 submit-btn"
+          [disabled]="!post.valid"
+        >
+          <i class="bi bi-send-fill me-2"></i>Post
+        </button>
+
+        <!-- Error Alert -->
+        @if (error) {
+        <div class="alert alert-danger mt-2 py-2 px-3" role="alert">
+          <small><i class="bi bi-exclamation-circle me-1"></i>{{ error }}</small>
+        </div>
+        }
+      </form>
     </div>
-
-    <button 
-      type="submit" 
-      class="btn btn-primary w-100" 
-      [disabled]="!post.valid"
-    >
-      Post
-    </button>
-
-    @if (error) {
-      <div class="alert alert-danger mt-2 error" role="alert">
-        error: {{ error }}
-      </div>
-    }
-  </form>
+  </div>
 </div>

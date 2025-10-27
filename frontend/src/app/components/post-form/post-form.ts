@@ -49,6 +49,9 @@ export class PostForm {
     if (res.ok) {
       this.addPost.emit(post);
       val.reset();
+      this.error = '';
+      this.previewUrl = null;
+      this.isImage = false;
       this.selectedFile = null;
     } else {
       this.error = post.error;

@@ -1,9 +1,10 @@
-<!-- <div class="container-fluid">
-  <div class="row flex-nowrap"> -->
-<!-- <app-nav-bar></app-nav-bar> -->
-
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+@if (user) {
 <div class="app-layout d-flex">
-  <app-nav-bar></app-nav-bar>
-  <app-posts-container class="posts overflow-auto d-flex justify-content-center"></app-posts-container>
+  <app-nav-bar [user]="user"></app-nav-bar>
+  <app-posts-container
+    [user]="user"
+    class="posts overflow-auto d-flex justify-content-center"
+    (scroll)="scroll()"
+  ></app-posts-container>
 </div>
+}

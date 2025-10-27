@@ -5,6 +5,16 @@
   
 }
 
+.scrollable-row {
+  height: 100%;
+  overflow-y: auto;
+}
+
+
+.scrollable-row::-webkit-scrollbar {
+  display: none;
+}
+
 .justify-self-center {
     justify-self: center;
 }

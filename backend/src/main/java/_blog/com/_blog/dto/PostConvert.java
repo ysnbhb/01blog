@@ -26,6 +26,7 @@ public class PostConvert {
         post.setUrlPhot(postReq.getUrlPhoto());
         post.setUser(UserConvert.convertToUserReq(postReq.getUser()));
         post.setTypePhoto(postReq.getTypePhoto());
+        post.setCreatedAt(postReq.getCreatedAt());
         return post;
     }
 

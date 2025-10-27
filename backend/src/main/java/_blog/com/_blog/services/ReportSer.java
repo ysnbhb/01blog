@@ -26,18 +26,24 @@ public class ReportSer {
         this.userRepository = userRepository;
         this.reportRepostiry = reportRepostiry;
     }
+
     @Transactional
     public void reportPost(ReportReq report, User user) throws ProgramExeption {
         if (report.getPostId() == null)
             return;
         Post post = postRepositery.findById(report.getPostId())
                 .orElseThrow(() -> new ProgramExeption(400, "Post not found"));
+        if (post.getUser().getId() == user.getId())
+            throw new ProgramExeption(400, "You can't report your post");
+        if (post.isHide())
+            throw new ProgramExeption(400, "You can't report this post");
         Report report2 = new Report();
         report2.setPost(post);
         report2.setReason(report.getReason());
         report2.setReporter(user);
         reportRepostiry.save(report2);
     }
+
     @Transactional
     public void reportUser(ReportReq report, User user) throws ProgramExeption {
         User user2 = userRepository.findByUuid(report.getUuid())

@@ -1,153 +1,215 @@
-.profile-img-list {
-  list-style-type: none;
-  margin: -0.1rem;
-  padding: 0;
+.post-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: #ffffff;
+  border-radius: 12px;
 }
 
-.justify-self-center {
-  justify-self: center;
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
 }
 
-.profile .profile-img-list .profile-img-list-item.main {
-  width: 50%;
-}
-.profile .profile-img-list:after,
-.profile .profile-img-list:before {
-  content: '';
-  display: table;
-  clear: both;
-}
-.profile .profile-img-list .profile-img-list-item {
-  width: 25%;
-  padding: 0.1rem;
-  float: left;
-}
-
-.profile .profile-img-list .profile-img-list-item .profile-img-list-link {
-  display: block;
-  padding-top: 60%;
-  overflow: hidden;
-  position: relative;
-}
-
-.profile .profile-img-list .profile-img-list-item .profile-img-list-link .profile-img-content,
-.profile .profile-img-list .profile-img-list-item .profile-img-list-link img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  max-width: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.profile
-  .profile-img-list
-  .profile-img-list-item
-  .profile-img-list-link
-  .profile-img-content:before,
-.profile .profile-img-list .profile-img-list-item .profile-img-list-link img:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.profile .profile-img-list .profile-img-list-item {
-  width: 25%;
-  padding: 0.1rem;
-  float: left;
-}
-
-.profile .profile-img-list:after,
-.profile .profile-img-list:before {
-  content: '';
-  display: table;
-  clear: both;
-}
-
-.profile .profile-img-list .profile-img-list-item.with-number .profile-img-number {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  color: #000;
-  font-size: 1.53125rem;
-  font-weight: 600;
-  line-height: 1.625rem;
-  margin-top: -0.765625rem;
-  text-align: center;
-  text-shadow: 2px 2px #fff;
-}
-
-.update-item:hover {
-  background-color: #e7f1ff;
-}
-.delete-item:hover {
-  background-color: #fff3cd;
-}
-.report-item:hover {
-  background-color: #ffb2ba;
-}
-
-.post-media {
-  /* width: 100%; */
-  max-height: 430px;
+.user-avatar {
   object-fit: cover;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 0.5rem;
+  border: 2px solid #f0f2f5;
+  transition: transform 0.2s ease;
 }
 
-.profile-img-list-item.main {
-  overflow: hidden;
-  margin-bottom: 1rem;
-}
-
-.post-actions {
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
-  margin-top: 10px;
-  padding-top: 5px;
-}
-
-.action-btn {
-  color: rgba(33, 37, 41, 0.6);
-  transition: all 0.2s ease;
-}
-
-.action-btn:hover {
-  color: #0d6efd; 
+.user-avatar-link:hover .user-avatar {
   transform: scale(1.05);
 }
 
-.action-btn.liked {
+.username-display {
+  font-weight: 600;
+  color: #1c1e21;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.username-display:hover {
   color: #0d6efd;
 }
 
-.action-btn small {
-  font-weight: 500;
+.post-timestamp {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
 }
 
-.bi {
+.dropdown-toggle-custom {
   font-size: 1.25rem;
+  transition: color 0.2s ease;
 }
 
-button.btn-link {
-  color: inherit;
-  transition: color 0.2s ease-in-out;
+.dropdown-toggle-custom:hover {
+  color: #0d6efd !important;
 }
 
-button.btn-link:hover i,
-button.btn-link:hover small {
+.dropdown-menu {
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  min-width: 180px;
+}
+
+.dropdown-item {
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+.dropdown-item i {
+  width: 20px;
+}
+
+.post-content {
+  color: #1c1e21;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+}
+
+.post-media-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f0f2f5;
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+  max-height: 600px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.post-media-link:hover .post-image {
+  transform: scale(1.02);
+}
+
+.post-video {
+  width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+  background: #000;
+}
+
+.interaction-stats {
+  color: #65676b;
+  font-size: 0.9rem;
+}
+
+.stat-item {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.stat-item:hover {
   color: #0d6efd;
 }
 
-.border-top {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+.action-buttons {
+  gap: 0.5rem;
+}
+
+.btn-action {
+  color: #65676b;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-action:hover {
+  background-color: #f0f2f5;
+  color: #1c1e21;
+}
+
+.btn-action i {
+  font-size: 1.1rem;
+}
+
+.comment-section {
+  margin-top: 0.5rem;
+}
+
+.comment-input {
+  padding: 0.625rem 3rem 0.625rem 1rem;
+  border: 1px solid #e4e6eb;
+  background: #f0f2f5;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.comment-input:focus {
+  background: #ffffff;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+.comment-submit-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #0d6efd;
+  padding: 0.25rem 0.5rem;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.comment-submit-btn:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .post-card {
+    border-radius: 3;
+    margin-left: -12px;
+    margin-right: -12px;
+  }
+
+  .card-body {
+    padding: 1rem !important;
+  }
+
+  .btn-action {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .btn-action span {
+    display: none;
+  }
+
+  .btn-action i {
+    margin: 0 !important;
+  }
+}
+
+/* Animations */
+@keyframes likeAnimation {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+
+.btn-action.liked i {
+  animation: likeAnimation 0.4s ease;
 }
