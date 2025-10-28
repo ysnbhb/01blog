@@ -29,11 +29,12 @@ public class CommentsServ {
     public Comment save(CommentReq commentReq, User user) throws ProgramExeption {
         Post post = postRepositery.findById(commentReq.getPostId())
                 .orElseThrow(() -> new ProgramExeption(400, "post not found"));
+        
         if (post.isHide()) {
             throw new ProgramExeption(400, "you can't comment this post");
         }
         Comment comment = new Comment();
-        comment.setContane(commentReq.getContent());
+        comment.setContent(commentReq.getContent());
         comment.setPost(post);
         comment.setUser(user);
         return commentsRepositories.save(comment);

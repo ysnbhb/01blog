@@ -20,7 +20,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String contane;
+    private String content;
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;

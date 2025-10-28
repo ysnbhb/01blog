@@ -11,7 +11,7 @@ import { UserRes } from '../../../model/User.model';
 
 @Component({
   selector: 'app-posts-container',
-  imports: [PostForm, PostComponent, DeletePostPopup, ErrorShow, ReportPopup, SuccuesShow],
+  imports: [PostComponent, DeletePostPopup, ErrorShow, ReportPopup, SuccuesShow, PostForm],
   templateUrl: './posts-container.html',
   styleUrl: './posts-container.css',
 })
@@ -93,9 +93,6 @@ export class PostsContainer implements OnInit {
     }
   }
 
-  onPostAdd(post: PostReq) {
-    this.posts = [post, ...this.posts];
-  }
 
   setError(error: string) {
     this.errro = error;

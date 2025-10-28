@@ -3,15 +3,16 @@ import { PostReq } from '../../../model/Post.model';
 import { getTimeDifferenceInHours } from '../../../utils/formatDate';
 import { CommonModule } from '@angular/common';
 import { UserRes } from '../../../model/User.model';
-import { FormsModule, NgForm } from '@angular/forms';
 import { MarkdownModule } from 'ngx-markdown';
 import { Comments } from '../../services/comments';
-import { ErrorShow } from "../error-show/error-show";
-import { SuccuesShow } from "../succues-show/succues-show";
+import { ErrorShow } from '../error-show/error-show';
+import { SuccuesShow } from '../succues-show/succues-show';
+import { RouterLink } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-post',
-  imports: [CommonModule, MarkdownModule, ErrorShow, SuccuesShow],
+  imports: [CommonModule, MarkdownModule, ErrorShow, SuccuesShow, RouterLink, FormsModule],
   templateUrl: './post.html',
   styleUrl: './post.css',
 })
@@ -20,6 +21,7 @@ export class PostComponent implements OnInit {
   @Output() remove = new EventEmitter<number>();
   @Output() report = new EventEmitter<number>();
   @Input() user!: UserRes;
+  @Input() showAll!: boolean;
   errro!: String;
   succes!: String;
   constructor(private commint: Comments) {}
@@ -28,14 +30,36 @@ export class PostComponent implements OnInit {
     this.remove.emit(this.post.id);
   }
 
-  
-
   reportpost() {
     this.report.emit(this.post.id);
   }
 
   ngOnInit(): void {
     this.post.createdAt = getTimeDifferenceInHours(this.post.createdAt);
+    if (!this.showAll && this.post.content.length > 100) {
+      this.post.content = this.post.content.slice(0, 100);
+    }
+  }
+  async submitComment(form: NgForm) {
+    const comment = form.value;
+    this.commint.createComment(this.post.id, comment.content).subscribe({
+      next: (_) => {
+        form.reset();
+        this.succes = 'Comment submitted successfully';
+        this.errro = '';
+        setTimeout(() => {
+          this.succes = '';
+        }, 1000);
+        console.log('Comment created successfully');
+      },
+      error: (_) => {
+        this.errro = 'Error submitting comment';
+        this.succes = '';
+        setTimeout(() => {
+          this.errro = '';
+        }, 1000);
+      },
+    });
   }
 
   async like() {

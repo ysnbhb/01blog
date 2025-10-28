@@ -26,7 +26,7 @@ public class PostServ {
     private final ReportRepostiry reportRepostiry;
 
     public PostServ(PostRepositery PostRepositery, NotifacationSer notifacationSer, ReactionRepo reactionRepo,
-            CommentsRepositories commentsRepositories , ReportRepostiry reportRepostiry) {
+            CommentsRepositories commentsRepositories, ReportRepostiry reportRepostiry) {
         this.postRepositery = PostRepositery;
         this.notifacationSer = notifacationSer;
         this.reactionRepo = reactionRepo;
@@ -76,6 +76,10 @@ public class PostServ {
 
     public List<Map<String, Object>> getUserPosts(Long userid, int offset, String uuid) throws ProgramExeption {
         return postRepositery.getUserPosts(userid, offset, false, uuid);
+    }
+
+    public Map<String, Object> getPost(Long userid, Long postId) throws ProgramExeption {
+        return postRepositery.getPost(userid, postId, false);
     }
 
 }

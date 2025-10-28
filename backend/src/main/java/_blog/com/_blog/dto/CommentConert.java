@@ -12,7 +12,7 @@ public class CommentConert {
         if (comment == null)
             return null;
         CommentReq post = new CommentReq();
-        post.setContent(comment.getContane());
+        post.setContent(comment.getContent());
         post.setId(comment.getId());
         post.setUser(UserConvert.convertToUserReq(comment.getUser()));
 

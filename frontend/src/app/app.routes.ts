@@ -6,6 +6,11 @@ export const routes: Routes = [
     title: 'Home',
   },
   {
+    path: 'comments',
+    loadComponent: () => import('./comments/comments').then((m) => m.CommentsComponent),
+    title: 'comments',
+  },
+  {
     path: 'register',
     loadComponent: () => import('./register/register').then((m) => m.Register),
     title: 'regiter',

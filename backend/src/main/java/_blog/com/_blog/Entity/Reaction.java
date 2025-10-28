@@ -20,9 +20,6 @@ public class Reaction {
     @JoinColumn(referencedColumnName = "id", name = "post_id")
     private Post post;
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", name = "comment_id")
-    private Comment comments;
-    @ManyToOne
     @JoinColumn(referencedColumnName = "id", name = "user_id", nullable = false)
     private User user;
 }

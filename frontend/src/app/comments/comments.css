@@ -1,0 +1,18 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  background: #f0f2f5;
+}
+
+app-nav-bar {
+  flex-shrink: 0;
+  height: 100vh;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+}
+
+
+

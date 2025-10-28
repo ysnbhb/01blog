@@ -23,7 +23,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
     @Query(value = """
             SELECT
                 p.id,
-                p.content,
+                CAST(p.content AS TEXT) AS content,
                 p.url_photo AS urlPhoto,
                 p.type_photo AS typePhoto,
                 p.hide as Ishide,
@@ -63,7 +63,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
     @Query(value = """
             SELECT
                 p.id,
-                p.content,
+                CAST(p.content AS TEXT) AS content,
                 p.url_photo AS urlPhoto,
                 p.type_photo AS typePhoto,
                 p.hide as Ishide,
@@ -98,7 +98,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
     @Query(value = """
             SELECT
                 p.id,
-                p.content,
+                CAST(p.content AS TEXT) AS content,
                 p.url_photo AS urlPhoto,
                 p.type_photo AS typePhoto,
                 p.hide as Ishide,
@@ -125,7 +125,6 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
                 p.id, p.content, p.url_photo, p.type_photo,
                 u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at , u.role
             ORDER BY p.created_at DESC
-            LIMIT 10 OFFSET :offset
             """, nativeQuery = true)
     Map<String, Object> getPost(@Param("userId") Long userid, @Param("post_id") Long offset,
             @Param("hide") boolean hide);

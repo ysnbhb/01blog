@@ -1,0 +1,10 @@
+<div class="app-layout">
+  @if (user) {
+  <app-nav-bar [user]="user" />
+  }
+  <div class="container bg-light min-vh-100 d-flex flex-column gap-3 align-items-start">
+    @for (comment of comments; track comment.id) {
+        <app-comment-view [comment]="comment" />
+     }
+  </div>
+</div>

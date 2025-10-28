@@ -1,10 +1,10 @@
 @if (post) {
-<div class="col-md-10 col-lg-7">
+<div class="col-md-10 col-lg-7 comment">
   <div class="card post-card mb-4 shadow-sm border-0">
     <div class="card-body p-4">
       <!-- User Header -->
       <div class="d-flex align-items-center mb-3">
-        <a href="#" class="user-avatar-link">
+        <a routerLink="{{ post.user.uuid }}" class="user-avatar-link">
           <img
             src="http://localhost:8080/image/{{ post.user.urlPhoto }}"
             alt="User avatar"
@@ -12,12 +12,11 @@
             height="50"
             class="rounded-circle user-avatar"
           />
-          <mark></mark>
         </a>
         <div class="flex-fill ps-3">
           <div class="d-flex justify-content-between align-items-start">
             <div class="user-info">
-              <a href="{{ post.user.uuid }}" class="text-decoration-none">
+              <a class="text-decoration-none">
                 <div class="username-display d-flex align-items-center">
                   @{{ post.user.username }}
                   @if (post.user.role == 'ADMIN') {
@@ -69,15 +68,11 @@
           </div>
         </div>
       </div>
-
-      <!-- Post Content -->
-      <!-- <p class="post-content mb-3">{{ post.content }}</p> -->
       <markdown [data]="post.content" class="post-content mb-3"></markdown>
 
-      <!-- Media Section -->
       @if (post.typePhoto == "image") {
       <div class="post-media-container mb-3">
-        <a class="post-media-link" data-bs-toggle="modal" data-bs-target="#imageModal">
+        <a class="post-media-link">
           <img
             src="http://localhost:8080/image/{{ post.urlPhot }}"
             class="img-fluid rounded post-image"
@@ -95,7 +90,6 @@
       </div>
       }
 
-      <!-- Interaction Stats -->
       <div class="interaction-stats d-flex gap-4 pb-3 border-bottom">
         <span class="stat-item">
           <i class="bi bi-hand-thumbs-up-fill text-primary"></i>
@@ -107,7 +101,6 @@
         </span>
       </div>
 
-      <!-- Action Buttons -->
       <div class="action-buttons d-flex justify-content-around py-2">
         <button type="button" class="btn btn-action flex-fill" (click)="like()">
           <i
@@ -117,10 +110,53 @@
           <span [ngClass]="post.isliked ? 'text-primary fw-semibold' : ''">Like</span>
         </button>
 
-        <button type="button" class="btn btn-action flex-fill">
+        <a
+          class="btn btn-action flex-fill"
+          routerLink="/comments"
+          [queryParams]="{ postId: post.id }"
+        >
           <i class="bi bi-chat-left-text me-2"></i>
           <span>Comment</span>
+        </a>
+
+        <button type="button" class="btn btn-action flex-fill">
+          <i class="bi bi-three-dots"></i>
+          <span>See ALl Post</span>
         </button>
+      </div>
+      <div class="comment-section pt-3 border-top">
+        <div class="d-flex align-items-center gap-2">
+          <img
+            src="http://localhost:8080/image/{{ user.urlPhoto }}"
+            alt="Your avatar"
+            width="36"
+            height="36"
+            class="rounded-circle"
+          />
+          <form
+            class="flex-fill position-relative"
+            (ngSubmit)="submitComment(commentForm)"
+            #commentForm="ngForm"
+          >
+            <input
+              type="text"
+              class="form-control comment-input rounded-pill"
+              placeholder="Write a comment..."
+              ngModel
+              name="content"
+              required
+              maxlength="250"
+              minlength="5"
+            />
+            <button
+              class="btn btn-link comment-submit-btn"
+              type="submit"
+              [disabled]="commentForm.invalid"
+            >
+              <i class="bi bi-send-fill"></i>
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </div>

@@ -20,7 +20,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 1000)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
     private String urlPhoto;
     @ManyToOne

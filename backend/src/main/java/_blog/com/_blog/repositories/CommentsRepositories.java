@@ -23,6 +23,7 @@ public interface CommentsRepositories extends JpaRepository<Comment, Long> {
                 u.uuid AS uuid,
                 u.url_photo AS userPhoto,
                 u.username AS username,
+                u.role,
                 cm.created_at AS createdAt,
                 COUNT(DISTINCT l.id) AS total_likes,
                 EXISTS (
@@ -35,6 +36,9 @@ public interface CommentsRepositories extends JpaRepository<Comment, Long> {
             JOIN posts p ON cm.post_id = p.id
             LEFT JOIN reactions l ON l.comment_id = cm.id
             WHERE p.hide = :hide AND p.id = :postId
+            GROUP BY
+                cm.id, cm.content,
+                u.name, u.last_name, u.uuid, u.url_photo, u.username, cm.created_at, u.role
             ORDER BY cm.created_at DESC
             LIMIT 10 OFFSET :offset
             """, nativeQuery = true)

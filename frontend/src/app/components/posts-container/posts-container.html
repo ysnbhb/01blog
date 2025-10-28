@@ -7,7 +7,7 @@
 }
 <div class="container profile" >
   <div class="row f-flex justify-content-center scrollable-row" (scroll)="handleScroll($event)">
-    <app-post-form (addPost)="onPostAdd($event)"></app-post-form>
+    <app-post-form ></app-post-form>
     @for ( post of posts; track post.id) {
     <app-post
       class="d-flex justify-content-center align-items-center flex-column"

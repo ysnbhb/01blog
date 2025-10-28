@@ -1,0 +1,19 @@
+<div
+  class="d-flex align-items-start bg-white rounded-4 shadow-sm p-3 w-auto"
+  style="max-width: 500px"
+>
+  <img
+    src="http://localhost:8080/image/{{ comment.user.urlPhoto }}"
+    alt="avatar"
+    class="rounded-circle me-3"
+    width="40"
+    height="40"
+  />
+  <div>
+    <div class="fw-semibold text-dark mb-1">
+      {{ comment.user.username }}
+      <span class="text-muted fw-normal small">{{ comment.createdAt }}</span>
+    </div>
+    <p class="mb-0 text-secondary">{{ comment.content }}</p>
+  </div>
+</div>
