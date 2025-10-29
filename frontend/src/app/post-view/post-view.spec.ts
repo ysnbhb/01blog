@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommentsComponent } from './comments';
+import { PostView } from './post-view';
 
-describe('Comments', () => {
-  let component: CommentsComponent;
-  let fixture: ComponentFixture<CommentsComponent>;
+describe('PostView', () => {
+  let component: PostView;
+  let fixture: ComponentFixture<PostView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommentsComponent]
+      imports: [PostView]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CommentsComponent);
+    fixture = TestBed.createComponent(PostView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

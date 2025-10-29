@@ -16,4 +16,13 @@ export class Post {
       },
     });
   }
+
+  create_post(post: FormData): Observable<PostReq> {
+    let token = localStorage.getItem('token');
+    return this.http.post<PostReq>('http://localhost:8080/api/creat_post', post, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }

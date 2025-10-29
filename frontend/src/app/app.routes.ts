@@ -11,6 +11,16 @@ export const routes: Routes = [
     title: 'comments',
   },
   {
+    path: 'create-post',
+    loadComponent: () => import('./create-post/create-post').then((m) => m.CreatePost),
+    title: 'create post',
+  },
+  {
+    path: 'post',
+    loadComponent: () => import('./post-view/post-view').then((m) => m.PostView),
+    title: 'post',
+  },
+  {
     path: 'register',
     loadComponent: () => import('./register/register').then((m) => m.Register),
     title: 'regiter',

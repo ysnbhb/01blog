@@ -8,6 +8,8 @@
 .scrollable-row {
   height: 100%;
   overflow-y: auto;
+   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 

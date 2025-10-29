@@ -11,7 +11,7 @@ import { UserRes } from '../../../model/User.model';
 
 @Component({
   selector: 'app-posts-container',
-  imports: [PostComponent, DeletePostPopup, ErrorShow, ReportPopup, SuccuesShow, PostForm],
+  imports: [PostComponent, DeletePostPopup, ErrorShow, ReportPopup, SuccuesShow],
   templateUrl: './posts-container.html',
   styleUrl: './posts-container.css',
 })
@@ -22,7 +22,6 @@ export class PostsContainer implements OnInit {
   isreport: boolean = false;
   errro!: string;
   succues!: string;
-  // @Input() useruuid!: string;
   @Input() user!: UserRes;
   async ngOnInit(): Promise<void> {
     await this.GetPost();

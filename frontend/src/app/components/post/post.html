@@ -46,23 +46,24 @@
                 @if (post.user.uuid == user.uuid || user.role == 'ADMIN') { @if (post.user.uuid ==
                 user.uuid) {
                 <li>
-                  <a class="dropdown-item" href="#">
+                  <a class="dropdown-item">
                     <i class="bi bi-pencil-square me-2 text-primary"></i>Update
                   </a>
                 </li>
                 }
                 <li>
-                  <a class="dropdown-item" href="#" (click)="removepost()">
+                  <a class="dropdown-item" (click)="removepost()">
                     <i class="bi bi-trash me-2 text-danger"></i>Delete
                   </a>
                 </li>
+                }@else if (post.user.uuid != user.uuid) {
                 <li><hr class="dropdown-divider" /></li>
-                }
                 <li>
-                  <a class="dropdown-item" href="#" (click)="reportpost()">
+                  <a class="dropdown-item" (click)="reportpost()">
                     <i class="bi bi-flag me-2 text-warning"></i>Report
                   </a>
                 </li>
+                }
               </ul>
             </div>
           </div>
@@ -101,28 +102,36 @@
         </span>
       </div>
 
-      <div class="action-buttons d-flex justify-content-around py-2">
-        <button type="button" class="btn btn-action flex-fill" (click)="like()">
+      <div class="action-buttons d-flex justify-content-between align-items-center py-3 px-1">
+        <button
+          type="button"
+          class="btn btn-action d-flex align-items-center justify-content-center flex-fill gap-2"
+          (click)="like()"
+          [class.active]="post.isliked"
+        >
           <i
-            class="bi me-2"
+            class="bi"
             [ngClass]="post.isliked ? 'bi-hand-thumbs-up-fill text-primary' : 'bi-hand-thumbs-up'"
           ></i>
-          <span [ngClass]="post.isliked ? 'text-primary fw-semibold' : ''">Like</span>
+          <span [class.text-primary]="post.isliked" [class.fw-semibold]="post.isliked"> Like </span>
         </button>
-
         <a
-          class="btn btn-action flex-fill"
+          class="btn btn-action d-flex align-items-center justify-content-center flex-fill gap-2 text-decoration-none"
           routerLink="/comments"
           [queryParams]="{ postId: post.id }"
         >
-          <i class="bi bi-chat-left-text me-2"></i>
+          <i class="bi bi-chat-left-text"></i>
           <span>Comment</span>
         </a>
-
-        <button type="button" class="btn btn-action flex-fill">
-          <i class="bi bi-three-dots"></i>
-          <span>See ALl Post</span>
-        </button>
+        <a
+          type="button"
+          class="btn btn-action d-flex align-items-center justify-content-center flex-fill gap-2"
+          routerLink="/post"
+          [queryParams]="{ postId: post.id }"
+        >
+          <i class="bi bi-chevron-down"></i>
+          <span>More</span>
+        </a>
       </div>
       <div class="comment-section pt-3 border-top">
         <div class="d-flex align-items-center gap-2">

@@ -2,9 +2,22 @@
   @if (user) {
   <app-nav-bar [user]="user" />
   }
-  <div class="container bg-light min-vh-100 d-flex flex-column gap-3 align-items-start">
+  <div
+    class="container bg-light min-vh-100 d-flex flex-column gap-3 align-items-start overflow-auto py-4 container-comments"
+    (scroll)="handleScroll($event)"
+  >
     @for (comment of comments; track comment.id) {
-        <app-comment-view [comment]="comment" />
-     }
+    <app-comment-view [comment]="comment" />
+    } @empty {
+    <div class="w-100 text-center py-5 my-5">
+      <i class="bi bi-chat-square-text display-1 text-muted mb-3"></i>
+      <h4 class="text-muted fw-light">No comments yet</h4>
+      <p class="text-secondary">Be the first to share your thoughts!</p>
+    </div>
+    }
   </div>
 </div>
+
+@if (error) {
+<app-error-show [error]="error"></app-error-show>
+}

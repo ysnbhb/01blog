@@ -1,19 +1,24 @@
-<div
-  class="d-flex align-items-start bg-white rounded-4 shadow-sm p-3 w-auto"
-  style="max-width: 500px"
->
+<div class="comment-card d-flex align-items-start bg-white rounded-4 shadow-sm p-4 my-3 hover-lift">
   <img
-    src="http://localhost:8080/image/{{ comment.user.urlPhoto }}"
-    alt="avatar"
-    class="rounded-circle me-3"
-    width="40"
-    height="40"
+    [src]="'http://localhost:8080/image/' + comment.user.urlPhoto"
+    alt="{{ comment.user.username }}'s avatar"
+    class="comment-avatar rounded-circle me-3 border border-light"
+    width="56"
+    height="56"
   />
-  <div>
-    <div class="fw-semibold text-dark mb-1">
-      {{ comment.user.username }}
-      <span class="text-muted fw-normal small">{{ comment.createdAt }}</span>
+
+  <div class="flex-grow-1">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h6 class="fw-bold mb-0 text-dark fs-5 d-flex align-items-center me-2">
+        {{ comment.user.username }}
+        @if (comment.user.role === 'ADMIN') {
+          <i class="bi bi-shield-fill-check text-primary ms-2" title="Admin"></i>
+        }
+      </h6>
+      <small class="text-muted fw-medium">{{ comment.createdAt }}</small>
     </div>
-    <p class="mb-0 text-secondary">{{ comment.content }}</p>
+    <p class="comment-content mb-0 text-dark lh-base fs-6">
+      {{ comment.content }}
+    </p>
   </div>
 </div>

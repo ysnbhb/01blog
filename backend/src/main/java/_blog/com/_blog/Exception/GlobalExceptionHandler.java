@@ -7,7 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
-
+import java.lang.IllegalArgumentException;
 import jakarta.servlet.ServletException;
 
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -27,6 +27,15 @@ public class GlobalExceptionHandler {
                 String message = ex.getBindingResult().getFieldErrors().isEmpty()
                                 ? "Validation error"
                                 : ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
+
+                return ResponseEntity
+                                .status(HttpStatus.BAD_REQUEST)
+                                .body(Map.of("error", message));
+        }
+
+        @ExceptionHandler(IllegalArgumentException.class)
+        public ResponseEntity<Map<String, String>> handleIllegalArgumentException(IllegalArgumentException ex) {
+                String message = "your input is invalid";
 
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)

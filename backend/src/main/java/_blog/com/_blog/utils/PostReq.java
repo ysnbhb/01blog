@@ -1,6 +1,7 @@
 package _blog.com._blog.utils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,10 +20,11 @@ public class PostReq {
     private String content;
     private String urlPhot;
     private String typePhoto;
+    private List<ImageReq> images;
     private int numOflike;
     private int numOfcomment;
     private boolean isliked;
     @JsonIgnore
-    private MultipartFile photo;
+    private MultipartFile[] photo;
     private LocalDateTime createdAt;
 }

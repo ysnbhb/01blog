@@ -1,71 +1,101 @@
-<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark w-100">
-  <div
-    class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
-  >
+<div class="sidebar-wrapper">
+  <div class="sidebar d-flex flex-column text-white min-vh-100">
     <a
-      href="/"
-      class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+      routerLink="/"
+      class="logo d-flex align-items-center px-4 py-3 text-white text-decoration-none"
     >
-      <i class="bi bi-bootstrap fs-2"></i><span class="fs-5 d-none d-sm-inline"> 01Blog</span>
+      <i class="bi bi-bootstrap fs-3"></i>
+      <span class="ms-2 fs-5 fw-bold d-none d-sm-inline">01Blog</span>
     </a>
-    <ul
-      class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-      id="menu"
-    >
+
+    <ul class="nav nav-pills flex-column mb-auto px-3 pt-2" id="menu">
       <li class="nav-item">
-        <a routerLink="/" class="nav-link align-middle px-0">
-          <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="#submenu1" class="nav-link px-0 align-middle">
-          <i class="fs-4 bi-bell"></i>
-          <span class="ms-1 d-none d-sm-inline">Notification</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link px-0 align-middle">
-          <i class="fs-4 bi-search"></i> <span class="ms-1 d-none d-sm-inline">Search</span></a
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          class="nav-link d-flex align-items-center"
+          [routerLinkActiveOptions]="{ exact: true }"
         >
-      </li>
-      <li class="nav-item">
-        <a routerLink="/profile/{{ user.uuid }}" class="nav-link px-0 align-middle">
-          <i class="fs-4 bi-person"></i>
-          <span class="ms-1 d-none d-sm-inline">Profile</span></a
-        >
-      </li>
-      @if (user.role == "ADMIN") {
-      <li class="nav-item">
-        <a href="#submenu3" class="nav-link px-0 align-middle">
-          <i class="fs-4 bi-sliders"></i> <span class="ms-1 d-none d-sm-inline">DashBord</span>
+          <i class="bi bi-house fs-5"></i>
+          <span class="ms-2 d-none d-sm-inline">Home</span>
         </a>
       </li>
 
-      }
       <li class="nav-item">
-        <a href="#" class="nav-link px-0 align-middle" (click)="logout()">
-          <i class="fs-4 bi-box-arrow-right"></i>
-          <span class="ms-1 d-none d-sm-inline">Logout</span>
+        <a href="#notifications" class="nav-link d-flex align-items-center position-relative">
+          <i class="bi bi-bell fs-5"></i>
+          @if (countofnotifs > 0) {
+          <span class="notification-badge">
+            {{ countofnotifs > 99 ? '99+' : countofnotifs }}
+          </span>
+          }
+
+          <span class="ms-2 d-none d-sm-inline">Notifications</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#search" class="nav-link d-flex align-items-center">
+          <i class="bi bi-search fs-5"></i>
+          <span class="ms-2 d-none d-sm-inline">Search</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          routerLink="/profile/{{ user.uuid }}"
+          routerLinkActive="active"
+          class="nav-link d-flex align-items-center"
+        >
+          <i class="bi bi-person fs-5"></i>
+          <span class="ms-2 d-none d-sm-inline">Profile</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          routerLink="/create-post"
+          routerLinkActive="active"
+          class="nav-link d-flex align-items-center"
+        >
+          <i class="bi bi-plus-circle-fill fs-5"></i>
+          <span class="ms-2 d-none d-sm-inline">Create Post</span>
+        </a>
+      </li>
+
+      @if (user.role === 'ADMIN') {
+      <li class="nav-item">
+        <a href="#dashboard" class="nav-link d-flex align-items-center admin-link">
+          <i class="bi bi-sliders fs-5"></i>
+          <span class="ms-2 d-none d-sm-inline">Dashboard</span>
+        </a>
+      </li>
+      }
+
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center text-danger" (click)="logout()">
+          <i class="bi bi-box-arrow-right fs-5"></i>
+          <span class="ms-2 d-none d-sm-inline">Logout</span>
         </a>
       </li>
     </ul>
-    <hr />
-    <div class="dropdown pb-4">
+
+    <hr class="mx-3 text-white-50" />
+    <div class="dropdown px-3 pb-3">
       <a
         routerLink="/profile/{{ user.uuid }}"
-        class="d-flex align-items-center text-white text-decoration-none"
-        id="dropdownUser1"
+        class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+        id="dropdownUser"
         data-bs-toggle="dropdown"
-        aria-expanded="false"
       >
         <img
-          src="http://localhost:8080/image/{{ user.urlPhoto }}"
-          alt="hugenerd"
-          width="30"
-          height="30"
-          class="rounded-circle"
+          [src]="'http://localhost:8080/image/' + user.urlPhoto"
+          alt="User"
+          width="36"
+          height="36"
+          class="rounded-circle border border-light"
         />
-        <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>
+        <span class="ms-2 d-none d-sm-inline fw-medium">{{ user.username }}</span>
       </a>
     </div>
   </div>

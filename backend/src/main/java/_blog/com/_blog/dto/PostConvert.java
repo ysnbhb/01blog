@@ -1,8 +1,13 @@
 package _blog.com._blog.dto;
 
+import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import _blog.com._blog.Entity.Post;
+import _blog.com._blog.utils.ImageReq;
 import _blog.com._blog.utils.PostReq;
 import _blog.com._blog.utils.UserReq;
 
@@ -39,6 +44,7 @@ public class PostConvert {
         postReq.setNumOfcomment(((Number) post.get("total_comments")).intValue());
         postReq.setNumOflike(((Number) post.get("total_likes")).intValue());
         postReq.setIsliked((Boolean) post.get("isLiked"));
+        // List<Image> images = mapper.readValue(json, new TypeReference<>() {} );
         postReq.setCreatedAt(((java.sql.Timestamp) post.get("createdAt")).toLocalDateTime());
         UserReq user = new UserReq();
         user.setUsername((String) post.get("username"));

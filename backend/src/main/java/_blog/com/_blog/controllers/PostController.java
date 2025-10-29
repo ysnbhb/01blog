@@ -50,7 +50,7 @@ public class PostController {
             throws Exception {
         Long userid = (long) request.getAttribute("userId");
         return ResponseEntity
-                .ok(postServ.getPosts(userid, offset.intValue()).stream().map(PostConvert::convertToPostReq));
+                .ok(postServ.getPosts(userid, offset.intValue()));
     }
 
     @GetMapping(path = "users_post")
@@ -59,7 +59,7 @@ public class PostController {
             @RequestParam(defaultValue = "0", name = "uuid") String uuid)
             throws Exception {
         return ResponseEntity
-                .ok(postServ.getUserPosts(userid, offset.intValue(), uuid).stream().map(PostConvert::convertToPostReq));
+                .ok(postServ.getUserPosts(userid, offset.intValue(), uuid));
     }
 
     @GetMapping(path = "post")

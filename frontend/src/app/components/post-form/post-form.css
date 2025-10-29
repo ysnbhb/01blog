@@ -1,112 +1,61 @@
 .post-form-card {
-  background: #ffffff;
-  border-radius: 10px;
-  max-width: 600px;
+  border-radius: 1.5rem !important;
+  max-width: 780px;
   margin: 0 auto;
+  transition: all .3s ease;
 }
+.post-form-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.1)!important; }
 
-.card-title {
-  color: #1c1e21;
-  font-weight: 600;
-  font-size: 1rem;
-  border-bottom: 1px solid #e4e6eb;
-  padding-bottom: 0.5rem;
-  margin-bottom: 0.75rem !important;
-}
-
-/* Content Textarea */
 .content-textarea {
-  border: 1px solid #ced4da;
-  border-radius: 8px;
-  padding: 0.625rem;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-  resize: none;
+  border: 2px solid #e9ecef;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  font-size: 1.1rem;
+  min-height: 160px;
+  resize: vertical;
 }
+.content-textarea:focus { border-color: #0d6efd; box-shadow: 0 0 0 .3rem rgba(13,110,253,.15); }
 
-.content-textarea:focus {
+.file-upload-area {
+  border-color: #cbd5e0;
+  background: #f8fafc;
+  transition: all .3s ease;
+}
+.file-upload-area:hover {
   border-color: #0d6efd;
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+  background: #eef2ff;
+  transform: translateY(-2px);
 }
 
-.content-textarea::placeholder {
-  color: #adb5bd;
+/* Preview Grid */
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
 }
-
-/* File Upload Button */
-.file-upload-btn {
-  border: 1px solid #dee2e6;
-  border-radius: 6px;
-  padding: 0.5rem;
-  font-size: 0.875rem;
-  transition: all 0.2s ease;
+.preview-item {
+  height: 200px;
+  border: 2px solid #e9ecef;
+  transition: transform .2s ease;
 }
+.preview-item:hover { transform: scale(1.02); }
+.preview-media { transition: opacity .2s; }
 
-.file-upload-btn:hover {
-  background-color: #e9ecef;
-  border-color: #adb5bd;
-}
-
-/* Preview Card */
-.preview-card {
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  padding: 0.75rem;
-}
-
-.preview-media-container {
-  border-radius: 6px;
-  overflow: hidden;
-  background: #000;
-  max-height: 250px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.preview-media {
-  width: 100%;
-  height: auto;
-  max-height: 250px;
-  object-fit: contain;
-}
-
-/* Submit Button */
+/* Submit */
 .submit-btn {
-  padding: 0.625rem;
-  font-weight: 600;
-  font-size: 0.9rem;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+  height: 56px;
+  border-radius: 1rem;
+  font-size: 1.1rem;
+}
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13,110,253,.3);
 }
 
-.submit-btn:not(:disabled):hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(13, 110, 253, 0.3);
-}
-
-.submit-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Error Alert */
-.alert-danger {
-  border: none;
-  border-radius: 6px;
-  background-color: #f8d7da;
-  color: #842029;
-  font-size: 0.85rem;
-}
-
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
-  .post-form-card {
-    border-radius: 8px;
-  }
-  
-  .card-body {
-    padding: 1rem !important;
-  }
+  .card-body { padding: 1.5rem!important; }
+  .preview-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .preview-item { height: 160px; }
 }

@@ -26,14 +26,13 @@ export class Comments {
     );
   }
 
-  getComments(postId: number): Observable<CommentReq[]> {
+  getComments(postId: number, offste: number = 0): Observable<CommentReq[]> {
     const token = localStorage.getItem('token');
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    return this.http.get<CommentReq[]>(
-      `http://localhost:8080/api/comments?postId=${postId}`,
-      { headers }
-    );
+    return this.http.get<CommentReq[]>(`http://localhost:8080/api/comments?postId=${postId}&offset=${offste}`, {
+      headers,
+    });
   }
 }

@@ -1,70 +1,119 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { Post } from '../../services/post';
 import { PostReq } from '../../../model/Post.model';
+interface MediaFile {
+  id: string;
+  file: File;
+  preview: string;
+  name: string;
+  size: number;
+  isImage: boolean;
+}
 
 @Component({
   selector: 'app-post-form',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './post-form.html',
   styleUrl: './post-form.css',
 })
 export class PostForm {
-  error: string = '';
-  selectedFile: File | null = null;
-  previewUrl: string | null = null;
-  isImage: boolean = false;
-  @Output() addPost = new EventEmitter<PostReq>();
+  error = '';
+  files: MediaFile[] = [];
+  dragOver = false;
+  isSubmitting = false;
+  constructor(private post: Post) {
+  
+  }
+
+
+ 
+
+  private generateId(): string {
+    return Math.random().toString(36).substr(2, 9);
+  }
+
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
+    if (input.files?.length) this.handleFiles(Array.from(input.files));
+  }
 
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      this.selectedFile = file;
-      this.isImage = file.type.startsWith('image/');
+  onDragOver(e: DragEvent): void {
+    e.preventDefault();
+    this.dragOver = true;
+  }
+  onDrop(e: DragEvent): void {
+    e.preventDefault();
+    this.dragOver = false;
+    console.log(e.dataTransfer);
+    
+    if (e.dataTransfer?.files) this.handleFiles(Array.from(e.dataTransfer.files));
+  }
+
+  private handleFiles(fileList: File[]): void {
+    const valid = fileList.filter(
+      (f) => f.type.startsWith('image/') || f.type.startsWith('video/')
+    );
+
+    if (valid.length === 0) {
+      this.error = 'Only images and videos are allowed.';
+      return;
+    }
+
+    if (this.files.length + valid.length > 10) {
+      this.error = 'Maximum 10 files allowed.';
+      return;
+    }
+
+    valid.forEach((file) => {
       const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.previewUrl = e.target?.result as string;
+      reader.onload = () => {
+        this.files.push({
+          id: this.generateId(),
+          file,
+          preview: reader.result as string,
+          name: file.name,
+          size: file.size,
+          isImage: file.type.startsWith('image/'),
+        });
       };
       reader.readAsDataURL(file);
-    }
+    });
   }
 
-  async sumbet(val: NgForm) {
-    let data = new FormData();
-    Object.entries(val.value).forEach(([key, val]) => {
-      data.append(key, val as string);
-    });
-    if (this.selectedFile) {
-      data.append('photo', this.selectedFile);
-    }
-    let token = localStorage.getItem('token');
-    let res = await fetch('http://localhost:8080/api/creat_post', {
-      method: 'POST',
-      body: data,
-      headers: {
-        Authorization: `Bearer ${token}`,
+  removeFile(id: string): void {
+    this.files = this.files.filter((f) => f.id !== id);
+    const el = document.getElementById('fileInput') as HTMLInputElement;
+    if (el) el.value = '';
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+  }
+  submit(form: NgForm): void {
+    if (form.invalid) return;
+    this.isSubmitting = true;
+    this.error = '';
+    const data = new FormData();
+    Object.entries(form.value).forEach(([k, v]) => data.append(k, v as string));
+    this.files.forEach((f) => data.append('photo', f.file));
+    this.post.create_post(data).subscribe({
+      next: (_: PostReq) => {
+        this.isSubmitting = false;
+        form.reset();
+        this.files = [];
+      },
+      error: (err) => {
+        this.isSubmitting = false;
+        console.log(err);
+        
+        this.error = err.error.error || 'Something went wrong';
       },
     });
-    let post = await res.json();
-    if (res.ok) {
-      this.addPost.emit(post);
-      val.reset();
-      this.error = '';
-      this.previewUrl = null;
-      this.isImage = false;
-      this.selectedFile = null;
-    } else {
-      this.error = post.error;
-    }
-  }
-
-  removeFile(): void {
-    this.selectedFile = null;
-    this.previewUrl = null;
-    this.isImage = false;
-    const fileInput = document.getElementById('image') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = '';
-    }
   }
 }
