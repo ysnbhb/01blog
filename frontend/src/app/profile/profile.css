@@ -1,0 +1,89 @@
+.app-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+app-haeder-profile {
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.profile {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
+}
+
+.scrollable-row {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 1rem;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.scrollable-row::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollable-row::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollable-row::-webkit-scrollbar-thumb {
+  background: #ced4da;
+  border-radius: 4px;
+}
+.scrollable-row::-webkit-scrollbar-thumb:hover {
+  background: #adb5bd;
+}
+
+app-post {
+  width: 100%;
+  max-width: 680px;
+  background: #ffffff;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+app-post:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+@media (min-width: 992px) {
+  .profile .container {
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0;
+  }
+  app-haeder-profile {
+    padding: 1.5rem 0;
+  }
+  .scrollable-row {
+    padding: 0 0.5rem;
+    gap: 1.5rem;
+  }
+  app-post {
+    border-radius: 1rem;
+  }
+}
+

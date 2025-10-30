@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Comment;
 import _blog.com._blog.Entity.Post;
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.dto.CommentConert;
 import _blog.com._blog.repositories.CommentsRepositories;
@@ -26,7 +26,7 @@ public class CommentsServ {
     }
 
     @Transactional
-    public Comment save(CommentReq commentReq, User user) throws ProgramExeption {
+    public Comment save(CommentReq commentReq, UserEntity user) throws ProgramExeption {
         Post post = postRepositery.findById(commentReq.getPostId())
                 .orElseThrow(() -> new ProgramExeption(400, "post not found"));
         

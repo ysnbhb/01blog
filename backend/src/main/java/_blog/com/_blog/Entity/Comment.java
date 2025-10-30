@@ -26,7 +26,7 @@ public class Comment {
     private Post post;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private UserEntity user;
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

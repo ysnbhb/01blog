@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Connection;
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.repositories.ConnectionRepo;
 import _blog.com._blog.repositories.UserRepository;
@@ -23,8 +23,8 @@ public class ConnectionSrv {
     private final NotifacationSer notifacationSer;
 
     @Transactional
-    public Map<String, Object> follow(User user, String uuid) throws ProgramExeption {
-        User following = userRepository.findByUuid(uuid).orElseThrow(() -> new ProgramExeption(400, "User not Found"));
+    public Map<String, Object> follow(UserEntity user, String uuid) throws ProgramExeption {
+        UserEntity following = userRepository.findByUuid(uuid).orElseThrow(() -> new ProgramExeption(400, "User not Found"));
         boolean isfollowing = connectionRepo.isfollowing(user.getId(), following.getId());
         if (isfollowing) {
             connectionRepo.deleteConnetion(user.getId(), following.getId());

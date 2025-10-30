@@ -1,5 +1,7 @@
 package _blog.com._blog.controllers;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import _blog.com._blog.Entity.Post;
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.dto.PostConvert;
 import _blog.com._blog.services.PostServ;
 import _blog.com._blog.utils.PostReq;
@@ -28,7 +30,7 @@ public class PostController {
 
     @PostMapping(path = "creat_post")
     public ResponseEntity<?> post(@Valid @ModelAttribute PostReq postReq, HttpServletRequest request) throws Exception {
-        User user = (User) request.getAttribute("user");
+        UserEntity user = (UserEntity) request.getAttribute("user");
         Post post = postServ.save(postReq, user);
         return ResponseEntity.ok(PostConvert.convertToPostReq(post));
     }
@@ -37,7 +39,7 @@ public class PostController {
     public ResponseEntity<?> delete(@RequestParam(defaultValue = "0", name = "postId") Long id,
             HttpServletRequest request) throws Exception {
         System.out.println(id);
-        User user = (User) request.getAttribute("user");
+        UserEntity user = (UserEntity) request.getAttribute("user");
         postServ.delete(id, user);
         return ResponseEntity.ok(id);
     }
@@ -51,13 +53,14 @@ public class PostController {
                 .ok(postServ.getPosts(userid, offset.intValue()));
     }
 
-    @GetMapping(path = "users_post")
-    public ResponseEntity<?> getUserPost(@RequestAttribute("userId") Long userid,
+    @GetMapping(path = "user_post")
+    public ResponseEntity<List<PostReq>> getUserPost(@RequestAttribute("userId") Long userid,
             @RequestParam(defaultValue = "0", name = "offset") Long offset,
-            @RequestParam(defaultValue = "0", name = "uuid") String uuid)
+            @RequestParam(name = "uuid") String uuid)
             throws Exception {
+        List<PostReq> post = postServ.getUserPosts(userid, offset.intValue(), uuid);
         return ResponseEntity
-                .ok(postServ.getUserPosts(userid, offset.intValue(), uuid));
+                .ok(post);
     }
 
     @GetMapping(path = "post")

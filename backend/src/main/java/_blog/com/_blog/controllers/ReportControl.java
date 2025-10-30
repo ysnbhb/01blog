@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.services.ReportSer;
 import _blog.com._blog.utils.ReportReq;
 import jakarta.validation.Valid;
@@ -21,12 +21,12 @@ public class ReportControl {
     }
 
     @PostMapping("report_post")
-    public void reportPost(@Valid @RequestBody ReportReq report, @RequestAttribute("user") User user) throws Exception {
+    public void reportPost(@Valid @RequestBody ReportReq report, @RequestAttribute("user") UserEntity user) throws Exception {
         reportSer.reportPost(report, user);
     }
 
     @PostMapping("reportUser")
-    public void reportUser(@Valid @RequestBody ReportReq report, @RequestAttribute("user") User user) throws Exception {
+    public void reportUser(@Valid @RequestBody ReportReq report, @RequestAttribute("user") UserEntity user) throws Exception {
         reportSer.reportUser(report, user);
     }
 

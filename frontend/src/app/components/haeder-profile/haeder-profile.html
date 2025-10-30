@@ -1,1 +1,77 @@
-<p>haeder-profile works!</p>
+<div class="profile-header py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Profile Picture -->
+      <div class="col-auto">
+        <div class="profile-avatar-wrapper">
+          <img
+            [src]="'http://localhost:8080/image/' + user.urlPhoto"
+            alt="{{ user.name }} {{ user.lastName }}"
+            class="profile-avatar"
+          />
+        </div>
+      </div>
+
+      <!-- User Info -->
+      <div class="col">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+          <div>
+            <h1 class="profile-name mb-1">
+              {{ user.name }} {{ user.lastName }}
+              @if (user.role === 'ADMIN') {
+              <i class="bi bi-shield-fill-check text-primary ms-2" title="Admin"></i>
+              }
+            </h1>
+            <p class="profile-username text-muted mb-2">@{{ user.username }}</p>
+
+            <!-- Stats -->
+            <div class="d-flex gap-4 text-center">
+              <div class="stat">
+                <strong class="d-block">{{ user.followingCount || 0 }}</strong>
+                <small class="text-muted">Following</small>
+              </div>
+              <div class="stat">
+                <strong class="d-block">{{ user.followersCount || 0 }}</strong>
+                <small class="text-muted">Followers</small>
+              </div>
+            </div>
+          </div>
+          <div>
+            @if (!user.mayAcount) {
+            <div class="d-flex gap-2 align-items-center">
+              <button
+                type="button"
+                class="btn follow-btn px-4"
+                [class.btn-primary]="!user.hascon"
+                [class.btn-outline-primary]="user.hascon"
+                (click)="toggleFollow()"
+                [disabled]="isLoading"
+              >
+                @if (isLoading) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                } @else {
+                <i
+                  class="bi me-1"
+                  [class.bi-person-plus-fill]="!user.hascon"
+                  [class.bi-check-lg]="user.hascon"
+                ></i>
+                }
+                <span>{{ user.hascon ? 'Following' : 'Follow' }}</span>
+              </button>
+              <button type="button" class="btn report-btn px-3" >
+                <i class="bi bi-flag-fill me-1"></i>
+                <span>Report</span>
+              </button>
+            </div>
+            }
+            <!-- @else {
+              <button type="button" class="btn btn-outline-secondary" routerLink="/settings">
+                <i class="bi bi-gear me-1"></i> Edit Profile
+              </button>
+            } -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

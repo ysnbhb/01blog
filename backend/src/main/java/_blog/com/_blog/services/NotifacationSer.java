@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Notifacation;
 import _blog.com._blog.Entity.Post;
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.repositories.ConnectionRepo;
 import _blog.com._blog.repositories.NotifacationRepo;
@@ -24,7 +24,7 @@ public class NotifacationSer {
     private final UserRepository userRepository;
 
     @Transactional
-    public void saveNotifiction(User from, User user, String type, String content, Post post) {
+    public void saveNotifiction(UserEntity from, UserEntity user, String type, String content, Post post) {
         Notifacation notifacation = new Notifacation();
         notifacation.setContent(content);
         notifacation.setFrom(from);
@@ -53,7 +53,7 @@ public class NotifacationSer {
 
     @Async
     @Transactional
-    public void setNotification(User sender, Post post) {
+    public void setNotification(UserEntity sender, Post post) {
         int offset = 0;
         List<Long> listOfIds;
 
@@ -63,7 +63,7 @@ public class NotifacationSer {
                 break;
 
             for (Long userId : listOfIds) {
-                User follower = userRepository.findById(userId).orElse(null);
+                UserEntity follower = userRepository.findById(userId).orElse(null);
                 if (follower != null) {
                     saveNotifiction(sender, follower, "post", "posted a new blog", post);
                 }

@@ -18,8 +18,8 @@ public class Connection {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "follower_id", referencedColumnName = "id", nullable = false)
-    private User follower;
+    private UserEntity follower;
     @ManyToOne
     @JoinColumn(name = "following_id", referencedColumnName = "id", nullable = false)
-    private User following;
+    private UserEntity following;
 }

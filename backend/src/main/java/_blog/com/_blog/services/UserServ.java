@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.utils.Upload;
 import _blog.com._blog.utils.UserReq;
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.dto.UserConvert;
 import _blog.com._blog.repositories.ConnectionRepo;
@@ -30,7 +30,7 @@ public class UserServ {
     }
 
     @Transactional
-    public User save(UserReq userReq) throws ProgramExeption {
+    public UserEntity save(UserReq userReq) throws ProgramExeption {
         if (userRepository.existsByEmail(userReq.getEmail())) {
             throw new ProgramExeption(400, "email already exists try other one");
         }
@@ -52,14 +52,14 @@ public class UserServ {
         } else {
             userReq.setUrlPhoto("default-avatar.jpg");
         }
-        User user = UserConvert.convertToUser(userReq);
+        UserEntity user = UserConvert.convertToUser(userReq);
         user.setRole("USER");
         user.setStatus("ACTIVE");
         return userRepository.save(user);
     }
 
-    public User login(UserReq userReq) throws ProgramExeption {
-        User user = userRepository.findByEmail(userReq.getEmail())
+    public UserEntity login(UserReq userReq) throws ProgramExeption {
+        UserEntity user = userRepository.findByEmail(userReq.getEmail())
                 .orElseThrow(() -> new ProgramExeption(400, "user not found or password not correct"));
         if (passwordEncoder.matches(user.getPassword(), userReq.getPassword())) {
             throw new ProgramExeption(400, "user not found or password not correct");
@@ -67,7 +67,7 @@ public class UserServ {
         return user;
     }
 
-    public UserReq profile(String uuid, User me) throws Exception {
+    public UserReq profile(String uuid, UserEntity me) throws Exception {
         Map<String, Object> info = userRepository.findUser(uuid);
         if (info == null) {
             throw new ProgramExeption(400, "User not found");
@@ -82,7 +82,7 @@ public class UserServ {
     }
 
     public List<UserReq> searchUsers(String query) {
-        List<User> users = userRepository.searchUsers(query);
+        List<UserEntity> users = userRepository.searchUsers(query);
         return users.stream()
                 .map((user) -> {
                     return UserConvert.convertToUserReq(user);

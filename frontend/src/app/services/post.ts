@@ -25,4 +25,18 @@ export class Post {
       },
     });
   }
+
+  getUserPost(uuid: string, offset: number = 0): Observable<PostReq[]> {
+    let token = localStorage.getItem('token');
+    console.log(uuid);
+    
+    return this.http.get<PostReq[]>(
+      `http://localhost:8080/api/user_post?uuid=${uuid}&offset=${offset}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
 }

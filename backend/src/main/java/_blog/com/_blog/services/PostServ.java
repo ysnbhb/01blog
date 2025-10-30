@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 // import _blog.com._blog.Entity.Image;
 import _blog.com._blog.Entity.Post;
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.dto.ImageCovert;
 import _blog.com._blog.dto.PostConvert;
@@ -42,7 +42,7 @@ public class PostServ {
     }
 
     @Transactional
-    public Post save(PostReq postReq, User user) throws ProgramExeption {
+    public Post save(PostReq postReq, UserEntity user) throws ProgramExeption {
         var photo = postReq.getPhoto();
 
         if (photo != null && photo.length > 10) {
@@ -91,7 +91,7 @@ public class PostServ {
     }
 
     @Transactional
-    public void delete(long Postid, User user) throws ProgramExeption {
+    public void delete(long Postid, UserEntity user) throws ProgramExeption {
         Post Post = postRepositery.findById(Postid)
                 .orElseThrow(() -> new ProgramExeption(400, "Post not found"));
 
@@ -122,9 +122,12 @@ public class PostServ {
     }
 
     public List<PostReq> getUserPosts(Long userid, int offset, String uuid) throws ProgramExeption {
-        return postRepositery.getUserPosts(userid, offset, false, uuid)
+        List<Map<String, Object>> posts = postRepositery.getUserPosts(userid, offset, false, uuid);
+        System.out.println("111111111111111111111111111111111111111111111111111111111111111111111");
+        return posts
                 .stream()
                 .map((post) -> {
+                    System.out.println(post.toString());
                     PostReq postReq = PostConvert.convertToPostReq(post);
                     List<ImageReq> images = imageRepo.findImgesByPostId(postReq.getId())
                             .stream()

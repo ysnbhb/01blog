@@ -9,8 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import _blog.com._blog.Entity.User;
+import org.springframework.security.core.userdetails.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.repositories.UserRepository;
 import _blog.com._blog.services.JwtService;
 import java.io.IOException;
@@ -41,13 +41,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
         Long userId = jwtService.extractUserId(token);
         if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            User user = userRepository.findById(userId).orElse(null);
+            UserEntity user = userRepository.findById(userId).orElse(null);
 
             if (user != null && jwtService.isTokenValid(token, user)) {
                 if (user.getStatus() != null && user.getStatus().equals("BANNED")) {
                     throw new ServletException();
                 }
-                UserDetails userDetails = org.springframework.security.core.userdetails.User
+                UserDetails userDetails = User
                         .withUsername(user.getUsername())
                         .password(user.getPassword())
                         .roles(user.getRole().toUpperCase())

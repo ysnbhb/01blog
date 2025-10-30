@@ -3,20 +3,21 @@
   <div class="d-flex h-100">
     <app-nav-bar [user]="user"></app-nav-bar>
   </div>
+  <div class="d-flex container flex-column header p-0">
+    @if (userProfile ) {
+    <app-haeder-profile [user]="userProfile"></app-haeder-profile>
+    }
+    <div class="container profile">
+      <div class="row f-flex justify-content-center scrollable-row">
+        @for ( post of posts; track post.id) {
+        <app-post
+          class="d-flex justify-content-center align-items-center flex-column"
+          [post]="post"
+          [user]="user"
+        />
+        }
+      </div>
+    </div>
+  </div>
   }
 </div>
-
-<!-- @if (isreport) {
-<app-report-popup
-  (confirmreport)="reported($event)"
-  (error)="setError($event)"
-  (succues)="setSuccues($event)"
-  [postId]="post.id"
-></app-report-popup>
-} @if (error) {
-<app-error-show [error]="error"></app-error-show>
-} @if (delete){
-<app-delete-post-popup (confirm)="confirmDelete($event)"></app-delete-post-popup>
-} @if (succues){
-<app-succues-show [succues]="succues"></app-succues-show>
-} -->

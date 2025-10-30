@@ -24,8 +24,6 @@ public class CommentConert {
             CommentReq commentReq = new CommentReq();
             commentReq.setId(((Long) post.get("id")));
             commentReq.setContent((String) post.get("content"));
-            commentReq.setNumOflike(((Number) post.get("total_likes")).intValue());
-            commentReq.setIsliked((Boolean) post.get("isLiked"));
             commentReq.setCreatedAt(((java.sql.Timestamp) post.get("createdAt")).toLocalDateTime());
             UserReq user = new UserReq();
             user.setUsername((String) post.get("username"));

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.dto.CommentConert;
 import _blog.com._blog.services.CommentsServ;
 import _blog.com._blog.utils.CommentReq;
@@ -26,7 +26,7 @@ public class Comments {
     }
 
     @PostMapping("creat_comment")
-    public CommentReq save(@Valid @RequestBody CommentReq commentReq, @RequestAttribute("user") User user)
+    public CommentReq save(@Valid @RequestBody CommentReq commentReq, @RequestAttribute("user") UserEntity user)
             throws Exception {
         return CommentConert.convertToPost(commentsServ.save(commentReq, user));
     }

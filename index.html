@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Profile Header</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Profile Header -->
+  <div class="bg-white shadow-sm border-b">
+    <div class="max-w-4xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5">
+
+        <!-- Profile Image -->
+        <div class="flex-shrink-0">
+          <img 
+            class="h-24 w-24 sm:h-32 sm:w-32 rounded-full object-cover border-4 border-white shadow-lg"
+            src="https://via.placeholder.com/150" 
+            alt="Profile picture"
+          />
+        </div>
+
+        <!-- User Info -->
+        <div class="flex-1 text-center sm:text-left">
+          <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">
+            John Doe
+          </h1>
+          <p class="text-sm text-gray-500">@johndoe</p>
+
+          <!-- Follow Stats -->
+          <div class="flex gap-6 mt-3 justify-center sm:justify-start">
+            <div>
+              <span class="font-semibold text-gray-900">1,234</span>
+              <span class="text-gray-600 text-sm ml-1">Following</span>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-900">5.6K</span>
+              <span class="text-gray-600 text-sm ml-1">Followers</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Optional Action Button -->
+        <div class="mt-4 sm:mt-0">
+          <button class="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+            Edit Profile
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

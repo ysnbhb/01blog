@@ -2,11 +2,11 @@ package _blog.com._blog.dto;
 
 import java.util.Map;
 
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.utils.UserReq;
 public class UserConvert {
 
-    public static UserReq convertToUserReq(User user) {
+    public static UserReq convertToUserReq(UserEntity user) {
         if (user == null) {
             return null;
         }
@@ -42,11 +42,11 @@ public class UserConvert {
         return userReq;
     }
 
-    public static User convertToUser(UserReq userReq) {
+    public static UserEntity convertToUser(UserReq userReq) {
         if (userReq == null) {
             return null;
         }
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setEmail(userReq.getEmail());
         user.setUsername(userReq.getUsername());
         user.setPassword(userReq.getPassword());

@@ -7,7 +7,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.repositories.UserRepository;
 import jakarta.validation.Valid;
 
@@ -48,7 +48,7 @@ public class AdminInitializer implements ApplicationRunner {
             System.out.print("Enter admin password:");
             String password = scanner.nextLine().trim();
             String url_photo = "default-avatar.jpg";
-            User admin = new User();
+            UserEntity admin = new UserEntity();
 
             admin.setEmail(email);
             admin.setDateOfBirth("2005-06-24");

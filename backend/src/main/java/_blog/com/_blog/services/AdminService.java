@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Post;
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.dto.UserConvert;
 import _blog.com._blog.repositories.PostRepositery;
@@ -26,7 +26,7 @@ public class AdminService {
 
     @Transactional
     public void delete(String uuid) throws ProgramExeption {
-        User user = userRepository.findByUuid(uuid)
+        UserEntity user = userRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ProgramExeption(400, "User not found"));
         postRepository.deleteAllByUser(user);
         userRepository.delete(user);
@@ -45,7 +45,7 @@ public class AdminService {
     }
     @Transactional
     public boolean banneUser(String uuid) throws ProgramExeption {
-        User user = userRepository.findByUuid(uuid).orElseThrow(() -> new ProgramExeption(400, "User not found"));
+        UserEntity user = userRepository.findByUuid(uuid).orElseThrow(() -> new ProgramExeption(400, "User not found"));
         userRepository.updateUserStatus(uuid, user.getStatus() != "BANNED" ? "BANNED" : "ACTIVE");
         return user.getStatus() != "BANNED";
     }

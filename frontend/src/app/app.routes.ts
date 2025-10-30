@@ -11,6 +11,11 @@ export const routes: Routes = [
     title: 'comments',
   },
   {
+    path: 'profile/:uuid',
+    loadComponent: () => import('./profile/profile').then((m) => m.Profile),
+    title: 'profile',
+  },
+  {
     path: 'create-post',
     loadComponent: () => import('./create-post/create-post').then((m) => m.CreatePost),
     title: 'create post',

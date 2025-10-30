@@ -26,10 +26,10 @@ public class Report {
     private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User reporter;
+    private UserEntity reporter;
     @ManyToOne
     @JoinColumn(name = "to_userid", referencedColumnName = "id")
-    private User reportedUser;
+    private UserEntity reportedUser;
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;

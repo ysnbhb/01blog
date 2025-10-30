@@ -24,10 +24,10 @@ public class Notifacation {
     private String type;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    private UserEntity user;
     @ManyToOne
     @JoinColumn(name = "from_id", referencedColumnName = "id", nullable = false)
-    private User from;
+    private UserEntity from;
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;

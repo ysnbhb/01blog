@@ -21,5 +21,5 @@ public class Reaction {
     private Post post;
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", name = "user_id", nullable = false)
-    private User user;
+    private UserEntity user;
 }

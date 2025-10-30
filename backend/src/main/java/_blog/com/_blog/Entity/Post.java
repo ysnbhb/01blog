@@ -27,7 +27,7 @@ public class Post {
     private String urlPhoto;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    private UserEntity user;
     private String typePhoto;
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

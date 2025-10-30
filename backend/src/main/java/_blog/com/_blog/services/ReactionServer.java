@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.Reaction;
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.repositories.PostRepositery;
 import _blog.com._blog.repositories.ReactionRepo;
@@ -23,7 +23,7 @@ public class ReactionServer {
     }
 
     @Transactional
-    public Map<String, Object> like(Long post_id, User user) throws ProgramExeption {
+    public Map<String, Object> like(Long post_id, UserEntity user) throws ProgramExeption {
         if (post_id == 0) {
             throw new ProgramExeption(400, "Post not found");
         }

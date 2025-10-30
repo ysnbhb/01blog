@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 // import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -27,7 +27,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(User user) {
+    public String generateToken(UserEntity user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", user.getId());
         claims.put("username", user.getUsername());
@@ -71,7 +71,7 @@ public class JwtService {
         }
     }
 
-    public boolean isTokenValid(String token, User user) {
+    public boolean isTokenValid(String token, UserEntity user) {
         try {
             Long id = extractUserId(token);
             Claims claims = extractAllClaims(token);

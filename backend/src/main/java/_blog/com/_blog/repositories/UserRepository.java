@@ -11,27 +11,27 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import _blog.com._blog.Entity.User;
+import _blog.com._blog.Entity.UserEntity;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    List<User> findByRoleNot(String role);
+    List<UserEntity> findByRoleNot(String role);
 
     boolean existsByEmail(String email);
 
     boolean existsByUsername(String username);
 
-    Optional<User> findById(Long id);
+    Optional<UserEntity> findById(Long id);
 
-    Optional<User> findByUsername(String username);
+    Optional<UserEntity> findByUsername(String username);
 
-    Optional<User> findByUuid(String uuid);
+    Optional<UserEntity> findByUuid(String uuid);
 
-    Optional<User> findByEmail(String username);
+    Optional<UserEntity> findByEmail(String username);
 
     @Query(value = "SELECT * FROM users ORDER BY created_at LIMIT 10 OFFSET :offset", nativeQuery = true)
-    List<User> findAllWithOffset(@Param("offset") int offset);
+    List<UserEntity> findAllWithOffset(@Param("offset") int offset);
 
     @Modifying
     @Transactional
@@ -63,13 +63,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
             """, nativeQuery = true)
     Map<String, Object> findUser(@Param("uuid") String uuid);
 
-    @Query("""
+    @Query(value = """
                 SELECT u
-                FROM User u
+                FROM users u
                 WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', :query, '%'))
                    OR LOWER(u.name) LIKE LOWER(CONCAT('%', :query, '%'))
                    OR LOWER(u.lastName) LIKE LOWER(CONCAT('%', :query, '%'))
-            """)
-    List<User> searchUsers(@Param("query") String query);
+            """, nativeQuery = true)
+    List<UserEntity> searchUsers(@Param("query") String query);
 
 }

@@ -24,17 +24,10 @@ public interface CommentsRepositories extends JpaRepository<Comment, Long> {
                 u.url_photo AS userPhoto,
                 u.username AS username,
                 u.role,
-                cm.created_at AS createdAt,
-                COUNT(DISTINCT l.id) AS total_likes,
-                EXISTS (
-                    SELECT 1
-                    FROM reactions l2
-                    WHERE l2.comment_id = cm.id AND l2.user_id = :userId
-                ) AS isLiked
+                cm.created_at AS createdAt
             FROM comments cm
             JOIN users u ON cm.user_id = u.id
             JOIN posts p ON cm.post_id = p.id
-            LEFT JOIN reactions l ON l.comment_id = cm.id
             WHERE p.hide = :hide AND p.id = :postId
             GROUP BY
                 cm.id, cm.content,
