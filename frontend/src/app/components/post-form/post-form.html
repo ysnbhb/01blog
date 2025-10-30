@@ -1,21 +1,69 @@
 <div class="container mb-5">
   <div class="card post-form-card shadow-lg border-0 overflow-hidden">
     <div class="card-body p-5">
+      <!-- Title -->
       <h5 class="card-title mb-4 fw-bold text-dark">
-        <i class="bi bi-pencil-square-fill me-3 text-primary"></i>
-        Create a New Post
+        <i class="bi bi-file-earmark-text-fill me-3 text-primary"></i>
+        Write a New Blog Post
       </h5>
+
       <form #post="ngForm" (ngSubmit)="submit(post)">
         <div class="mb-4">
+          <input
+            type="text"
+            class="form-control form-control-lg title-input"
+            name="title"
+            placeholder="Enter your blog title..."
+            required
+            minlength="5"
+            ngModel
+          />
+          <div class="form-text text-muted mt-2">
+            <i class="bi bi-info-circle me-1"></i>
+            Minimum 5 characters
+          </div>
+        </div>
+        <div class="mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label class="form-label fw-semibold">Content (Markdown)</label>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary"
+              (click)="togglePreview()"
+            >
+              <i class="bi" [class.bi-eye]="!showPreview" [class.bi-eye-slash]="showPreview"></i>
+              {{ showPreview ? 'Edit' : 'Preview' }}
+            </button>
+          </div>
+
+          @if (!showPreview) {
           <textarea
             class="form-control content-textarea markdown-editor"
             name="content"
-            rows="8"
-            placeholder="What's on your mind?"
+            rows="12"
+            [(ngModel)]="content"
+            placeholder="# Your blog post starts here...\n\nUse **Markdown** for formatting.\n\n```js\n// Code blocks are supported\n ('Hello');\n```"
             required
-            ngModel
+            minlength="10"
           ></textarea>
+          <div class="form-text text-muted mt-2">
+            <i class="bi bi-markdown-fill me-1"></i>
+            <a
+              href="https://www.markdownguide.org/cheat-sheet"
+              target="_blank"
+              class="text-decoration-none"
+            >
+              Full Markdown support
+            </a>
+          </div>
+          } @else {
+          <article class="markdown-body p-4 border rounded-3 bg-light">
+            <markdown [data]="content"></markdown>
+          </article>
+          }
         </div>
+
+        <!-- File Upload -->
         <div class="mb-4">
           <input
             type="file"
@@ -35,9 +83,11 @@
             (drop)="onDrop($event)"
             [class.dragover]="dragOver"
           >
-            <i class="bi bi-cloud-upload display-4 text-primary mb-3"></i>
-            <p class="fw-semibold mb-1">Click or drag & drop</p>
-            <p class="text-muted small mb-0">Multiple images & videos (JPG, PNG, GIF, MP4, WebM)</p>
+            <i class="bi bi-images display-4 text-primary mb-3"></i>
+            <p class="fw-semibold mb-1">Add images & videos</p>
+            <p class="text-muted small mb-0">
+              Drag & drop or click • Supports JPG, PNG, GIF, MP4, WebM
+            </p>
           </div>
           } @if (files.length > 0) {
           <div class="preview-grid">
@@ -52,11 +102,7 @@
               </button>
 
               @if (file.isImage) {
-              <img
-                [src]="file.preview"
-                alt="Preview"
-                class="preview-media w-100 h-100 object-fit-cover"
-              />
+              <img [src]="file.preview" class="preview-media w-100 h-100 object-fit-cover" />
               } @else {
               <video
                 [src]="file.preview"
@@ -69,26 +115,30 @@
                 <i class="bi bi-play-fill"></i>
               </div>
               }
+
               <div class="p-2 bg-white">
-                <small class="text-muted d-block text-truncate">{{ file.name }}</small>
+                <small class="d-block text-truncate text-muted">{{ file.name }}</small>
                 <small class="text-muted">{{ formatFileSize(file.size) }}</small>
               </div>
             </div>
             }
           </div>
+
           <button
             type="button"
             class="btn btn-outline-primary w-100 mt-3 d-flex align-items-center justify-content-center gap-2"
             (click)="fileInput.click()"
           >
             <i class="bi bi-plus-circle"></i>
-            Add More Files
+            Add More Media
           </button>
           }
         </div>
+
+        <!-- Submit -->
         <button
           type="submit"
-          class="btn btn-primary btn-lg w-100 submit-btn fw-semibold d-flex align-items-center justify-content-center gap-2"
+          class="btn btn-success btn-lg w-100 submit-btn fw-semibold d-flex align-items-center justify-content-center gap-2"
           [disabled]="!post.valid || isSubmitting"
         >
           @if (isSubmitting) {
@@ -96,15 +146,17 @@
           } @else {
           <i class="bi bi-send-fill"></i>
           }
-          <span>Publish Post</span>
+          <span>Publish Blog Post</span>
         </button>
+
+        <!-- Error -->
         @if (error) {
         <div
           class="alert alert-danger d-flex align-items-center mt-3 py-3 px-4 rounded-3"
           role="alert"
         >
           <i class="bi bi-exclamation-triangle-fill me-2"></i>
-          <div><strong>Oops!</strong> {{ error }}</div>
+          <div><strong>Error:</strong> {{ error }}</div>
         </div>
         }
       </form>

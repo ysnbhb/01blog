@@ -73,7 +73,7 @@ public class UserServ {
             throw new ProgramExeption(400, "User not found");
         }
         UserReq user = UserConvert.convertToUserReq(info);
-        user.setMayAcount(user.getUuid() == me.getUuid());
+        user.setMayAcount(user.getUuid().equals(me.getUuid()));
         if (!user.isMayAcount()) {
             boolean isfollowing = connectionRepo.isfollowing(me.getId(), (Long) info.get("id"));
             user.setHasCon(isfollowing);

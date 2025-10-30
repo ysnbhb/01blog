@@ -3,8 +3,6 @@ package _blog.com._blog.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,6 +44,11 @@ public class PostServ {
     @Transactional
     public Post save(PostReq postReq, User user) throws ProgramExeption {
         var photo = postReq.getPhoto();
+
+        if (photo != null && photo.length > 10) {
+            throw new ProgramExeption(400, "Maximum 10 files allowed");
+
+        }
         if (photo != null && photo.length > 0) {
             if (postReq.getImages() == null) {
                 postReq.setImages(new ArrayList<>());
@@ -78,8 +81,10 @@ public class PostServ {
         Post post = PostConvert.convertToPost(postReq);
         post.setUser(user);
         post = postRepositery.save(post);
-        for (ImageReq img : postReq.getImages()) {
-            imageRepo.save(ImageCovert.convertToImageEntity(img, post));
+        if (postReq.getImages() != null) {
+            for (ImageReq img : postReq.getImages()) {
+                imageRepo.save(ImageCovert.convertToImageEntity(img, post));
+            }
         }
         notifacationSer.setNotification(user, post);
         return post;
@@ -131,8 +136,19 @@ public class PostServ {
                 .toList();
     }
 
-    public Map<String, Object> getPost(Long userid, Long postId) throws ProgramExeption {
-        return postRepositery.getPost(userid, postId, false);
+    public PostReq getPost(Long userid, Long postId) throws ProgramExeption {
+        Map<String, Object> post = postRepositery.getPost(userid, postId, false);
+        if (post != null && post.size() > 0) {
+            PostReq postReq = PostConvert.convertToPostReq(post);
+            List<ImageReq> images = imageRepo.findImgesByPostId(postReq.getId())
+                    .stream()
+                    .map(ImageCovert::convertToImageUtil)
+                    .toList();
+            postReq.setImages(images);
+            return postReq;
+        } else {
+            return null;
+        }
     }
 
 }

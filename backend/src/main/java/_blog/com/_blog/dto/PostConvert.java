@@ -1,13 +1,7 @@
 package _blog.com._blog.dto;
 
-import java.util.List;
 import java.util.Map;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import _blog.com._blog.Entity.Post;
-import _blog.com._blog.utils.ImageReq;
 import _blog.com._blog.utils.PostReq;
 import _blog.com._blog.utils.UserReq;
 
@@ -19,6 +13,7 @@ public class PostConvert {
         post.setContent(postReq.getContent());
         post.setUrlPhoto(postReq.getUrlPhot());
         post.setTypePhoto(postReq.getTypePhoto());
+        post.setTitle(postReq.getTitle());
         return post;
     }
 
@@ -32,6 +27,8 @@ public class PostConvert {
         post.setUser(UserConvert.convertToUserReq(postReq.getUser()));
         post.setTypePhoto(postReq.getTypePhoto());
         post.setCreatedAt(postReq.getCreatedAt());
+        post.setTitle(postReq.getTitle());
+
         return post;
     }
 
@@ -44,6 +41,7 @@ public class PostConvert {
         postReq.setNumOfcomment(((Number) post.get("total_comments")).intValue());
         postReq.setNumOflike(((Number) post.get("total_likes")).intValue());
         postReq.setIsliked((Boolean) post.get("isLiked"));
+        postReq.setTitle((String) post.get("title"));
         // List<Image> images = mapper.readValue(json, new TypeReference<>() {} );
         postReq.setCreatedAt(((java.sql.Timestamp) post.get("createdAt")).toLocalDateTime());
         UserReq user = new UserReq();

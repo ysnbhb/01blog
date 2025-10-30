@@ -14,6 +14,9 @@ import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-rust';
 import 'prismjs/components/prism-markdown';
 
 export const appConfig: ApplicationConfig = {

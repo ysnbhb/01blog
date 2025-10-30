@@ -22,6 +22,8 @@ public class Post {
     private Long id;
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
+    @Column(nullable = false)
+    private String title;
     private String urlPhoto;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)

@@ -1,0 +1,22 @@
+<div class="app-layout">
+  @if (user) {
+  <div class="d-flex h-100">
+    <app-nav-bar [user]="user"></app-nav-bar>
+  </div>
+  }
+</div>
+
+<!-- @if (isreport) {
+<app-report-popup
+  (confirmreport)="reported($event)"
+  (error)="setError($event)"
+  (succues)="setSuccues($event)"
+  [postId]="post.id"
+></app-report-popup>
+} @if (error) {
+<app-error-show [error]="error"></app-error-show>
+} @if (delete){
+<app-delete-post-popup (confirm)="confirmDelete($event)"></app-delete-post-popup>
+} @if (succues){
+<app-succues-show [succues]="succues"></app-succues-show>
+} -->

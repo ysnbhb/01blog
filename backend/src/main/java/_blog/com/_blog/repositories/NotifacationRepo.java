@@ -45,9 +45,9 @@ public interface NotifacationRepo extends JpaRepository<Notifacation, Long> {
         List<Map<String, Object>> findAllNotifactions(@Param("userid") Long userid);
 
         @Query(value = """
-                        UPDATE notifacation SET read = true WHERE user_id = :userid
+                        UPDATE notifacation SET read = true WHERE id = :id
                         """, nativeQuery = true)
-        void updateRead(@Param("userid") Long userid);
+        void updateRead(@Param("id") Long notifid);
 
         @Query(value = """
                         SELECT COUNT(*) FROM notifacation WHERE  read = false AND user_id = :userid

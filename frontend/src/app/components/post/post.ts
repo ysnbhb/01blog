@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PostReq } from '../../../model/Post.model';
 import { getTimeDifferenceInHours } from '../../../utils/formatDate';
 import { CommonModule } from '@angular/common';
@@ -24,6 +24,8 @@ export class PostComponent implements OnInit {
   @Input() showAll!: boolean;
   errro!: String;
   succes!: String;
+  showImagePopup = false;
+  currentImageIndex = 0;
   constructor(private commint: Comments) {}
 
   removepost() {
@@ -36,9 +38,10 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.post.createdAt = getTimeDifferenceInHours(this.post.createdAt);
-    if (!this.showAll && this.post.content.length > 100) {
-      this.post.content = this.post.content.slice(0, 100);
+    if (!this.showAll && this.post.content.length > 200) {
+      this.post.content = this.post.content.slice(0, 200);
     }
+
   }
   async submitComment(form: NgForm) {
     const comment = form.value;
@@ -50,7 +53,7 @@ export class PostComponent implements OnInit {
         setTimeout(() => {
           this.succes = '';
         }, 1000);
-        console.log('Comment created successfully');
+         ('Comment created successfully');
       },
       error: (_) => {
         this.errro = 'Error submitting comment';
@@ -86,5 +89,64 @@ export class PostComponent implements OnInit {
     } catch (err) {
       console.error('Error deleting post:', err);
     }
+  }
+
+  openImagePopup(index: number): void {
+    this.currentImageIndex = index;
+    this.showImagePopup = true;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', this.handleKeyPress);
+  }
+
+  closeImagePopup(): void {
+    this.showImagePopup = false;
+    document.body.style.overflow = '';
+
+    document.removeEventListener('keydown', this.handleKeyPress);
+  }
+
+  nextImage(event: Event): void {
+    event.stopPropagation();
+    const imageCount = this.getImageCount();
+    this.currentImageIndex = (this.currentImageIndex % imageCount) + 1;
+    if (this.currentImageIndex == imageCount) {
+      this.currentImageIndex = 0;
+    }
+  }
+
+  previousImage(event: Event): void {
+    event.stopPropagation();
+    if (this.currentImageIndex > 0) {
+      this.currentImageIndex--;
+    }
+  }
+  getImageCount(): number {
+    return this.post.images.filter((img: any) => img.type === 'image').length;
+  }
+
+  handleKeyPress = (event: KeyboardEvent): void => {
+    if (!this.showImagePopup) return;
+
+    switch (event.key) {
+      case 'Escape':
+        this.closeImagePopup();
+        break;
+      case 'ArrowRight':
+        if (this.currentImageIndex < this.getImageCount() - 1) {
+          this.currentImageIndex++;
+        }
+        break;
+      case 'ArrowLeft':
+        if (this.currentImageIndex > 0) {
+          this.currentImageIndex--;
+        }
+        break;
+    }
+  };
+
+  // Clean up on component destroy
+  ngOnDestroy(): void {
+    document.removeEventListener('keydown', this.handleKeyPress);
+    document.body.style.overflow = '';
   }
 }

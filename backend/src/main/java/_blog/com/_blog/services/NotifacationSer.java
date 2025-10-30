@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import _blog.com._blog.Entity.Notifacation;
 import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.User;
+import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.repositories.ConnectionRepo;
 import _blog.com._blog.repositories.NotifacationRepo;
 import _blog.com._blog.repositories.UserRepository;
@@ -41,6 +42,15 @@ public class NotifacationSer {
         notifacationRepo.deleteNotifactionByPostid(postid);
     }
 
+    public void raedNotif(Long nofifId, Long userid) throws ProgramExeption {
+        Notifacation notif = notifacationRepo.findById(nofifId).orElse(null);
+        if (notif != null && notif.getUser().getId().equals(userid)) {
+            notifacationRepo.updateRead(userid);
+        } else {
+            throw new ProgramExeption(403, "You are not authorized to read this notification");
+        }
+    }
+
     @Async
     @Transactional
     public void setNotification(User sender, Post post) {
@@ -65,7 +75,6 @@ public class NotifacationSer {
 
     public List<Map<String, Object>> findAllNotifactions(Long userid) {
         List<Map<String, Object>> notfication = notifacationRepo.findAllNotifactions(userid);
-        notifacationRepo.updateRead(userid);
         return notfication;
     }
 

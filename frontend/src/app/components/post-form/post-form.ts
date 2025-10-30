@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Post } from '../../services/post';
 import { PostReq } from '../../../model/Post.model';
+import { marked } from 'marked';
+import { MarkdownComponent } from "ngx-markdown";
 interface MediaFile {
   id: string;
   file: File;
@@ -14,7 +16,7 @@ interface MediaFile {
 @Component({
   selector: 'app-post-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MarkdownComponent],
   templateUrl: './post-form.html',
   styleUrl: './post-form.css',
 })
@@ -23,12 +25,14 @@ export class PostForm {
   files: MediaFile[] = [];
   dragOver = false;
   isSubmitting = false;
-  constructor(private post: Post) {
-  
+  showPreview = false;
+  renderedMarkdown = '';
+  content = '';
+  constructor(private post: Post) {}
+
+  togglePreview() {
+    this.showPreview = !this.showPreview;
   }
-
-
- 
 
   private generateId(): string {
     return Math.random().toString(36).substr(2, 9);
@@ -46,8 +50,8 @@ export class PostForm {
   onDrop(e: DragEvent): void {
     e.preventDefault();
     this.dragOver = false;
-    console.log(e.dataTransfer);
-    
+     (e.dataTransfer);
+
     if (e.dataTransfer?.files) this.handleFiles(Array.from(e.dataTransfer.files));
   }
 
@@ -110,8 +114,8 @@ export class PostForm {
       },
       error: (err) => {
         this.isSubmitting = false;
-        console.log(err);
-        
+         (err);
+
         this.error = err.error.error || 'Something went wrong';
       },
     });

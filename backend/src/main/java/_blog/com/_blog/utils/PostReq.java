@@ -15,8 +15,11 @@ import lombok.Data;
 public class PostReq {
     private long id;
     private UserReq user;
+    @NotBlank
+    @Size(min = 5, max = 100)
+    private String title;
     @NotBlank(message = "content must be not null")
-    @Size(min = 3, message = "content must be more than 3 ")
+    @Size(min = 10, message = "content must be more than 3 ")
     private String content;
     private String urlPhot;
     private String typePhoto;

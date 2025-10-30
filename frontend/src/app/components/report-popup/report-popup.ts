@@ -25,7 +25,7 @@ export class ReportPopup {
 
     let token = localStorage.getItem('token');
     try {
-      console.log(rep);
+       (rep);
       let res = await fetch('http://localhost:8080/api/report_post', {
         method: 'POST',
         body: JSON.stringify(rep),

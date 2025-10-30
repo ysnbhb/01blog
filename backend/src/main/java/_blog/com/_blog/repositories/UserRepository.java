@@ -39,17 +39,28 @@ public interface UserRepository extends JpaRepository<User, Long> {
     int updateUserStatus(@Param("uuid") String uuid, @Param("status") String status);
 
     @Query(value = """
-            SELECT name
-                lastName ,
-                username ,
-                dateOfBirth ,
-                urlPhoto ,
-                role ,
-                id
-                (SELECT COUNT(*) FROM connection WHERE follower_id = :uuid ) AS following,
-                (SELECT COUNT(*) FROM connection WHERE following_id = :uuid ) AS follower,
-                WHERE uuid = :uuid
-            """ , nativeQuery = true)
+            SELECT
+                u.name,
+                u.last_name,
+                u.username,
+                u.url_photo,
+                u.role,
+                u.uuid,
+                COALESCE(fc.following_count, 0) AS following,
+                COALESCE(fl.follower_count, 0) AS follower
+            FROM users u
+            LEFT JOIN (
+                SELECT follower_id, COUNT(*) AS following_count
+                FROM connection
+                GROUP BY follower_id
+            ) fc ON fc.follower_id = u.id
+            LEFT JOIN (
+                SELECT following_id, COUNT(*) AS follower_count
+                FROM connection
+                GROUP BY following_id
+            ) fl ON fl.following_id = u.id
+            WHERE u.uuid = :uuid
+            """, nativeQuery = true)
     Map<String, Object> findUser(@Param("uuid") String uuid);
 
     @Query("""

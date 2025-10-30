@@ -47,7 +47,7 @@ export class Register implements OnInit {
     }
   }
   async ngOnInit(): Promise<void> {
-    console.log('ngOnInit triggered');
+     ('ngOnInit triggered');
 
     const token = localStorage.getItem('token');
     if (token) {

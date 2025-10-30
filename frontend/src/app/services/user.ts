@@ -15,4 +15,11 @@ export class User {
       headers: { Authorization: `Bearer ${token}` },
     });
   }
+
+  getProfile(uuid: string): Observable<UserRes> {
+    let token = localStorage.getItem('token');
+    return this.http.get<UserRes>(`http://localhost:8080/api/profile/${uuid}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
 }

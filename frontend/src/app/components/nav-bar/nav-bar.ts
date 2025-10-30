@@ -11,14 +11,14 @@ import { Notifications } from '../../services/notifications';
 })
 export class NavBar {
   @Input() user!: UserRes;
-  countofnotifs: number = 10;
+  countofnotifs: number = 0;
   ngOnInit(): void {
     this.loadNotificationsCount();
   }
   loadNotificationsCount(): void {
     this.notif.getcount().subscribe({
       next: (count: number) => {
-        // this.countofnotifs = count;
+        this.countofnotifs = count;
       },
       error: (err) => {
         console.error('Error fetching notifications count:', err);

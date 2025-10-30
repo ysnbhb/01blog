@@ -1,7 +1,5 @@
 package _blog.com._blog.controllers;
 
-import java.util.Map;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,10 +64,12 @@ public class PostController {
     public ResponseEntity<?> getPost(@RequestAttribute("userId") Long userid,
             @RequestParam(defaultValue = "0", name = "postId") Long postid)
             throws Exception {
-        Map<String, Object> post = postServ.getPost(userid, postid);
-        return post != null && post.size() > 0
-                ? ResponseEntity.ok(PostConvert.convertToPostReq(postServ.getPost(userid, postid)))
-                : ResponseEntity.status(404).body("Post not found");
+        PostReq post = postServ.getPost(userid, postid);
+        if (post != null) {
+            return ResponseEntity.ok(post);
+        } else {
+            return ResponseEntity.status(404).body("Post not found");
+        }
     }
 
 }

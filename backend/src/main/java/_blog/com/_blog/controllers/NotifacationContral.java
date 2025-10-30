@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +27,11 @@ public class NotifacationContral {
     @GetMapping("countNotif")
     public int countNotif(@RequestAttribute("userId") Long userid) {
         return notifacationSer.countNotif(userid);
+    }
+
+    @PutMapping("raedNotif/{notifId}")
+    public void read(@RequestAttribute("userId") Long userid, @PathVariable Long notifId) throws Exception {
+        notifacationSer.raedNotif(notifId, userid);
     }
 
 }

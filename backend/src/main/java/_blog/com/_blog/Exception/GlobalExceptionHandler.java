@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import java.lang.IllegalArgumentException;
 import jakarta.servlet.ServletException;
-
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import jakarta.validation.ValidationException;
 import java.io.IOException;
@@ -30,6 +30,15 @@ public class GlobalExceptionHandler {
 
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)
+                                .body(Map.of("error", message));
+        }
+
+        @ExceptionHandler(NoResourceFoundException.class)
+        public ResponseEntity<Map<String, String>> handleNoResourceFoundException(NoResourceFoundException ex) {
+                String message = "this file not exist";
+
+                return ResponseEntity
+                                .status(HttpStatus.NOT_FOUND)
                                 .body(Map.of("error", message));
         }
 

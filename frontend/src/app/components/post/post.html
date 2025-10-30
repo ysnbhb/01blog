@@ -4,7 +4,7 @@
     <div class="card-body p-4">
       <!-- User Header -->
       <div class="d-flex align-items-center mb-3">
-        <a routerLink="{{ post.user.uuid }}" class="user-avatar-link">
+        <a routerLink="/profile/{{ post.user.uuid }}" class="user-avatar-link">
           <img
             src="http://localhost:8080/image/{{ post.user.urlPhoto }}"
             alt="User avatar"
@@ -29,7 +29,6 @@
               </small>
             </div>
 
-            <!-- Dropdown Menu -->
             <div class="dropdown">
               <button
                 class="btn btn-link text-secondary p-0 dropdown-toggle-custom"
@@ -69,27 +68,78 @@
           </div>
         </div>
       </div>
+      <div class="mb-3 h3">{{ post.title }}</div>
       <markdown [data]="post.content" class="post-content mb-3"></markdown>
 
-      @if (post.typePhoto == "image") {
-      <div class="post-media-container mb-3">
-        <a class="post-media-link">
-          <img
-            src="http://localhost:8080/image/{{ post.urlPhot }}"
-            class="img-fluid rounded post-image"
-            alt="Post image"
-          />
-        </a>
+      <div class="post-media-gallery">
+        @if (!showAll && post.images) { @if (post.images.length >= 1 && post.images[0].type ==
+        "image") {
+        <div class="blog-media-figure">
+          <a
+            class="blog-image-wrapper"
+            data-bs-toggle="modal"
+            [attr.data-bs-target]="'#imageModal'"
+          >
+            <img
+              [src]="'http://localhost:8080/image/' + post.images[0].url"
+              class="blog-image"
+              alt="Post image"
+              loading="lazy"
+            />
+            <div class="media-overlay">
+              <i class="bi bi-zoom-in"></i>
+            </div>
+          </a>
+        </div>
+
+        }@else if (post.images.length >= 1 && post.images[0].type == "video") {
+        <div class="blog-media-figure">
+          <a
+            class="blog-image-wrapper"
+            data-bs-toggle="modal"
+            [attr.data-bs-target]="'#imageModal'"
+          >
+            <video
+              [src]="'http://localhost:8080/image/' + post.images[0].url"
+              class="blog-image"
+              alt="Post image"
+              loading="lazy"
+              controls
+            ></video>
+            <div class="media-overlay">
+              <i class="bi bi-zoom-in"></i>
+            </div>
+          </a>
+        </div>
+        } } @else { @for (image of post.images; track $index) { @if (image.type == "image") {
+        <figure class="blog-media-figure">
+          <div class="blog-image-wrapper" (click)="openImagePopup($index)">
+            <img
+              [src]="'http://localhost:8080/image/' + image.url"
+              class="blog-image"
+              alt="Blog post image"
+              loading="lazy"
+            />
+            <div class="zoom-icon">
+              <i class="bi bi-zoom-in"></i>
+            </div>
+          </div>
+        </figure>
+        } @else if(image.type == "video") {
+        <figure class="blog-media-figure">
+          <div class="blog-video-wrapper">
+            <video
+              class="blog-video"
+              [src]="'http://localhost:8080/video/' + image.url"
+              controls
+              preload="metadata"
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </figure>
+        } }}
       </div>
-      }@else if(post.typePhoto == "video") {
-      <div class="post-media-container mb-3">
-        <video
-          class="post-video rounded"
-          [src]="'http://localhost:8080/video/' + post.urlPhot"
-          controls
-        ></video>
-      </div>
-      }
 
       <div class="interaction-stats d-flex gap-4 pb-3 border-bottom">
         <span class="stat-item">
@@ -170,7 +220,35 @@
     </div>
   </div>
 </div>
-} @if (errro) {
+@if (showImagePopup) {
+<div class="image-popup-overlay" (click)="closeImagePopup()">
+  <div class="image-popup-container">
+    <button class="popup-close-btn" (click)="closeImagePopup()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+
+    @if (currentImageIndex > 0) {
+    <button class="popup-nav-btn popup-prev-btn" (click)="previousImage($event)">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    } @if (getImageCount() !=1) {
+    <button class="popup-nav-btn popup-next-btn" (click)="nextImage($event)">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+    }
+
+    <div class="popup-image-wrapper">
+      <img
+        [src]="'http://localhost:8080/image/' + post.images[currentImageIndex].url"
+        class="popup-image"
+        alt="Full size image"
+      />
+    </div>
+
+    <div class="popup-counter">{{ currentImageIndex + 1 }} / {{ getImageCount() }}</div>
+  </div>
+</div>
+} } @if (errro) {
 <app-error-show [error]="errro"></app-error-show>
 }@else if (succes) {
 <app-succues-show [succues]="succes"></app-succues-show>

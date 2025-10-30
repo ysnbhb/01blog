@@ -4,7 +4,6 @@ import java.util.Map;
 
 import _blog.com._blog.Entity.User;
 import _blog.com._blog.utils.UserReq;
-
 public class UserConvert {
 
     public static UserReq convertToUserReq(User user) {
@@ -28,6 +27,8 @@ public class UserConvert {
         if (info == null) {
             return null;
         }
+
+        System.out.println(info.get("following") + "------------------");
         UserReq userReq = new UserReq();
         userReq.setDateOfBirth((String) info.get("dateOfBirth"));
         userReq.setUsername((String) info.get("username"));
@@ -36,8 +37,8 @@ public class UserConvert {
         userReq.setUrlPhoto((String) info.get("urlPhoto"));
         userReq.setUuid((String) info.get("uuid"));
         userReq.setRole((String) info.get("role"));
-        userReq.setFollowers((Integer) info.get("follower"));
-        userReq.setFollowing((Integer) info.get("following"));
+        userReq.setFollowers(((Long) info.get("follower")).intValue());
+        userReq.setFollowing(((Long) info.get("following")).intValue());
         return userReq;
     }
 

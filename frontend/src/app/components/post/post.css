@@ -214,16 +214,599 @@
 
 .admin-icon {
   font-size: 0.9rem;
-  color: #0d6efd; 
+  color: #0d6efd;
   transition: color 0.2s ease;
 }
 
 .admin-icon:hover {
-  color: #0a58ca; 
+  color: #0a58ca;
 }
 
 @media (max-width: 768px) {
   .admin-icon {
     font-size: 0.85rem;
+  }
+}
+.blog-media-section {
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.blog-media-figure {
+  margin: 2rem 0;
+  padding: 0;
+  position: relative;
+}
+
+.blog-media-figure:first-child {
+  margin-top: 1.5rem;
+}
+
+.blog-media-figure:last-child {
+  margin-bottom: 1.5rem;
+}
+
+.blog-image-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.blog-image-wrapper:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.blog-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 700px;
+  object-fit: contain;
+  background: #ffffff;
+  cursor: zoom-in;
+  transition: opacity 0.3s ease;
+}
+
+.blog-image:hover {
+  opacity: 0.95;
+}
+
+/* ========================================
+   BLOG VIDEO STYLES
+======================================== */
+
+.blog-video-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  aspect-ratio: 16 / 9;
+}
+
+.blog-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background: #000;
+}
+
+.blog-video::-webkit-media-controls-panel {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+}
+
+/* Zoom Icon */
+.zoom-icon {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.blog-image-wrapper:hover .zoom-icon {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ========================================
+   IMAGE POPUP OVERLAY
+======================================== */
+
+.image-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+  cursor: zoom-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   POPUP CONTAINER
+======================================== */
+
+.image-popup-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+/* ========================================
+   POPUP IMAGE
+======================================== */
+
+.popup-image-wrapper {
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.popup-image {
+  max-width: 100%;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ========================================
+   POPUP CLOSE BUTTON
+======================================== */
+
+.popup-close-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10001;
+}
+
+.popup-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* ========================================
+   POPUP NAVIGATION BUTTONS
+======================================== */
+
+.popup-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10001;
+}
+
+.popup-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.popup-prev-btn {
+  left: 2rem;
+}
+
+.popup-next-btn {
+  right: 2rem;
+}
+
+/* ========================================
+   POPUP COUNTER
+======================================== */
+
+.popup-counter {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  z-index: 10001;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ========================================
+   BLOG VIDEO STYLES
+======================================== */
+
+.blog-video-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  aspect-ratio: 16 / 9;
+}
+
+.blog-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background: #000;
+}
+
+.blog-video::-webkit-media-controls-panel {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+}
+
+/* ========================================
+   FIGURE CAPTION (Optional)
+======================================== */
+
+.blog-media-figure figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-align: center;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ========================================
+   LOADING STATE
+======================================== */
+
+.blog-image.loading,
+.blog-video.loading {
+  background: linear-gradient(90deg, #f0f0f0 0%, #e0e0e0 50%, #f0f0f0 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  min-height: 400px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.blog-media-figure.full-width {
+  margin-left: -1rem;
+  margin-right: -1rem;
+  width: calc(100% + 2rem);
+}
+
+.blog-media-figure.full-width .blog-image-wrapper,
+.blog-media-figure.full-width .blog-video-wrapper {
+  border-radius: 0;
+}
+
+@media (max-width: 992px) {
+  .blog-media-section {
+    margin: 1.5rem 0;
+  }
+
+  .blog-media-figure {
+    margin: 1.5rem 0;
+  }
+
+  .blog-image {
+    max-height: 600px;
+  }
+
+  .image-popup-container {
+    padding: 2rem;
+  }
+
+  .popup-nav-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .popup-prev-btn {
+    left: 1.5rem;
+  }
+
+  .popup-next-btn {
+    right: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-media-section {
+    margin: 1.25rem 0;
+  }
+
+  .blog-media-figure {
+    margin: 1.25rem 0;
+  }
+
+  .blog-image-wrapper,
+  .blog-video-wrapper {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .blog-image {
+    max-height: 500px;
+  }
+
+  .blog-media-figure figcaption {
+    font-size: 0.85rem;
+    padding: 0 0.5rem;
+  }
+
+  .zoom-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+
+  .image-popup-container {
+    padding: 1rem;
+  }
+
+  .popup-close-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .popup-nav-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+  }
+
+  .popup-prev-btn {
+    left: 1rem;
+  }
+
+  .popup-next-btn {
+    right: 1rem;
+  }
+
+  .popup-counter {
+    bottom: 1.5rem;
+    font-size: 0.9rem;
+    padding: 0.625rem 1.25rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .blog-media-section {
+    margin: 1rem 0;
+  }
+
+  .blog-media-figure {
+    margin: 1rem 0;
+  }
+
+  .blog-image-wrapper,
+  .blog-video-wrapper {
+    border-radius: 6px;
+  }
+
+  .blog-image {
+    max-height: 400px;
+  }
+
+  .blog-video-wrapper {
+    aspect-ratio: 16 / 9;
+  }
+
+  .blog-media-figure {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    width: calc(100% + 1rem);
+  }
+
+  .zoom-icon {
+    opacity: 1;
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .popup-nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .popup-prev-btn {
+    left: 0.5rem;
+  }
+
+  .popup-next-btn {
+    right: 0.5rem;
+  }
+
+  .popup-counter {
+    bottom: 1rem;
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .popup-close-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+}
+
+
+
+.blog-image:focus-visible,
+.blog-video:focus-visible {
+  outline: 3px solid #0d6efd;
+  outline-offset: 4px;
+}
+
+@media (prefers-contrast: high) {
+  .blog-image-wrapper,
+  .blog-video-wrapper {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .blog-image-wrapper,
+  .blog-image,
+  .blog-video {
+    transition: none;
+  }
+
+  .blog-image.loading,
+  .blog-video.loading {
+    animation: none;
+    background: #e0e0e0;
+  }
+}
+
+/* ========================================
+   DARK MODE SUPPORT (Optional)
+======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .blog-image-wrapper {
+    background: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .blog-image {
+    background: #000;
+  }
+
+  .blog-media-figure figcaption {
+    color: #adb5bd;
+  }
+}
+
+/* ========================================
+   ELEGANT SPACING BETWEEN CONTENT
+======================================== */
+
+/* If you have text between images */
+.blog-media-figure + p,
+.blog-media-figure + .blog-content {
+  margin-top: 2rem;
+}
+
+p + .blog-media-figure,
+.blog-content + .blog-media-figure {
+  margin-top: 2rem;
+}
+
+/* ========================================
+   LIGHTBOX EFFECT (Optional Enhancement)
+======================================== */
+
+/* Keyboard shortcuts hint (optional) */
+.popup-help-text {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  text-align: center;
+  z-index: 10001;
+  opacity: 0;
+  animation: fadeInOut 3s ease;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
   }
 }

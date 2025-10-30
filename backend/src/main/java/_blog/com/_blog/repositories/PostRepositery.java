@@ -23,6 +23,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
     @Query(value = """
             SELECT
                 p.id,
+                p.title,
                 CAST(p.content AS TEXT) AS content,
                 p.url_photo AS urlPhoto,
                 p.type_photo AS typePhoto,
@@ -47,7 +48,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
             LEFT JOIN reactions l ON l.post_id = p.id
             WHERE p.hide = :hide
             GROUP BY
-                p.id, p.content, p.url_photo, p.type_photo,
+                p.id, p.content, p.url_photo, p.type_photo, p.title,
                 u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at, u.role
             ORDER BY p.created_at DESC
             LIMIT 10 OFFSET :offset
@@ -71,6 +72,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
                 u.last_name AS lastName,
                 u.uuid AS uuid,
                 u.role,
+                p.title,
                 u.url_photo AS userPhoto,
                 u.username AS username,
                 p.created_at AS createdAt,
@@ -87,7 +89,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
             LEFT JOIN reactions l ON l.post_id = p.id
             WHERE p.hide = :hide AND u.uuid = :uuid
             GROUP BY
-                p.id, p.content, p.url_photo, p.type_photo,
+                p.id, p.content, p.url_photo, p.type_photo, p.title,
                 u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at , u.role
             ORDER BY p.created_at DESC
             LIMIT 10 OFFSET :offset
@@ -103,6 +105,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
                 p.type_photo AS typePhoto,
                 p.hide as Ishide,
                 u.name AS name,
+                p.title,
                 u.last_name AS lastName,
                 u.uuid AS uuid,
                 u.url_photo AS userPhoto,
@@ -122,7 +125,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
             LEFT JOIN reactions l ON l.post_id = p.id
             WHERE p.hide = :hide AND p.id = :post_id
             GROUP BY
-                p.id, p.content, p.url_photo, p.type_photo,
+                p.id, p.content, p.url_photo, p.type_photo, p.title,
                 u.name, u.last_name, u.uuid, u.url_photo, u.username, p.created_at , u.role
             ORDER BY p.created_at DESC
             """, nativeQuery = true)
