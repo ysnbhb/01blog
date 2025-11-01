@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UserRes } from '../../../model/User.model';
-import { Notifications } from '../../services/notifications';
+import { NotificationServ } from '../../services/notifications';
 
 @Component({
   selector: 'app-nav-bar',
@@ -25,7 +25,7 @@ export class NavBar {
       },
     });
   }
-  constructor(private rout: Router, private notif: Notifications) {}
+  constructor(private rout: Router, private notif: NotificationServ) {}
   logout() {
     localStorage.removeItem('token');
     this.rout.navigate(['/login']);

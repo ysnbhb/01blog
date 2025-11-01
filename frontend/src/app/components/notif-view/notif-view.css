@@ -1,0 +1,53 @@
+.unread-dot {
+  position: absolute;
+  top: 1rem;
+  left: -8px;
+  width: 12px;
+  height: 12px;
+  background: #0d6efd;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px #eef2ff;
+}
+
+.notification-avatar {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #e9ecef;
+}
+
+.from-user {
+  color: #1c1e21;
+  font-weight: 600;
+}
+
+.notification-content {
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .notification-avatar {
+    width: 40px;
+    height: 40px;
+  }
+  .unread-dot {
+    top: 0.75rem;
+    left: -6px;
+  }
+}
+
+
+@media (max-width: 360px) {
+  .notification-avatar {
+    width: 30px;
+    height: 30px;
+  }
+  .unread-dot {
+    top: 0.5rem;
+    left: -3px;
+  }
+}

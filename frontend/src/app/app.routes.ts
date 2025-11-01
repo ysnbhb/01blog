@@ -15,6 +15,13 @@ export const routes: Routes = [
     loadComponent: () => import('./profile/profile').then((m) => m.Profile),
     title: 'profile',
   },
+
+  {
+    path: 'notifications',
+    loadComponent: () => import('./notifications/notifications').then((m) => m.Notifications),
+    title: 'notifications',
+  },
+
   {
     path: 'create-post',
     loadComponent: () => import('./create-post/create-post').then((m) => m.CreatePost),

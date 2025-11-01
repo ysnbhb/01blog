@@ -50,6 +50,10 @@ public class NotifacationSer {
         }
     }
 
+    public void raedNotifAll(Long userid) throws ProgramExeption {
+        notifacationRepo.updateAll(userid);
+    }
+
     @Async
     @Transactional
     public void setNotification(UserEntity sender, Post post) {

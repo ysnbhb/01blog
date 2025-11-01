@@ -33,4 +33,10 @@ public class NotifacationContral {
         notifacationSer.raedNotif(notifId, userid);
     }
 
+    @PutMapping("raedNotifAll")
+    public void readAll(@RequestAttribute("userId") Long userid) throws Exception {
+        System.out.println(userid);
+        notifacationSer.raedNotifAll(userid);
+    }
+
 }
