@@ -8,6 +8,7 @@ import { ReportPopup } from '../report-popup/report-popup';
 import { SuccuesShow } from '../succues-show/succues-show';
 import { throttle } from '../../../utils/throttle';
 import { UserRes } from '../../../model/User.model';
+import { Post } from '../../services/post';
 
 @Component({
   selector: 'app-posts-container',
@@ -23,8 +24,10 @@ export class PostsContainer implements OnInit {
   errro!: string;
   succues!: string;
   @Input() user!: UserRes;
-  async ngOnInit(): Promise<void> {
-    await this.GetPost();
+
+  constructor(private post: Post) {}
+  ngOnInit(): void {
+    this.GetPost();
   }
 
   handleScroll = throttle((event: Event) => {
@@ -34,23 +37,15 @@ export class PostsContainer implements OnInit {
       this.GetPost();
     }
   }, 1000);
-  async GetPost() {
-    const token = localStorage.getItem('token');
-    try {
-      const res = await fetch(`http://localhost:8080/api/posts?offset=${this.offset}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to fetch posts: ${res.status}`);
-      }
-      const data = await res.json();
-      this.posts.push(...data);
-    } catch (err) {
-      this.setError('Error loading posts');
-    }
+  GetPost() {
+    this.post.getPosts(this.offset).subscribe({
+      next: (data) => {
+        this.posts.push(...data);
+      },
+      error: () => {
+        this.setError('Error loading posts');
+      },
+    });
   }
 
   setSuccues(succues: string) {
@@ -92,7 +87,6 @@ export class PostsContainer implements OnInit {
     }
   }
 
-
   setError(error: string) {
     this.errro = error;
     this.post_id = 0;
@@ -101,25 +95,15 @@ export class PostsContainer implements OnInit {
     }, 2000);
   }
 
-  async removepost() {
-    const token = localStorage.getItem('token');
-    try {
-      const res = await fetch(`http://localhost:8080/api/delete_post?postId=${this.post_id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.ok) {
+  removepost() {
+    this.post.removePost(this.post_id).subscribe({
+      next: () => {
         this.onPostDeleted(this.post_id);
         this.setSuccues('Post deleted successfully.');
-      } else {
-        let data = await res.json();
-        this.setError(data.error);
-      }
-    } catch (err) {
-      this.setError('Error deleting post');
-    }
+      },
+      error: (err) => {
+        this.setError(err.error || 'Error deleting post');
+      },
+    });
   }
 }

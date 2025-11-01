@@ -1,36 +1,38 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Post } from '../../services/post';
+import { User } from '../../services/user';
 
 @Component({
-  selector: 'app-report-popup',
+  selector: 'app-report-user',
   imports: [FormsModule],
-  templateUrl: './report-popup.html',
-  styleUrl: './report-popup.css',
+  templateUrl: './report-user.html',
+  styleUrl: './report-user.css',
 })
-export class ReportPopup {
-  @Output() confirmreport = new EventEmitter<boolean>();
-  @Output() error = new EventEmitter<string>();
+export class ReportUser {
   @Output() succues = new EventEmitter<string>();
-  @Input() postId!: number;
-  constructor(private post: Post) {}
+  @Output() error = new EventEmitter<string>();
+  @Output() confirmreport = new EventEmitter<boolean>();
+  @Input() uuid!: string;
   reportconfirm(confirm: boolean) {
     this.confirmreport.emit(confirm);
   }
+  constructor(private userser: User) {}
 
   onSubmit(form: NgForm) {
     let rep = {
-      postId: this.postId,
+      uuid: this.uuid,
       reason: form.value.reason,
     };
+
     form.reset();
-    this.post.reportUser(rep).subscribe({
+
+    this.userser.reportUser(rep).subscribe({
       next: () => {
-        this.succues.emit('Post reported successfully');
+        this.succues.emit('user reported successfully');
         this.confirmreport.emit(true);
       },
       error: (err) => {
-        this.succues.emit(err.error || 'report Post fieled');
+        this.succues.emit(err.error || 'report user fieled');
         this.confirmreport.emit(true);
       },
     });

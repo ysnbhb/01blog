@@ -40,6 +40,7 @@
   line-height: 1.6 !important;
   color: #2d3748 !important;
   margin-bottom: 0;
+  word-break: break-all;
 }
 
 @media (max-width: 576px) {

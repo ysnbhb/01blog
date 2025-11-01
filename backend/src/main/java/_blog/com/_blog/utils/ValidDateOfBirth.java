@@ -24,7 +24,6 @@ class DateOfBirthValidator implements ConstraintValidator<ValidDateOfBirth, Stri
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        System.out.println(value);
         if (value == null || value.isBlank()) {
             return false;
         }

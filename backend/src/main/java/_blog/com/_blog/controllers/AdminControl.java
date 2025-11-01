@@ -37,7 +37,6 @@ public class AdminControl {
 
     @GetMapping("/users")
     public List<UserReq> getUsers(@RequestParam(defaultValue = "0", name = "offset") int offset) {
-        System.out.println(offset);
         return adminServ.getUsers(offset);
     }
 

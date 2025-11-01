@@ -2,8 +2,6 @@ package _blog.com._blog.services;
 
 import java.util.Map;
 
-// import java.sql.Connection;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +36,8 @@ public class ConnectionSrv {
         }
         return Map.of(
                 "isfollow", !isfollowing,
-                "countOfFollwinf", connectionRepo.countOffolloewr(following.getId()));
+                "followor", connectionRepo.countOffollower(following.getId()) ,
+                "follwining", connectionRepo.countOffollowing(following.getId()));
     }
 
 }

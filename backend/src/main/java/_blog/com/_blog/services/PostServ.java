@@ -123,11 +123,9 @@ public class PostServ {
 
     public List<PostReq> getUserPosts(Long userid, int offset, String uuid) throws ProgramExeption {
         List<Map<String, Object>> posts = postRepositery.getUserPosts(userid, offset, false, uuid);
-        System.out.println("111111111111111111111111111111111111111111111111111111111111111111111");
         return posts
                 .stream()
                 .map((post) -> {
-                    System.out.println(post.toString());
                     PostReq postReq = PostConvert.convertToPostReq(post);
                     List<ImageReq> images = imageRepo.findImgesByPostId(postReq.getId())
                             .stream()

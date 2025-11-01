@@ -41,7 +41,6 @@ export class PostComponent implements OnInit {
     if (!this.showAll && this.post.content.length > 200) {
       this.post.content = this.post.content.slice(0, 200);
     }
-
   }
   async submitComment(form: NgForm) {
     const comment = form.value;
@@ -50,10 +49,11 @@ export class PostComponent implements OnInit {
         form.reset();
         this.succes = 'Comment submitted successfully';
         this.errro = '';
+        this.post.numOfcomment++;
         setTimeout(() => {
           this.succes = '';
         }, 1000);
-         ('Comment created successfully');
+        ('Comment created successfully');
       },
       error: (_) => {
         this.errro = 'Error submitting comment';

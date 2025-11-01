@@ -1,0 +1,134 @@
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1040;
+}
+
+.modal.fade .modal-dialog {
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+  transform: scale(0.7) translateY(-50px);
+  opacity: 0;
+}
+
+.modal.show .modal-dialog {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.modal-dialog {
+  max-width: 500px;
+  margin: 1.75rem auto;
+  position: relative;
+  pointer-events: none;
+}
+
+.modal-dialog-centered {
+  display: flex;
+  align-items: center;
+  min-height: calc(100% - 3.5rem);
+}
+
+/* Modal content - glassy card style */
+.modal-content {
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  border: none;
+}
+
+/* Header with gradient */
+.modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  padding: 20px 26px;
+  border-bottom: none;
+}
+
+.modal-title {
+  font-weight: 600;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-title i {
+  font-size: 1.4rem;
+}
+
+/* Close button */
+.btn-close {
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+  transition: transform 0.3s ease;
+}
+
+.btn-close:hover {
+  transform: rotate(90deg);
+  opacity: 1;
+}
+
+/* Modal body */
+.modal-body {
+  padding: 28px;
+  background-color: #fff;
+  color: #333;
+}
+
+.reason-textarea {
+  resize: none;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.reason-textarea:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 5px rgba(118, 75, 162, 0.5);
+}
+
+.modal-footer {
+  border-top: none;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px;
+  gap: 10px;
+}
+
+.modal-footer .btn {
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.modal-footer .btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+.modal-footer .btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.modal-footer .btn-danger:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+}

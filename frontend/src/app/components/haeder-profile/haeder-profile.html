@@ -27,11 +27,11 @@
             <!-- Stats -->
             <div class="d-flex gap-4 text-center">
               <div class="stat">
-                <strong class="d-block">{{ user.followingCount || 0 }}</strong>
+                <strong class="d-block">{{ user.following || 0 }}</strong>
                 <small class="text-muted">Following</small>
               </div>
               <div class="stat">
-                <strong class="d-block">{{ user.followersCount || 0 }}</strong>
+                <strong class="d-block">{{ user.followers || 0 }}</strong>
                 <small class="text-muted">Followers</small>
               </div>
             </div>
@@ -42,8 +42,8 @@
               <button
                 type="button"
                 class="btn follow-btn px-4"
-                [class.btn-primary]="!user.hascon"
-                [class.btn-outline-primary]="user.hascon"
+                [class.btn-primary]="!user.hasCon"
+                [class.btn-outline-primary]="user.hasCon"
                 (click)="toggleFollow()"
                 [disabled]="isLoading"
               >
@@ -52,13 +52,13 @@
                 } @else {
                 <i
                   class="bi me-1"
-                  [class.bi-person-plus-fill]="!user.hascon"
-                  [class.bi-check-lg]="user.hascon"
+                  [class.bi-person-plus-fill]="!user.hasCon"
+                  [class.bi-check-lg]="user.hasCon"
                 ></i>
                 }
-                <span>{{ user.hascon ? 'Following' : 'Follow' }}</span>
+                <span>{{ user.hasCon ? 'Following' : 'Follow' }}</span>
               </button>
-              <button type="button" class="btn report-btn px-3" >
+              <button type="button" class="btn report-btn px-3" (click)="setReport()">
                 <i class="bi bi-flag-fill me-1"></i>
                 <span>Report</span>
               </button>
@@ -75,3 +75,16 @@
     </div>
   </div>
 </div>
+
+@if (error) {
+<app-error-show [error]="error"></app-error-show>
+} @if (report) {
+<app-report-user
+  (confirmreport)="reported($event)"
+  (error)="setError($event)"
+  (succues)="setSuccus($event)"
+  [uuid]="user.uuid"
+></app-report-user>
+} @if (succuse) {
+<app-succues-show [succues]="succuse"></app-succues-show>
+}

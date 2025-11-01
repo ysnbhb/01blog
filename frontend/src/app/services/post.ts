@@ -16,7 +16,12 @@ export class Post {
       },
     });
   }
-
+  reportUser(form: Object) {
+    let token = localStorage.getItem('token');
+    return this.http.post('http://localhost:8080/api/report_post', JSON.stringify(form), {
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    });
+  }
   create_post(post: FormData): Observable<PostReq> {
     let token = localStorage.getItem('token');
     return this.http.post<PostReq>('http://localhost:8080/api/creat_post', post, {
@@ -29,7 +34,7 @@ export class Post {
   getUserPost(uuid: string, offset: number = 0): Observable<PostReq[]> {
     let token = localStorage.getItem('token');
     console.log(uuid);
-    
+
     return this.http.get<PostReq[]>(
       `http://localhost:8080/api/user_post?uuid=${uuid}&offset=${offset}`,
       {
@@ -38,5 +43,24 @@ export class Post {
         },
       }
     );
+  }
+
+  getPosts(offset: number = 0): Observable<PostReq[]> {
+    let token = localStorage.getItem('token');
+
+    return this.http.get<PostReq[]>(`http://localhost:8080/api/posts?offset=${offset}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  removePost(id: number): Observable<number> {
+    const token = localStorage.getItem('token');
+    return this.http.delete<number>(`http://localhost:8080/api/delete_post?postId=${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 }

@@ -40,6 +40,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Query(value = """
             SELECT
+                u.id,
                 u.name,
                 u.last_name,
                 u.username,

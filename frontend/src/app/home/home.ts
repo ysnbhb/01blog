@@ -4,7 +4,6 @@ import { PostsContainer } from '../components/posts-container/posts-container';
 import { Router } from '@angular/router';
 import { User } from '../services/user';
 import { UserRes } from '../../model/User.model';
-import { ReportPopup } from "../components/report-popup/report-popup";
 
 @Component({
   selector: 'app-home',

@@ -1,7 +1,6 @@
 package _blog.com._blog.repositories;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Notifacation;
+import _blog.com._blog.utils.NotificationRes;
 
 @Repository
 public interface NotifacationRepo extends JpaRepository<Notifacation, Long> {
@@ -26,23 +26,24 @@ public interface NotifacationRepo extends JpaRepository<Notifacation, Long> {
 
         @Query(value = """
                         SELECT
-                            n.id AS notif_id,
-                            n.type,
-                            n.content,
-                            n.post_id,
-                            u1.name AS to_name,
-                            u1.uuid AS to_uuid,
-                            u2.name AS from_name,
-                            u2.uuid AS from_uuid,
-                            n.created_at ,
-                            n.read;
+                            n.id AS id,
+                            n.type AS type,
+                            n.content AS content,
+                            COALESCE(n.post_id, NULL) AS postId,
+                            u1.username AS toUsername,
+                            u1.uuid AS toUuid,
+                            u2.username AS fromUsername,
+                            u2.uuid AS fromUuid,
+                            u2.url_photo AS url,
+                            n.created_at AS createdAt,
+                            n.read AS isRead
                         FROM notifacation n
                         JOIN users u1 ON n.user_id = u1.id
                         JOIN users u2 ON n.from_id = u2.id
-                        WHERE u.user_id = :userid
+                        WHERE n.user_id = :userid
                         ORDER BY n.created_at DESC
                         """, nativeQuery = true)
-        List<Map<String, Object>> findAllNotifactions(@Param("userid") Long userid);
+        List<NotificationRes> findAllNotifactions(@Param("userid") Long userid);
 
         @Query(value = """
                         UPDATE notifacation SET read = true WHERE id = :id

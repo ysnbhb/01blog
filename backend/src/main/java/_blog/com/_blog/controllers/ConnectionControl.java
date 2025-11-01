@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +14,7 @@ import _blog.com._blog.services.ConnectionSrv;
 import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequestMapping("api")
 @RequiredArgsConstructor
 public class ConnectionControl {
     private final ConnectionSrv connectionSrv;

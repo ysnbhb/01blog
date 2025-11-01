@@ -27,8 +27,6 @@ public class UserConvert {
         if (info == null) {
             return null;
         }
-
-        System.out.println(info.get("following") + "------------------");
         UserReq userReq = new UserReq();
         userReq.setDateOfBirth((String) info.get("dateOfBirth"));
         userReq.setUsername((String) info.get("username"));

@@ -1,8 +1,6 @@
 package _blog.com._blog.controllers;
 
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import _blog.com._blog.services.NotifacationSer;
+import _blog.com._blog.utils.NotificationRes;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -20,7 +19,7 @@ public class NotifacationContral {
     private final NotifacationSer notifacationSer;
 
     @GetMapping("notifacition")
-    public List<Map<String, Object>> getNotifacation(@RequestAttribute("userId") Long id) {
+    public List<NotificationRes> getNotifacation(@RequestAttribute("userId") Long id) {
         return notifacationSer.findAllNotifactions(id);
     }
 

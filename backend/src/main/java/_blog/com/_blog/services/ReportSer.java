@@ -47,7 +47,7 @@ public class ReportSer {
     @Transactional
     public void reportUser(ReportReq report, UserEntity user) throws ProgramExeption {
         UserEntity user2 = userRepository.findByUuid(report.getUuid())
-                .orElseThrow(() -> new ProgramExeption(400, "Post not found"));
+                .orElseThrow(() -> new ProgramExeption(400, "User not found"));
         Report report2 = new Report();
         report2.setReportedUser(user2);
         report2.setReason(report.getReason());

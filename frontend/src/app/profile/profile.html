@@ -1,3 +1,11 @@
+@if (post_id) {
+<app-delete-post-popup (confirm)="confirmDelete($event)"></app-delete-post-popup>
+} @if(errro) {
+<app-error-show [error]="errro"></app-error-show>
+} @if (succues) {
+<app-succues-show [succues]="succues"></app-succues-show>
+}
+
 <div class="app-layout">
   @if (user) {
   <div class="d-flex h-100">
@@ -8,12 +16,15 @@
     <app-haeder-profile [user]="userProfile"></app-haeder-profile>
     }
     <div class="container profile">
-      <div class="row f-flex justify-content-center scrollable-row">
+      <div class="row f-flex justify-content-center scrollable-row" (scroll)="handleScroll($event)">
         @for ( post of posts; track post.id) {
         <app-post
           class="d-flex justify-content-center align-items-center flex-column"
           [post]="post"
           [user]="user"
+          (remove)="addPost($event)"
+          [user]="user"
+          (report)="setReport($event)"
         />
         }
       </div>
@@ -21,3 +32,12 @@
   </div>
   }
 </div>
+
+@if (isreport) {
+<app-report-popup
+  (confirmreport)="reported($event)"
+  (error)="setError($event)"
+  (succues)="setSuccues($event)"
+  [postId]="post_id"
+></app-report-popup>
+}

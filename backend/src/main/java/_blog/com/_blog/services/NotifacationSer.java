@@ -1,8 +1,6 @@
 package _blog.com._blog.services;
 
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +12,7 @@ import _blog.com._blog.Exception.ProgramExeption;
 import _blog.com._blog.repositories.ConnectionRepo;
 import _blog.com._blog.repositories.NotifacationRepo;
 import _blog.com._blog.repositories.UserRepository;
+import _blog.com._blog.utils.NotificationRes;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -73,8 +72,8 @@ public class NotifacationSer {
         } while (listOfIds.size() == 10);
     }
 
-    public List<Map<String, Object>> findAllNotifactions(Long userid) {
-        List<Map<String, Object>> notfication = notifacationRepo.findAllNotifactions(userid);
+    public List<NotificationRes> findAllNotifactions(Long userid) {
+        List<NotificationRes> notfication = notifacationRepo.findAllNotifactions(userid);
         return notfication;
     }
 

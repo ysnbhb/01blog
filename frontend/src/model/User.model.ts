@@ -7,9 +7,9 @@ export interface UserRes {
   urlPhoto: string;
   role: string;
   mayAcount: boolean;
-  hascon: boolean;
+  hasCon: boolean;
   status?: null | string;
   dateOfBirth: string;
-  followersCount: number;
-  followingCount: number;
+  followers: number;
+  following: number;
 }
