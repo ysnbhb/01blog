@@ -40,14 +40,14 @@
   box-shadow: 0 0 0 0.3rem rgba(13, 110, 253, 0.15);
 }
 
-.markdown-body {
+/* .markdown-body {
   background: #f8f9fa;
   border-radius: 1rem;
   max-height: 500px;
   overflow-y: auto;
   font-size: 1.05rem;
   line-height: 1.7;
-}
+} */
 
 .file-upload-area {
   border-color: #cbd5e0;

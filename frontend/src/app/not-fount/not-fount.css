@@ -1,0 +1,78 @@
+/* ========== 404 PAGE ========== */
+.not-found-container {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.display-1 {
+  font-size: 8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #0d6efd, #0a58ca);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.display-5 {
+  font-size: 2.5rem;
+}
+
+.lead {
+  font-size: 1.25rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Buttons */
+.btn {
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0d6efd, #0a58ca);
+  border: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0a58ca, #084298);
+}
+
+/* Search Box */
+.search-box .form-control {
+  border: 2px solid #dee2e6;
+  padding-left: 3.5rem;
+  height: 56px;
+}
+
+.search-box .form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+.search-box .input-group-text {
+  z-index: 3;
+  background: transparent;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .display-1 {
+    font-size: 5rem;
+  }
+  .display-5 {
+    font-size: 2rem;
+  }
+  .btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}

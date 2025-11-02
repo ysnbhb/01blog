@@ -44,7 +44,7 @@ public class NotifacationSer {
     public void raedNotif(Long nofifId, Long userid) throws ProgramExeption {
         Notifacation notif = notifacationRepo.findById(nofifId).orElse(null);
         if (notif != null && notif.getUser().getId().equals(userid)) {
-            notifacationRepo.updateRead(userid);
+            notifacationRepo.updateRead(nofifId);
         } else {
             throw new ProgramExeption(403, "You are not authorized to read this notification");
         }

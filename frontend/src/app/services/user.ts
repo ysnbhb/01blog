@@ -24,6 +24,13 @@ export class User {
     });
   }
 
+  searchUsers(query: string): Observable<UserRes[]> {
+    let token = localStorage.getItem('token');
+    return this.http.get<UserRes[]>(`http://localhost:8080/api/search?query=${query}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+
   follow(uuid: string): Observable<any> {
     let token = localStorage.getItem('token');
     return this.http.post<any>(`http://localhost:8080/api/follow?uuid=${uuid}`, null, {

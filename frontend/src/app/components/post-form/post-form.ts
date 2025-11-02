@@ -4,14 +4,8 @@ import { Post } from '../../services/post';
 import { PostReq } from '../../../model/Post.model';
 import { marked } from 'marked';
 import { MarkdownComponent } from "ngx-markdown";
-interface MediaFile {
-  id: string;
-  file: File;
-  preview: string;
-  name: string;
-  size: number;
-  isImage: boolean;
-}
+import { MediaFile } from '../../../model/MediaFile.model';
+
 
 @Component({
   selector: 'app-post-form',
@@ -77,8 +71,6 @@ export class PostForm {
           id: this.generateId(),
           file,
           preview: reader.result as string,
-          name: file.name,
-          size: file.size,
           isImage: file.type.startsWith('image/'),
         });
       };

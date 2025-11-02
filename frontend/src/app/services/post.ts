@@ -31,6 +31,15 @@ export class Post {
     });
   }
 
+  updatePost(post: FormData) {
+    let token = localStorage.getItem('token');
+    return this.http.put('http://localhost:8080/api/updatePost', post, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
   getUserPost(uuid: string, offset: number = 0): Observable<PostReq[]> {
     let token = localStorage.getItem('token');
     console.log(uuid);

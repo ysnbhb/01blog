@@ -22,11 +22,11 @@
       </li>
 
       <li class="nav-item">
-        <a routerLink="/notifications" class="nav-link d-flex align-items-center position-relative">
+        <a routerLink="/notifications" class="nav-link d-flex align-items-center position-relative" routerLinkActive="active">
           <i class="bi bi-bell fs-5"></i>
-          @if (countofnotifs > 0) {
+          @if (countofnotifs! > 0) {
           <span class="notification-badge">
-            {{ countofnotifs > 99 ? '99+' : countofnotifs }}
+            {{ countofnotifs! > 99 ? '99+' : countofnotifs }}
           </span>
           }
 
@@ -35,7 +35,7 @@
       </li>
 
       <li class="nav-item">
-        <a href="#search" class="nav-link d-flex align-items-center">
+        <a routerLink="/search" class="nav-link d-flex align-items-center" routerLinkActive="active">
           <i class="bi bi-search fs-5"></i>
           <span class="ms-2 d-none d-sm-inline">Search</span>
         </a>

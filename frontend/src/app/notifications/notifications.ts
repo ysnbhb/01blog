@@ -7,6 +7,7 @@ import { NotificationServ } from '../services/notifications';
 import { ErrorShow } from '../components/error-show/error-show';
 import { Notification } from '../../model/Notifaction.model';
 import { NotifView } from '../components/notif-view/notif-view';
+import { queueScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-notifications',
@@ -18,9 +19,16 @@ export class Notifications implements OnInit {
   user!: UserRes;
   notifications!: Notification[];
   error = '';
+  countNotif = 0;
   constructor(private userSer: User, private router: Router, private notifServ: NotificationServ) {}
 
   ngOnInit(): void {
+    this.notifServ.getcount().subscribe({
+      next: (count: number) => {
+        this.countNotif = count;
+      },
+    });
+
     this.userSer.getUser().subscribe({
       next: (user: UserRes) => {
         this.user = user;
@@ -33,9 +41,38 @@ export class Notifications implements OnInit {
       next: (data: Notification[]) => {
         this.notifications = data;
       },
-      error: () => {},
+      error: () => {
+        this.setError('error read all notifications');
+      },
     });
   }
+
+  click(Notification: Notification) {
+    this.notifServ.readOneNotif(Notification.id).subscribe({
+      next: () => {
+        this.notifications = this.notifications.map((notif) => {
+          if (notif.id == Notification.id) {
+            return {
+              ...notif,
+              isRead: true,
+            };
+          } else {
+            return notif;
+          }
+        });
+
+        if (Notification.type == 'post') {
+          this.router.navigate(['/post'], { queryParams: { postId: Notification.postId } });
+        } else if (Notification.type == 'follow') {
+          this.router.navigate(['/profile', Notification.fromUuid]);
+        }
+      },
+      error: (err) => {
+        this.setError('Failed to mark all as read');
+      },
+    });
+  }
+
   readAll() {
     this.notifServ.readAll().subscribe({
       next: () => {
@@ -43,6 +80,7 @@ export class Notifications implements OnInit {
           ...notif,
           isRead: true,
         }));
+        this.countNotif = 0;
       },
       error: (err) => {
         this.setError('Failed to mark all as read');

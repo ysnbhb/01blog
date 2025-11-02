@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import _blog.com._blog.Entity.Image;
 // import _blog.com._blog.Entity.Image;
 import _blog.com._blog.Entity.Post;
 import _blog.com._blog.Entity.UserEntity;
@@ -41,7 +42,6 @@ public class PostServ {
         this.imageRepo = imageRepo;
     }
 
-    @Transactional
     public Post save(PostReq postReq, UserEntity user) throws ProgramExeption {
         var photo = postReq.getPhoto();
 
@@ -91,6 +91,61 @@ public class PostServ {
     }
 
     @Transactional
+    public void update(PostReq postReq, UserEntity user, String[] deletePhoto) throws ProgramExeption {
+        var photo = postReq.getPhoto();
+        Post postupdate = postRepositery.findById(postReq.getId())
+                .orElseThrow(() -> new ProgramExeption(400, "Post not fount"));
+        if (postupdate.getUser().getId() != user.getId() || postupdate.isHide()) {
+            throw new ProgramExeption(400, "You can't update this post");
+        }
+        List<Image> images = imageRepo.findImgesByPostId(postupdate.getId());
+
+        if (photo != null && deletePhoto != null && photo.length + images.size() - deletePhoto.length > 10) {
+            throw new ProgramExeption(400, "Maximum 10 files allowed");
+
+        }
+        if (photo != null && photo.length > 0) {
+            if (postReq.getImages() == null) {
+                postReq.setImages(new ArrayList<>());
+            }
+
+            for (MultipartFile file : photo) {
+                if (file.getSize() > 50 * 1024 * 1024) {
+                    throw new ProgramExeption(400, "File size must be less than 50MB");
+                }
+                String url;
+                String type;
+                try {
+                    Upload.isRealPhoto(file);
+                    url = Upload.saveImage(file);
+                    type = "image";
+                } catch (Exception e) {
+                    if (Upload.isLikelyVideo(file)) {
+                        url = Upload.saveVideo(file);
+                        type = "video";
+                    } else {
+                        throw new ProgramExeption(400, "File is neither a valid image nor a valid video");
+                    }
+                }
+                postReq.getImages().add(new ImageReq(url, type));
+            }
+        }
+        if (deletePhoto != null) {
+            for (String img : deletePhoto) {
+                imageRepo.deleteByUrl(img);
+            }
+        }
+        if (postReq.getImages() != null) {
+            for (ImageReq img : postReq.getImages()) {
+                imageRepo.save(ImageCovert.convertToImageEntity(img, postupdate));
+            }
+        }
+        postupdate.setContent(postReq.getContent());
+        postupdate.setTitle(postReq.getTitle());
+        postRepositery.save(postupdate);
+    }
+
+    @Transactional
     public void delete(long Postid, UserEntity user) throws ProgramExeption {
         Post Post = postRepositery.findById(Postid)
                 .orElseThrow(() -> new ProgramExeption(400, "Post not found"));
@@ -100,6 +155,7 @@ public class PostServ {
             notifacationSer.deleteNotifactionByPostid(Postid);
             commentsRepositories.deleteByPostid(Postid);
             reportRepostiry.deleteByPost(Postid);
+            imageRepo.deleteImgesByPostId(Postid);
             postRepositery.deleteById(Postid);
         } else {
             throw new ProgramExeption(400, "you can't delet this post");

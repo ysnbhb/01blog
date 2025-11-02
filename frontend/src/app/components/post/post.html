@@ -1,5 +1,5 @@
 @if (post) {
-<div class="col-md-10 col-lg-7 comment">
+<div class="col-md-10  comment">
   <div class="card post-card mb-4 shadow-sm border-0">
     <div class="card-body p-4">
       <!-- User Header -->
@@ -25,7 +25,7 @@
                 </div>
               </a>
               <small class="text-muted post-timestamp">
-                <i class="bi bi-clock me-1"></i>{{ post.createdAt }}
+                <i class="bi bi-clock me-1"></i>{{ post.createdAt | formatDate }}
               </small>
             </div>
 
@@ -45,7 +45,7 @@
                 @if (post.user.uuid == user.uuid || user.role == 'ADMIN') { @if (post.user.uuid ==
                 user.uuid) {
                 <li>
-                  <a class="dropdown-item">
+                  <a class="dropdown-item" routerLink="/update" [queryParams]="{ postId: post.id }">
                     <i class="bi bi-pencil-square me-2 text-primary"></i>Update
                   </a>
                 </li>
@@ -69,7 +69,10 @@
         </div>
       </div>
       <div class="mb-3 h3">{{ post.title }}</div>
-      <markdown [data]="post.content" class="post-content mb-3"></markdown>
+      <article class="markdown-body p-4 border rounded-3 bg-light">
+        <markdown [data]="post.content"></markdown>
+      </article>
+      <!-- <markdown [data]="post.content" class="post-content mb-3"></markdown> -->
 
       <div class="post-media-gallery">
         @if (!showAll && post.images) { @if (post.images.length >= 1 && post.images[0].type ==

@@ -12,10 +12,10 @@
       <h6 class="fw-bold mb-0 text-dark fs-5 d-flex align-items-center me-2">
         {{ comment.user.username }}
         @if (comment.user.role === 'ADMIN') {
-          <i class="bi bi-shield-fill-check text-primary ms-2" title="Admin"></i>
+        <i class="bi bi-shield-fill-check text-primary ms-2" title="Admin"></i>
         }
       </h6>
-      <small class="text-muted fw-medium">{{ comment.createdAt }}</small>
+      <small class="text-muted fw-medium">{{ comment.createdAt | formatDate }}</small>
     </div>
     <p class="comment-content mb-0 text-dark lh-base fs-6">
       {{ comment.content }}

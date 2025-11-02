@@ -80,6 +80,13 @@ export class Profile implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.uuid = params.get('uuid') || '';
+      this.usr.getProfile(this.uuid).subscribe({
+        next: (user: UserRes) => {
+          this.userProfile = user;
+        },
+        error: () => {},
+      });
+      this.GetPost();
     });
     this.usr.getUser().subscribe({
       next: (data: UserRes) => {
@@ -89,13 +96,6 @@ export class Profile implements OnInit {
         this.router.navigate(['/login']);
       },
     });
-    this.usr.getProfile(this.uuid).subscribe({
-      next: (user: UserRes) => {
-        this.userProfile = user;
-      },
-      error: () => {},
-    });
-    this.GetPost();
   }
   setSuccues(succues: string) {
     this.succues = succues;

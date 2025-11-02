@@ -11,9 +11,11 @@ import { NotificationServ } from '../../services/notifications';
 })
 export class NavBar {
   @Input() user!: UserRes;
-  countofnotifs: number = 0;
+  @Input() countofnotifs: number | null = null;
   ngOnInit(): void {
-    this.loadNotificationsCount();
+    if (this.countofnotifs == null) {
+      this.loadNotificationsCount();
+    }
   }
   loadNotificationsCount(): void {
     this.notif.getcount().subscribe({

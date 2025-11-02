@@ -1,0 +1,68 @@
+.post-form-card {
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 1.5rem !important;
+}
+.post-form-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+.title-input {
+  font-size: 1.5rem;
+  font-weight: 600;
+  border: 2px solid #e9ecef;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+}
+.title-input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.3rem rgba(13, 110, 253, 0.15);
+}
+
+.markdown-editor {
+  min-height: 300px;
+  font-family: 'Courier New', monospace;
+  border: 2px solid #e9ecef;
+  border-radius: 1rem;
+  padding: 1.25rem;
+}
+.markdown-editor:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.3rem rgba(13, 110, 253, 0.15);
+}
+
+/* .markdown-body {
+  max-height: 500px;
+  overflow-y: auto;
+} */
+
+.file-upload-area {
+  border-color: #cbd5e0;
+  background: #f8fafc;
+  transition: all 0.3s;
+}
+.file-upload-area:hover,
+.file-upload-area.dragover {
+  border-color: #0d6efd;
+  background: #eef2ff;
+}
+
+.submit-btn {
+  height: 56px;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #198754, #157347);
+}
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(25, 135, 84, 0.3);
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    padding: 1.5rem !important;
+  }
+  .title-input {
+    font-size: 1.3rem;
+  }
+}

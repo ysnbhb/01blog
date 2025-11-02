@@ -1,18 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Notification } from '../../../model/Notifaction.model';
-import { getTimeDifferenceInHours } from '../../../utils/formatDate';
 import { RouterLink } from '@angular/router';
+import { FormatDatePipe } from '../../pipe/format-date-pipe';
 
 @Component({
   selector: 'app-notif-view',
-  imports: [RouterLink],
+  imports: [RouterLink , FormatDatePipe],
   templateUrl: './notif-view.html',
   styleUrl: './notif-view.css',
 })
-export class NotifView implements OnInit {
+export class NotifView {
   @Input() notif!: Notification;
-  ngOnInit(): void {
-    console.log(this.notif);
-    this.notif.createdAt = getTimeDifferenceInHours(this.notif.createdAt);
-  }
 }

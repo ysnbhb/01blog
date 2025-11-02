@@ -58,7 +58,7 @@ public class UserController {
         return userServ.profile(uuid, user);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/api/search")
     public List<UserReq> searchUsers(@RequestParam("query") String query) {
         return userServ.searchUsers(query);
     }

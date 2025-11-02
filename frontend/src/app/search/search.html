@@ -1,0 +1,86 @@
+<div class="app-layout">
+  @if (user) {
+  <div class="d-flex h-100">
+    <app-nav-bar [user]="user"></app-nav-bar>
+    <div class="flex-grow-1 overflow-auto bg-light">
+      <div class="container py-4 py-md-5">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <h4 class="mb-0 fw-bold d-flex align-items-center">
+            <i class="bi bi-search me-2 text-primary"></i>
+            Search Users
+          </h4>
+        </div>
+        <div class="mb-4">
+          <div class="input-group input-group-lg search-input-group">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="bi bi-search text-muted"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control border-start-0 ps-0"
+              placeholder="Search by name or username..."
+              [(ngModel)]="searchQuery"
+              (keyup.enter)="search()"
+              [ngModelOptions]="{ standalone: true }"
+            />
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="search()"
+              [disabled]="isSearching"
+            >
+              @if (isSearching) {
+              <span class="spinner-border spinner-border-sm"></span>
+              } @else { Search }
+            </button>
+          </div>
+        </div>
+
+        @if (users) {
+        <div class="search-results">
+          @if (users.length === 0) {
+          <div class="text-center py-5 text-muted">
+            <i class="bi bi-people display-4"></i>
+            <p class="mt-3 fs-5">No users found</p>
+            <p class="text-muted small">Try a different name or username.</p>
+          </div>
+          } @else {
+          <div class="row g-3">
+            @for (u of users; track u.uuid) {
+            <a class="col-12" routerLink="/profile/{{ u.uuid }}">
+              <div
+                class="user-card d-flex align-items-center p-3 rounded-3 shadow-sm bg-white"
+                role="button"
+              >
+                <a class="flex-shrink-0 me-3" routerLink="/profile/{{ u.uuid }}">
+                  <img
+                    [src]="'http://localhost:8080/image/' + u.urlPhoto"
+                    alt="{{ u.username }}"
+                    class="user-avatar"
+                  />
+                </a>
+                <div class="flex-grow-1">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 class="mb-0 fw-semibold text-dark">
+                        {{ u.name }} {{ u.lastName }}
+                        @if (u.role === 'ADMIN') {
+                        <i class="bi bi-shield-fill-check text-primary ms-1" title="Admin"></i>
+                        }
+                      </h6>
+                      <p class="text-muted mb-0 small">@{{ u.username }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            }
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  }
+</div>

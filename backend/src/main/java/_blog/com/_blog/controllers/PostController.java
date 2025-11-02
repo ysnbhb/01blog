@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,15 @@ public class PostController {
         UserEntity user = (UserEntity) request.getAttribute("user");
         Post post = postServ.save(postReq, user);
         return ResponseEntity.ok(PostConvert.convertToPostReq(post));
+    }
+
+    @PutMapping(path = "updatePost")
+    public void updatePost(@Valid @ModelAttribute PostReq postReq,
+            @RequestParam(name = "deletePhoto", defaultValue = "null") String[] deletePhoto, HttpServletRequest request)
+            throws Exception {
+        UserEntity user = (UserEntity) request.getAttribute("user");
+        postServ.update(postReq, user, deletePhoto);
+
     }
 
     @DeleteMapping(path = "delete_post")

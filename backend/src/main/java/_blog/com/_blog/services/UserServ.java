@@ -69,7 +69,7 @@ public class UserServ {
 
     public UserReq profile(String uuid, UserEntity me) throws Exception {
         Map<String, Object> info = userRepository.findUser(uuid);
-        if (info == null) {
+        if (info == null || info.size() == 0) {
             throw new ProgramExeption(400, "User not found");
         }
         UserReq user = UserConvert.convertToUserReq(info);

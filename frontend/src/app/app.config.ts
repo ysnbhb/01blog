@@ -19,9 +19,11 @@ import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-rust';
 import 'prismjs/components/prism-go';
 import 'prismjs/components/prism-c';
+import 'prismjs/components/prism-sql';
 import 'prismjs/components/prism-markdown';
 
 export const appConfig: ApplicationConfig = {
+  
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),

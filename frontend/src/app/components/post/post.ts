@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PostReq } from '../../../model/Post.model';
-import { getTimeDifferenceInHours } from '../../../utils/formatDate';
 import { CommonModule } from '@angular/common';
 import { UserRes } from '../../../model/User.model';
 import { MarkdownModule } from 'ngx-markdown';
@@ -9,10 +8,11 @@ import { ErrorShow } from '../error-show/error-show';
 import { SuccuesShow } from '../succues-show/succues-show';
 import { RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
+import { FormatDatePipe } from '../../pipe/format-date-pipe';
 
 @Component({
   selector: 'app-post',
-  imports: [CommonModule, MarkdownModule, ErrorShow, SuccuesShow, RouterLink, FormsModule],
+  imports: [CommonModule, MarkdownModule, ErrorShow, SuccuesShow, RouterLink, FormsModule , FormatDatePipe],
   templateUrl: './post.html',
   styleUrl: './post.css',
 })
@@ -37,7 +37,7 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.post.createdAt = getTimeDifferenceInHours(this.post.createdAt);
+    // this.post.createdAt = getTimeDifferenceInHours(this.post.createdAt);
     if (!this.showAll && this.post.content.length > 200) {
       this.post.content = this.post.content.slice(0, 200);
     }

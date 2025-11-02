@@ -15,7 +15,11 @@ export const routes: Routes = [
     loadComponent: () => import('./profile/profile').then((m) => m.Profile),
     title: 'profile',
   },
-
+  {
+    path: 'search',
+    loadComponent: () => import('./search/search').then((m) => m.Search),
+    title: 'search',
+  },
   {
     path: 'notifications',
     loadComponent: () => import('./notifications/notifications').then((m) => m.Notifications),
@@ -38,8 +42,18 @@ export const routes: Routes = [
     title: 'regiter',
   },
   {
+    path: 'update',
+    loadComponent: () => import('./update-post/update-post').then((m) => m.UpdatePost),
+    title: 'update post',
+  },
+  {
     path: 'login',
     loadComponent: () => import('./login/login').then((m) => m.Login),
     title: 'login',
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./not-fount/not-fount').then((m) => m.NotFount),
+    title: 'not found',
   },
 ];

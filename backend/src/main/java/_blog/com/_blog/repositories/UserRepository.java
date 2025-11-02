@@ -64,13 +64,15 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             """, nativeQuery = true)
     Map<String, Object> findUser(@Param("uuid") String uuid);
 
-    @Query(value = """
+    @Query("""
                 SELECT u
-                FROM users u
+                FROM UserEntity AS u
                 WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', :query, '%'))
                    OR LOWER(u.name) LIKE LOWER(CONCAT('%', :query, '%'))
                    OR LOWER(u.lastName) LIKE LOWER(CONCAT('%', :query, '%'))
-            """, nativeQuery = true)
+                   OR LOWER (CONCAT(u.lastName , " " ,u.name )) LIKE LOWER(CONCAT('%', :query, '%'))
+                   OR LOWER (CONCAT(u.name , " " ,u.lastName )) LIKE LOWER(CONCAT('%', :query, '%'))
+            """)
     List<UserEntity> searchUsers(@Param("query") String query);
 
 }
