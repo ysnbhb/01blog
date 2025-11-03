@@ -24,6 +24,13 @@ export class User {
     });
   }
 
+  deleteUser(uuid: string) {
+    let token = localStorage.getItem('token');
+    return this.http.delete(`http://localhost:8080/admin/delete_user?uuid=${uuid}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+
   searchUsers(query: string): Observable<UserRes[]> {
     let token = localStorage.getItem('token');
     return this.http.get<UserRes[]>(`http://localhost:8080/api/search?query=${query}`, {

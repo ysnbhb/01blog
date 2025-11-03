@@ -19,10 +19,6 @@ public interface NotifacationRepo extends JpaRepository<Notifacation, Long> {
         @Query(value = "DELETE FROM notifacation WHERE (user_id=:userId AND from_id= :fromId AND type='follow') OR (user_id=:fromId AND from_id= :userId AND type='post')", nativeQuery = true)
         void deleteNotifaction(@Param("userId") Long userid, @Param("fromId") Long from);
 
-        @Modifying
-        @Transactional
-        @Query(value = "DELETE FROM notifacation WHERE post_id=:post_id ", nativeQuery = true)
-        void deleteNotifactionByPostid(@Param("post_id") Long post_id);
 
         @Query(value = """
                         SELECT

@@ -11,6 +11,11 @@ export const routes: Routes = [
     title: 'comments',
   },
   {
+    path: 'admin/users',
+    loadComponent: () => import('./users/users').then((m) => m.Users),
+    title: 'users',
+  },
+  {
     path: 'profile/:uuid',
     loadComponent: () => import('./profile/profile').then((m) => m.Profile),
     title: 'profile',
@@ -19,6 +24,12 @@ export const routes: Routes = [
     path: 'search',
     loadComponent: () => import('./search/search').then((m) => m.Search),
     title: 'search',
+  },
+
+  {
+    path: 'admin',
+    loadComponent: () => import('./dashboard/dashboard').then((m) => m.Dashboard),
+    title: 'dash Boroad',
   },
   {
     path: 'notifications',

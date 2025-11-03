@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Report;
 
@@ -31,6 +29,23 @@ public interface ReportRepostiry extends JpaRepository<Report, Long> {
             LIMIT 20 OFFSET :offset
             """, nativeQuery = true)
     List<Map<String, Object>> findReportsUser(@Param("offset") int offset);
+
+
+    @Query(value = """
+            SELECT
+               COUNT(*)
+            FROM report r
+            WHERE r.post_id IS NULL
+            """, nativeQuery = true)
+    int CountReportsUser();
+
+    @Query(value = """
+            SELECT
+               COUNT(*)
+            FROM report r
+            WHERE r.to_userid IS NULL
+            """, nativeQuery = true)
+    int CountReportsPost();
 
     @Query(value = """
             SELECT
@@ -58,9 +73,4 @@ public interface ReportRepostiry extends JpaRepository<Report, Long> {
             LIMIT 20 OFFSET :offset
             """, nativeQuery = true)
     List<Map<String, Object>> findReportsPost(@Param("offset") int offset);
-
-    @Modifying
-    @Transactional
-    @Query(value = "DELETE  FROM report WHERE post_id = :postId", nativeQuery = true)
-    void deleteByPost(@Param("postId") long post_id);
 }

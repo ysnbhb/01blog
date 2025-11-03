@@ -11,5 +11,4 @@ public interface ImageRepo extends JpaRepository<Image, Long> {
     List<Image> findImgesByPostId(Long postId);
 
     void deleteByUrl(String url);
-    void deleteImgesByPostId(Long post_id);
 }

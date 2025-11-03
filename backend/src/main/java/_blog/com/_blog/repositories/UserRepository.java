@@ -30,8 +30,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByEmail(String username);
 
-    @Query(value = "SELECT * FROM users ORDER BY created_at LIMIT 10 OFFSET :offset", nativeQuery = true)
-    List<UserEntity> findAllWithOffset(@Param("offset") int offset);
+    @Query(value = "SELECT * FROM users ORDER BY created_at LIMIT :limit OFFSET :offset", nativeQuery = true)
+    List<UserEntity> findAllWithOffset(@Param("offset") int offset, @Param("limit") int limit);
 
     @Modifying
     @Transactional
@@ -74,5 +74,12 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
                    OR LOWER (CONCAT(u.name , " " ,u.lastName )) LIKE LOWER(CONCAT('%', :query, '%'))
             """)
     List<UserEntity> searchUsers(@Param("query") String query);
+
+    @Query(value = """
+            SELECT COUNT(*)
+            FROM users
+            WHERE created_at >= NOW() - INTERVAL '30 days'
+            """, nativeQuery = true)
+    int userGrowth();
 
 }

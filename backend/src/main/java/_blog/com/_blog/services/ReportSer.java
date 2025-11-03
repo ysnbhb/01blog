@@ -63,4 +63,6 @@ public class ReportSer {
     public List<Map<String, Object>> findReportUser(int offset) {
         return reportRepostiry.findReportsUser(offset);
     }
+
+ 
 }

@@ -27,18 +27,12 @@ import _blog.com._blog.utils.Upload;
 public class PostServ {
     private final PostRepositery postRepositery;
     private final NotifacationSer notifacationSer;
-    private final ReactionRepo reactionRepo;
-    private final CommentsRepositories commentsRepositories;
-    private final ReportRepostiry reportRepostiry;
     private final ImageRepo imageRepo;
 
     public PostServ(PostRepositery PostRepositery, NotifacationSer notifacationSer, ReactionRepo reactionRepo,
             CommentsRepositories commentsRepositories, ReportRepostiry reportRepostiry, ImageRepo imageRepo) {
         this.postRepositery = PostRepositery;
         this.notifacationSer = notifacationSer;
-        this.reactionRepo = reactionRepo;
-        this.commentsRepositories = commentsRepositories;
-        this.reportRepostiry = reportRepostiry;
         this.imageRepo = imageRepo;
     }
 
@@ -151,11 +145,6 @@ public class PostServ {
                 .orElseThrow(() -> new ProgramExeption(400, "Post not found"));
 
         if ((Post.getUser().getId() == user.getId() && !Post.isHide()) || user.getRole() == "ADMIN") {
-            reactionRepo.deleteByPost(Postid);
-            notifacationSer.deleteNotifactionByPostid(Postid);
-            commentsRepositories.deleteByPostid(Postid);
-            reportRepostiry.deleteByPost(Postid);
-            imageRepo.deleteImgesByPostId(Postid);
             postRepositery.deleteById(Postid);
         } else {
             throw new ProgramExeption(400, "you can't delet this post");

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Value;
 // import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,11 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
     private static final long EXPIRATION_TIME = TimeUnit.DAYS.toMillis(30);
-
-    private String secretKey = "3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b";
+    @Value("${jwt.token}")
+    private String secretKey;
 
     private Key getSigningKey() {
+        System.out.println(secretKey);
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
@@ -34,7 +36,7 @@ public class JwtService {
         claims.put("uuid", user.getUuid());
 
         long now = System.currentTimeMillis();
-        
+
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(String.valueOf(user.getId()))

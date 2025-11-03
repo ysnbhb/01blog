@@ -37,10 +37,6 @@ public class NotifacationSer {
         notifacationRepo.deleteNotifaction(userid, fromid);
     }
 
-    public void deleteNotifactionByPostid(Long postid) {
-        notifacationRepo.deleteNotifactionByPostid(postid);
-    }
-
     public void raedNotif(Long nofifId, Long userid) throws ProgramExeption {
         Notifacation notif = notifacationRepo.findById(nofifId).orElse(null);
         if (notif != null && notif.getUser().getId().equals(userid)) {

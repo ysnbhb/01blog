@@ -32,16 +32,20 @@ public class AdminControl {
     @DeleteMapping("/delete_user")
     public ResponseEntity<?> deleteUser(@RequestParam("uuid") String uuid) throws ProgramExeption {
         adminServ.delete(uuid);
-        return ResponseEntity.ok(uuid);
+        return ResponseEntity.ok(Map.of("uuid", uuid));
     }
 
     @GetMapping("/users")
-    public List<UserReq> getUsers(@RequestParam(defaultValue = "0", name = "offset") int offset) {
-        return adminServ.getUsers(offset);
+    public List<UserReq> getUsers(@RequestParam(defaultValue = "0", name = "offset") int offset,
+            @RequestParam(defaultValue = "0", name = "limit") int limit) {
+        if (offset < 0) {
+            return null;
+        }
+        return adminServ.getUsers(offset, limit);
     }
 
     @PutMapping("/hide_post")
-    public boolean hidePost(@RequestParam(defaultValue = "0", name = "offset") Long post_id) throws ProgramExeption {
+    public boolean hidePost(@RequestParam(defaultValue = "0", name = "postId") Long post_id) throws ProgramExeption {
         return adminServ.hidePost(post_id);
     }
 
@@ -68,5 +72,10 @@ public class AdminControl {
             return reportSer.findReportPost(offset.intValue());
         }
         return null;
+    }
+
+    @GetMapping(path = "dashboardStatus")
+    public Map<String, Object> DashboardStats() {
+        return adminServ.DashboardStats();
     }
 }

@@ -38,6 +38,6 @@ public class UserReq {
     private boolean mayAcount;
     private boolean hasCon;
     private String role;
-    private String stutes;
+    private String status;
 
 }

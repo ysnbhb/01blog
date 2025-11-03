@@ -24,7 +24,6 @@ public interface ConnectionRepo extends JpaRepository<Connection, Long> {
     @Query(value = "SELECT COUNT(*) FROM connection WHERE  following_id = :userId", nativeQuery = true)
     int countOffollower(@Param("userId") Long userId);
 
-
     @Query(value = "SELECT COUNT(*) FROM connection WHERE  follower_id = :userId", nativeQuery = true)
     int countOffollowing(@Param("userId") Long userId);
 

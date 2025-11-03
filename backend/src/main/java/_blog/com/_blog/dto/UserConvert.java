@@ -19,7 +19,7 @@ public class UserConvert {
         userReq.setUrlPhoto(user.getUrlPhoto());
         userReq.setUuid(user.getUuid());
         userReq.setRole(user.getRole());
-        userReq.setStutes(user.getStatus());
+        userReq.setStatus(user.getStatus());
         return userReq;
     }
 

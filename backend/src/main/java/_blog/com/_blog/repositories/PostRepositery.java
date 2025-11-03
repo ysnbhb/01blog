@@ -12,13 +12,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import _blog.com._blog.Entity.Post;
-import _blog.com._blog.Entity.UserEntity;
 
 @Repository
 public interface PostRepositery extends JpaRepository<Post, Long> {
     Optional<Post> findById(Long id);
-
-    void deleteAllByUser(UserEntity user);
 
     @Query(value = """
             SELECT

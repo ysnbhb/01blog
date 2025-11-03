@@ -3,7 +3,9 @@ import { UserRes } from '../../../model/User.model';
 import { User } from '../../services/user';
 import { ErrorShow } from '../error-show/error-show';
 import { ReportUser } from '../report-user/report-user';
-import { SuccuesShow } from "../succues-show/succues-show";
+import { SuccuesShow } from '../succues-show/succues-show';
+import { Admin } from '../../services/admin';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-haeder-profile',
@@ -13,11 +15,12 @@ import { SuccuesShow } from "../succues-show/succues-show";
 })
 export class HaederProfile {
   @Input() user!: UserRes;
+  @Input() role!: string;
   isLoading = false;
   error = '';
   succuse = '';
   report = false;
-  constructor(private useser: User) {}
+  constructor(private useser: User, private router: Router) {}
   setError(error: string) {
     this.error = error;
     setTimeout(() => {
@@ -27,6 +30,7 @@ export class HaederProfile {
   setReport() {
     this.report = true;
   }
+
   setSuccus(succuse: string) {
     this.succuse = succuse;
     setTimeout(() => {

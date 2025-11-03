@@ -1,0 +1,77 @@
+<div class="user-view-card p-4 rounded-4 shadow-sm border-0 bg-white">
+  <div class="d-flex align-items-start gap-4">
+    <div class="flex-shrink-0">
+      <img
+        [src]="'http://localhost:8080/image/' + user.urlPhoto"
+        [alt]="user.name + ' ' + user.lastName"
+        class="user-avatar"
+      />
+      <div
+        class="status-indicator"
+        [class.bg-success]="user.status === 'ACTIVE'"
+        [class.bg-danger]="user.status === 'BANNED'"
+        [class.bg-secondary]="user.status !== 'ACTIVE' && user.status !== 'BANNED'"
+        title="{{ user.status }}"
+      ></div>
+    </div>
+    <div class="flex-grow-1">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <h5 class="mb-0 fw-bold text-dark">
+          {{ user.name }} {{ user.lastName }}
+          @if (user.role === 'ADMIN') {
+          <i class="bi bi-shield-fill-check text-primary ms-2" title="Administrator"></i>
+          }
+        </h5>
+        <span
+          class="badge rounded-pill px-3 py-2"
+          [class.bg-primary]="user.role === 'ADMIN'"
+          [class.bg-secondary]="user.role === 'USER'"
+        >
+          <i
+            class="bi me-1"
+            [class.bi-shield-fill-check]="user.role === 'ADMIN'"
+            [class.bi-person-fill]="user.role === 'USER'"
+          ></i>
+          {{ user.role }}
+        </span>
+      </div>
+
+      <p class="text-muted mb-2">
+        <i class="bi bi-envelope-fill me-2 text-primary"></i>
+        <span class="fw-medium">{{ user.email }}</span>
+      </p>
+
+      <p class="text-muted small mb-3">
+        <i class="bi bi-fingerprint me-2 text-secondary"></i>
+        <code class="bg-light px-2 py-1 rounded">{{ user.uuid }}</code>
+      </p>
+      <div class="d-flex align-items-center gap-2">
+        <span class="fw-semibold">Status:</span>
+        <span
+          class="badge"
+          [class.bg-success]="user.status === 'ACTIVE'"
+          [class.bg-danger]="user.status === 'BANNED'"
+          [class.bg-secondary]="!user.status"
+        >
+          <i
+            class="bi me-1"
+            [class.bi-check-circle-fill]="user.status === 'ACTIVE'"
+            [class.bi-slash-circle-fill]="user.status === 'BANNED'"
+          ></i>
+          {{ user.status || 'UNKNOWN' }}
+        </span>
+      </div>
+    </div>
+    @if (user.role != "ADMIN" ) {
+
+    <div class="d-flex flex-column gap-2">
+      <button type="button" class="btn btn-sm btn-outline-warning" title="Edit User">
+        <i class="bi bi-ban"></i>
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-danger" title="Delete User">
+        <i class="bi bi-trash3"></i>
+      </button>
+    </div>
+    }
+  </div>
+</div>
