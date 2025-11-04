@@ -1,0 +1,57 @@
+<div class="col">
+  <div
+    class="reported-user-card p-4 rounded-4 shadow-sm border-0 bg-white position-relative overflow-hidden"
+  >
+    <div class="report-count-badge">
+      <i class="bi bi-flag-fill"></i>
+      {{ u.reportcount }}
+    </div>
+    <div class="text-center mb-3">
+      <img
+        [src]="'http://localhost:8080/image/' + u.userphoto"
+        [alt]="u.username"
+        class="reported-user-avatar"
+      />
+    </div>
+
+    <div class="text-center">
+      <h5 class="mb-1 fw-bold text-dark">{{ u.name }} {{ u.lastname }}</h5>
+      <p class="text-muted small mb-2">@{{ u.username }}</p>
+
+      <p class="text-muted small mb-3">
+        <code class="bg-light px-2 py-1 rounded">{{ u.uuid.slice(0, 12) }}...</code>
+      </p>
+      <div class="d-flex gap-2 justify-content-center">
+        <button class="btn btn-sm btn-outline-primary" title="View Reports">
+          <i class="bi bi-file-earmark-text"></i> View
+        </button>
+        @if (u.role !== "ADMIN") {
+        <button
+          class="btn btn-sm"
+          [class.btn-warning]="!(u.status == 'BANNED')"
+          [class.btn-success]="u.status == 'BANNED'"
+          title="{{ u.status == 'BANNED' ? 'Unban' : 'Ban' }}"
+          (click)="banUser()"
+        >
+          <i
+            class="bi me-1"
+            [class.bi-ban-fill]="!(u.status == 'BANNED')"
+            [class.bi-slash-circle-fill]="u.status == 'BANNED'"
+          ></i>
+          {{ u.status == 'BANNED' ? 'Unban' : 'Ban' }}
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-danger"
+          title="Delete User"
+          (click)="DeleteUser()"
+        >
+          <i class="bi bi-trash3"></i>
+        </button>
+
+        }
+      </div>
+    </div>
+  </div>
+</div>

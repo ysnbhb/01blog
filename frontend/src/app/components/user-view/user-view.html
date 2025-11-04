@@ -65,10 +65,20 @@
     @if (user.role != "ADMIN" ) {
 
     <div class="d-flex flex-column gap-2">
-      <button type="button" class="btn btn-sm btn-outline-warning" title="Edit User">
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-warning"
+        title="Ban User"
+        (click)="banUser()"
+      >
         <i class="bi bi-ban"></i>
       </button>
-      <button type="button" class="btn btn-sm btn-outline-danger" title="Delete User">
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-danger"
+        title="Delete User"
+        (click)="DeleteUser()"
+      >
         <i class="bi bi-trash3"></i>
       </button>
     </div>

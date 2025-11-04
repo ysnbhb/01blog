@@ -1,9 +1,16 @@
 import { Routes } from '@angular/router';
+('admin/reports/users');
 export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./home/home').then((m) => m.Home),
     title: 'Home',
+  },
+
+  {
+    path: 'admin/reports/users',
+    loadComponent: () => import('./user-report/user-report').then((m) => m.ReportedUsersComponent),
+    title: 'reported users',
   },
   {
     path: 'comments',

@@ -30,4 +30,27 @@ export class Admin {
       }
     );
   }
+
+  getReportUsers(): Observable<any[]> {
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return this.http.get<any[]>(
+      `http://localhost:8080/admin/reported?type=user`,
+      {
+        headers,
+      }
+    );
+  }
+
+  banUser(uuid: string): Observable<boolean> {
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return this.http.post<boolean>(`http://localhost:8080/admin/banne_user?uuid=${uuid}`, null, {
+      headers,
+    });
+  }
 }

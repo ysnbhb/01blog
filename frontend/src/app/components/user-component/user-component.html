@@ -27,7 +27,7 @@
       </div>
       <p class="mt-3 text-muted">Loading users...</p>
     </div>
-    } @if (users.length === 0) {
+    } @if (users && users.length === 0) {
     <div class="text-center py-5">
       <i class="bi bi-people display-1 text-muted opacity-50"></i>
       <h3 class="mt-4 text-muted">No users found</h3>
@@ -38,7 +38,11 @@
       @for (user of users; track user.uuid) {
       <div class="col">
         <div class="user-card-wrapper d-flex">
-          <app-user-view [user]="user"></app-user-view>
+          <app-user-view
+            [user]="user"
+            (ban)="setUuid($event)"
+            (delete)="dUser($event)"
+          ></app-user-view>
         </div>
       </div>
       }
@@ -50,16 +54,16 @@
           <button
             class="page-link"
             [disabled]="currentPage === 1"
-            (click)="setPage(currentPage)"
+            (click)="setPage(currentPage - 1)"
           >
             Previous
           </button>
         </li>
-        <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <li class="page-item" [class.disabled]="currentPage >= totalPages">
           <button
             class="page-link"
             [disabled]="currentPage === totalPages"
-            (click)="setPage(currentPage - 1)"
+            (click)="setPage(currentPage + 1)"
           >
             Next
           </button>
@@ -68,3 +72,8 @@
     </nav>
   </div>
 </div>
+@if (deleteUser) {
+<app-delete-user-popup (confirm)="confirmDelete($event)"></app-delete-user-popup>
+} @else if (uuid) {
+<app-ban-popup (confirm)="confirm($event)"></app-ban-popup>
+}

@@ -1,7 +1,6 @@
 package _blog.com._blog.Entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -39,18 +38,18 @@ public class Post {
     private boolean hide;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reaction> reactions = new ArrayList<>();
+    private List<Reaction> reactions;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Image> images = new ArrayList<>();
+    private List<Image> images;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Report> report = new ArrayList<>();
+    private List<Report> report;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Notifacation> notif = new ArrayList<>();
+    private List<Notifacation> notif;
 
     @PrePersist
     public void prePersist() {

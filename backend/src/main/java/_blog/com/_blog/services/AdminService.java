@@ -33,8 +33,9 @@ public class AdminService {
         userRepository.delete(user);
     }
 
-    public List<UserReq> getUsers(int offset , int limit) {
-        List<UserReq> listuser = userRepository.findAllWithOffset(offset , limit).stream().map(UserConvert::convertToUserReq)
+    public List<UserReq> getUsers(int offset, int limit) {
+        List<UserReq> listuser = userRepository.findAllWithOffset(offset, limit).stream()
+                .map(UserConvert::convertToUserReq)
                 .toList();
         return listuser;
     }
@@ -49,8 +50,12 @@ public class AdminService {
     @Transactional
     public boolean banneUser(String uuid) throws ProgramExeption {
         UserEntity user = userRepository.findByUuid(uuid).orElseThrow(() -> new ProgramExeption(400, "User not found"));
-        userRepository.updateUserStatus(uuid, user.getStatus() != "BANNED" ? "BANNED" : "ACTIVE");
-        return user.getStatus() != "BANNED";
+        if (user.getRole().equals("ADMIN")) {
+            throw new ProgramExeption(400, "User not found");
+        }
+        userRepository.updateUserStatus(uuid, user.getStatus().equals("BANNED") ? "ACTIVE" : "BANNED");
+        user = userRepository.findByUuid(uuid).orElseThrow(() -> new ProgramExeption(400, "User not found"));
+        return !user.getStatus().equals("BANNED");
     }
 
     public List<Map<String, Object>> getHidePost(Long userid, int offset) throws ProgramExeption {

@@ -4,7 +4,6 @@
     <app-nav-bar [user]="user"></app-nav-bar>
     <div class="content-wrapper flex-grow-1 overflow-auto">
       <div class="container my-4">
-        <!-- <app-post-form></app-post-form> -->
         <app-dashboard-header
           [stats]="status"
           [isRefreshing]="isRefreshing"
@@ -13,7 +12,7 @@
       </div>
       @if (status) {
       <div class="container my-4">
-        <app-user-component [totalUser]="status.totalUsers"></app-user-component>
+        <app-user-report-component></app-user-report-component>
       </div>
       }
     </div>

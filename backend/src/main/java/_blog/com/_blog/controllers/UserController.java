@@ -43,7 +43,7 @@ public class UserController {
         UserEntity user = userServ.login(userReq);
         String token = jwtService.generateToken(user);
         if (user.getStatus().equals("BANNED")) {
-            throw new ProgramExeption(400, "You are Banned From Same reason");
+            throw new ProgramExeption(400, "You are Banned From Some reason");
         }
         return ResponseEntity.ok(Map.of("token", token));
     }

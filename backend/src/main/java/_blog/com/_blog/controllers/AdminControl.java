@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,18 +59,18 @@ public class AdminControl {
                 .ok(adminServ.getHidePost(userid, offset.intValue()).stream().map(PostConvert::convertToPostReq));
     }
 
-    @GetMapping(path = "banne_user")
+    @PostMapping(path = "banne_user")
     public boolean banneUser(@RequestParam("uuid") String uuid) throws Exception {
         return adminServ.banneUser(uuid);
     }
 
     @GetMapping(path = "reported")
-    public List<Map<String, Object>> getReported(@RequestParam(defaultValue = "0", name = "offset") Long offset,
+    public List<Map<String, Object>> getReported(
             @RequestParam(name = "type") String type) throws Exception {
         if (type.equals("user")) {
-            return reportSer.findReportUser(offset.intValue());
+            return reportSer.findReportUser();
         } else if (type.equals("post")) {
-            return reportSer.findReportPost(offset.intValue());
+            return reportSer.findReportPost();
         }
         return null;
     }

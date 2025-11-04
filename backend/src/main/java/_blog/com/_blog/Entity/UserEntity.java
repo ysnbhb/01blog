@@ -1,10 +1,8 @@
 package _blog.com._blog.Entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -47,27 +45,31 @@ public class UserEntity {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reaction> reactions = new ArrayList<>();
+    private List<Reaction> reactions;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> post = new ArrayList<>();
+    private List<Post> post;
 
     @OneToMany(mappedBy = "reporter", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Report> reportsSent = new ArrayList<>();
+    private List<Report> reportsSent;
+
     @OneToMany(mappedBy = "reportedUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Report> reportsReceived = new ArrayList<>();
+    private List<Report> reportsReceived;
+
     @OneToMany(mappedBy = "from", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Notifacation> formuser = new ArrayList<>();
+    private List<Notifacation> formuser;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Notifacation> to_user = new ArrayList<>();
+    private List<Notifacation> to_user;
+
     @OneToMany(mappedBy = "following", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Connection> followings = new ArrayList<>();
+    private List<Connection> followings;
 
     @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Connection> followers = new ArrayList<>();
+    private List<Connection> followers;
 
     @PrePersist
     public void prePersist() {

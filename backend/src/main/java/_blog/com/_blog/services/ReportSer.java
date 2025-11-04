@@ -55,13 +55,13 @@ public class ReportSer {
         reportRepostiry.save(report2);
     }
 
-    public List<Map<String, Object>> findReportPost(int offset) {
-        return reportRepostiry.findReportsPost(offset);
+    public List<Map<String, Object>> findReportPost() {
+        return reportRepostiry.findReportsPost();
 
     }
 
-    public List<Map<String, Object>> findReportUser(int offset) {
-        return reportRepostiry.findReportsUser(offset);
+    public List<Map<String, Object>> findReportUser() {
+        return reportRepostiry.findReportsUser();
     }
 
  

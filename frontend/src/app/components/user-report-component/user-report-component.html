@@ -1,0 +1,48 @@
+<div class="reported-users-container py-5">
+  <div class="container">
+    <div class="mb-4">
+      <div class="input-group input-group-lg search-box">
+        <span class="input-group-text bg-white border-end-0">
+          <i class="bi bi-search text-muted"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control border-start-0 ps-0"
+          placeholder="Search by name or username..."
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="search()"
+        />
+      </div>
+    </div>
+    @if (isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-danger" style="width: 3rem; height: 3rem" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    } @else if (users.length === 0) {
+    <div class="text-center py-5 text-muted">
+      <i class="bi bi-shield-check display-1 opacity-50"></i>
+      <h3 class="mt-4">No reported users</h3>
+    </div>
+    } @else {
+    <div class="row g-4">
+      @for (u of users; track u.uuid) {
+      <app-user-report-view
+        [u]="u"
+        class="col-md-6 col-lg-4"
+        (ban)="setUuid($event)"
+        (delete)="dUser($event)"
+      ></app-user-report-view>
+      }
+    </div>
+
+    }
+  </div>
+</div>
+
+@if (deleteUser) {
+<app-delete-user-popup (confirm)="confirmDelete($event)"></app-delete-user-popup>
+} @else if (uuid) {
+<app-ban-popup (confirm)="confirm($event)"></app-ban-popup>
+}
