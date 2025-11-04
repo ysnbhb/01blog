@@ -13,7 +13,7 @@ markdown img,
 .markdown-body img {
   max-width: 100% !important;
   height: auto !important;
-  display: block;
+  /* display: block; */
   margin: 1.5rem auto;
   border-radius: 0.75rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
