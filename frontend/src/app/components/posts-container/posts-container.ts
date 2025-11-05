@@ -47,7 +47,6 @@ export class PostsContainer implements OnInit {
       },
     });
   }
-
   setSuccues(succues: string) {
     this.succues = succues;
     this.errro = '';

@@ -1,0 +1,98 @@
+<div class="reported-posts-container py-5">
+  <div class="container">
+    <!-- Header -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h2 class="h4 mb-0 fw-bold d-flex align-items-center text-danger">
+        <i class="bi bi-flag-fill me-2"></i>
+        Reported Posts
+      </h2>
+    </div>
+    @if (isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-danger" style="width: 3rem; height: 3rem" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    } @else if (posts.length === 0) {
+    <div class="text-center py-5 text-muted">
+      <i class="bi bi-file-earmark-check display-1 opacity-50"></i>
+      <h3 class="mt-4">No reported posts</h3>
+    </div>
+    } @else {
+    <div class="row g-4">
+      @for (p of posts; track p.postId) {
+      <div class="col-md-12 col-lg-6">
+        <div
+          class="reported-post-card p-4 rounded-4 shadow-sm border-0 bg-white position-relative overflow-hidden"
+        >
+          <div class="report-count-badge">
+            <i class="bi bi-flag-fill"></i>
+            {{ p.reportcount }}
+          </div>
+          <h5 class="mb-2 fw-bold text-dark text-truncate">
+            {{ p.title }}
+          </h5>
+
+          <p class="text-muted small mb-3 text-truncate-3-lines">
+            {{ p.content }}
+          </p>
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <img
+              [src]="'http://localhost:8080/image/' + p.userphoto"
+              [alt]="p.username"
+              class="author-avatar"
+            />
+            <div>
+              <div class="fw-semibold text-dark">{{ p.name }} {{ p.lastname }}</div>
+              <div class="text-muted small">@{{ p.username }}</div>
+            </div>
+          </div>
+
+          <p class="text-muted small mb-3">
+            <i class="bi bi-hash me-1"></i>
+            <code class="bg-light px-2 py-1 rounded">{{ p.postid }}</code>
+          </p>
+
+          <div class="d-flex gap-2">
+            <button
+              class="btn btn-sm btn-outline-primary flex-fill"
+              (click)="viewPost(p.postid)"
+              title="View Post"
+            >
+              <i class="bi bi-eye"></i> View
+            </button>
+
+            <button
+              class="btn btn-sm btn-outline-danger flex-fill"
+              (click)="deletePost(p.postid)"
+              title="Delete Post"
+            >
+              <i class="bi bi-trash3"></i> Delete
+            </button>
+
+            <button
+              class="btn btn-sm btn-warning flex-fill"
+              title="Hide Post"
+              (click)="hidePost(p.postid)"
+            >
+              @if (p.hide) {
+              <i class="bi bi-eye"></i>
+              show } @else {
+              <i class="bi bi-eye-slash"></i>
+              Hide }
+            </button>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    }
+  </div>
+</div>
+
+@if (ishide) {
+<app-hide-post-popup (confirm)="confirmhide($event)"></app-hide-post-popup>
+}@else if (idPost) {
+<app-delete-post-popup (confirm)="removepost($event)"></app-delete-post-popup>
+}

@@ -55,7 +55,7 @@ public interface PostRepositery extends JpaRepository<Post, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE posts SET hide = :hide WHERE id = :PostId", nativeQuery = true)
+    @Query(value = "UPDATE posts SET hide = :hide WHERE id = :postId", nativeQuery = true)
     int updateHideStatus(@Param("postId") long post_id, @Param("hide") boolean hide);
 
     @Query(value = """

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 //handel global exception 
 @ControllerAdvice
@@ -27,6 +28,16 @@ public class GlobalExceptionHandler {
                 String message = ex.getBindingResult().getFieldErrors().isEmpty()
                                 ? "Validation error"
                                 : ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
+
+                return ResponseEntity
+                                .status(HttpStatus.BAD_REQUEST)
+                                .body(Map.of("error", message));
+        }
+
+        @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+        public ResponseEntity<Map<String, String>> handleMethodArgumentTypeMismatchException(
+                        MethodArgumentTypeMismatchException ex) {
+                String message = "invalid input";
 
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)

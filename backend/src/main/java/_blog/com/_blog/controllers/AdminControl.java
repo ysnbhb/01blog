@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import _blog.com._blog.Exception.ProgramExeption;
-import _blog.com._blog.dto.PostConvert;
 import _blog.com._blog.services.AdminService;
 import _blog.com._blog.services.ReportSer;
 import _blog.com._blog.utils.UserReq;
-import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("admin")
@@ -50,15 +48,6 @@ public class AdminControl {
         return adminServ.hidePost(post_id);
     }
 
-    @GetMapping(path = "hide_posts")
-    public ResponseEntity<?> getHidePost(HttpServletRequest request,
-            @RequestParam(defaultValue = "0", name = "offset") Long offset)
-            throws Exception {
-        Long userid = (long) request.getAttribute("userId");
-        return ResponseEntity
-                .ok(adminServ.getHidePost(userid, offset.intValue()).stream().map(PostConvert::convertToPostReq));
-    }
-
     @PostMapping(path = "banne_user")
     public boolean banneUser(@RequestParam("uuid") String uuid) throws Exception {
         return adminServ.banneUser(uuid);
@@ -73,6 +62,19 @@ public class AdminControl {
             return reportSer.findReportPost();
         }
         return null;
+    }
+
+    @GetMapping(path = "reasone/user")
+    public List<Map<String, Object>> getReasoneReported(
+            @RequestParam(name = "uuid") String uuid) throws Exception {
+
+        return reportSer.findReasonUser(uuid);
+    }
+
+    @GetMapping(path = "reasone/post")
+    public List<Map<String, Object>> getReasonePost(
+            @RequestParam(name = "postid") Long postid) throws Exception {
+        return reportSer.findReasonPost(postid);
     }
 
     @GetMapping(path = "dashboardStatus")

@@ -43,7 +43,7 @@ public class AdminService {
     @Transactional
     public boolean hidePost(Long post_id) throws ProgramExeption {
         Post post = postRepository.findById(post_id).orElseThrow(() -> new ProgramExeption(400, "Post not found"));
-        postRepository.updateHideStatus(post_id, post.isHide());
+        postRepository.updateHideStatus(post_id, !post.isHide());
         return !post.isHide();
     }
 
@@ -58,13 +58,6 @@ public class AdminService {
         return !user.getStatus().equals("BANNED");
     }
 
-    public List<Map<String, Object>> getHidePost(Long userid, int offset) throws ProgramExeption {
-        try {
-            return postRepository.getPosts(userid, offset, true);
-        } catch (Exception e) {
-            throw new ProgramExeption(500, "some unexpacte error");
-        }
-    }
 
     public Map<String, Object> DashboardStats() {
         return Map.of("totalUsers", userRepository.count(), "userGrowth", userRepository.userGrowth(), "reportedUsers",

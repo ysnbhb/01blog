@@ -64,5 +64,12 @@ public class ReportSer {
         return reportRepostiry.findReportsUser();
     }
 
- 
+    public List<Map<String, Object>> findReasonUser(String uuid) {
+        return reportRepostiry.findReasonUser(uuid);
+    }
+
+    public List<Map<String, Object>> findReasonPost(Long id) {
+        return reportRepostiry.findReasonPost(id);
+    }
+
 }

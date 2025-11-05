@@ -144,8 +144,9 @@ public class PostServ {
         Post Post = postRepositery.findById(Postid)
                 .orElseThrow(() -> new ProgramExeption(400, "Post not found"));
 
-        if ((Post.getUser().getId() == user.getId() && !Post.isHide()) || user.getRole() == "ADMIN") {
+        if ((Post.getUser().getId() == user.getId()) || user.getRole().equals("ADMIN")) {
             postRepositery.deleteById(Postid);
+
         } else {
             throw new ProgramExeption(400, "you can't delet this post");
         }

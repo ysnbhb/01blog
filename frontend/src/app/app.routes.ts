@@ -12,6 +12,24 @@ export const routes: Routes = [
     loadComponent: () => import('./user-report/user-report').then((m) => m.ReportedUsersComponent),
     title: 'reported users',
   },
+
+  {
+    path: 'admin/reports/users/:uuid',
+    loadComponent: () => import('./all-report-user/all-report-user').then((m) => m.AllReportUser),
+    title: 'reported users',
+  },
+
+  {
+    path: 'admin/reports/post/:postid',
+    loadComponent: () => import('./all-report-user/all-report-user').then((m) => m.AllReportUser),
+    title: 'reported post',
+  },
+
+  {
+    path: 'admin/reports/posts',
+    loadComponent: () => import('./post-report/post-report').then((m) => m.PostReport),
+    title: 'reported post',
+  },
   {
     path: 'comments',
     loadComponent: () => import('./comments/comments').then((m) => m.CommentsComponent),

@@ -1,0 +1,21 @@
+<div class="app-layout">
+  @if (user) {
+  <div class="d-flex h-100">
+    <app-nav-bar [user]="user"></app-nav-bar>
+    <div class="content-wrapper flex-grow-1 overflow-auto">
+      <div class="container my-4">
+        <app-dashboard-header
+          [stats]="status"
+          [isRefreshing]="isRefreshing"
+          (refrech)="refreshStats()"
+        ></app-dashboard-header>
+      </div>
+      @if (status) {
+      <div class="container my-4">
+        <app-post-report-component></app-post-report-component>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>
