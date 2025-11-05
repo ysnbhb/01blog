@@ -28,11 +28,9 @@ public class Post {
     private String content;
     @Column(nullable = false)
     private String title;
-    private String urlPhoto;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity user;
-    private String typePhoto;
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
     private boolean hide;

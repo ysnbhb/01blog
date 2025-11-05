@@ -21,8 +21,6 @@ public class PostReq {
     @NotBlank(message = "content must be not null")
     @Size(min = 10, message = "content must be more than 3 ")
     private String content;
-    private String urlPhot;
-    private String typePhoto;
     private List<ImageReq> images;
     private int numOflike;
     private int numOfcomment;

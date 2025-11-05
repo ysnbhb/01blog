@@ -1,8 +1,7 @@
 @if (post) {
-<div class="col-md-10  comment">
+<div class="col-md-10 comment">
   <div class="card post-card mb-4 shadow-sm border-0">
     <div class="card-body p-4">
-      <!-- User Header -->
       <div class="d-flex align-items-center mb-3">
         <a routerLink="/profile/{{ post.user.uuid }}" class="user-avatar-link">
           <img
@@ -103,7 +102,7 @@
             [attr.data-bs-target]="'#imageModal'"
           >
             <video
-              [src]="'http://localhost:8080/image/' + post.images[0].url"
+              [src]="'http://localhost:8080/video/' + post.images[0].url"
               class="blog-image"
               alt="Post image"
               loading="lazy"
@@ -129,7 +128,7 @@
           </div>
         </figure>
         } @else if(image.type == "video") {
-        <figure class="blog-media-figure">
+        <figure class="blog-media-figure" (click)="openImagePopup($index)">
           <div class="blog-video-wrapper">
             <video
               class="blog-video"
@@ -241,11 +240,21 @@
     }
 
     <div class="popup-image-wrapper">
+      @if (getImage().type == "image") {
       <img
-        [src]="'http://localhost:8080/image/' + post.images[currentImageIndex].url"
+        [src]="`http://localhost:8080/image/`+getImage().url"
         class="popup-image"
         alt="Full size image"
       />
+      }@else {
+      <video
+        [src]="`http://localhost:8080/video/` + getImage().url"
+        class="popup-image"
+        alt="Full size vidoe"
+        controls
+      ></video>
+
+      }
     </div>
 
     <div class="popup-counter">{{ currentImageIndex + 1 }} / {{ getImageCount() }}</div>

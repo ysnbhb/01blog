@@ -11,8 +11,6 @@ public class PostConvert {
             return null;
         Post post = new Post();
         post.setContent(postReq.getContent());
-        post.setUrlPhoto(postReq.getUrlPhot());
-        post.setTypePhoto(postReq.getTypePhoto());
         post.setTitle(postReq.getTitle());
         return post;
     }
@@ -23,9 +21,7 @@ public class PostConvert {
         PostReq post = new PostReq();
         post.setId(postReq.getId());
         post.setContent(postReq.getContent());
-        post.setUrlPhot(postReq.getUrlPhoto());
         post.setUser(UserConvert.convertToUserReq(postReq.getUser()));
-        post.setTypePhoto(postReq.getTypePhoto());
         post.setCreatedAt(postReq.getCreatedAt());
         post.setTitle(postReq.getTitle());
 
@@ -36,13 +32,10 @@ public class PostConvert {
         PostReq postReq = new PostReq();
         postReq.setId(((Long) post.get("id")));
         postReq.setContent((String) post.get("content"));
-        postReq.setUrlPhot((String) post.get("urlPhoto"));
-        postReq.setTypePhoto((String) post.get("typePhoto"));
         postReq.setNumOfcomment(((Number) post.get("total_comments")).intValue());
         postReq.setNumOflike(((Number) post.get("total_likes")).intValue());
         postReq.setIsliked((Boolean) post.get("isLiked"));
         postReq.setTitle((String) post.get("title"));
-        // List<Image> images = mapper.readValue(json, new TypeReference<>() {} );
         postReq.setCreatedAt(((java.sql.Timestamp) post.get("createdAt")).toLocalDateTime());
         UserReq user = new UserReq();
         user.setUsername((String) post.get("username"));

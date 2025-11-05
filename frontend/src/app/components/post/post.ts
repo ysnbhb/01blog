@@ -9,10 +9,19 @@ import { SuccuesShow } from '../succues-show/succues-show';
 import { RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { FormatDatePipe } from '../../pipe/format-date-pipe';
+import { image } from '../../../model/images';
 
 @Component({
   selector: 'app-post',
-  imports: [CommonModule, MarkdownModule, ErrorShow, SuccuesShow, RouterLink, FormsModule , FormatDatePipe],
+  imports: [
+    CommonModule,
+    MarkdownModule,
+    ErrorShow,
+    SuccuesShow,
+    RouterLink,
+    FormsModule,
+    FormatDatePipe,
+  ],
   templateUrl: './post.html',
   styleUrl: './post.css',
 })
@@ -26,6 +35,7 @@ export class PostComponent implements OnInit {
   succes!: String;
   showImagePopup = false;
   currentImageIndex = 0;
+  image: image[] = [];
   constructor(private commint: Comments) {}
 
   removepost() {
@@ -37,10 +47,11 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.post.createdAt = getTimeDifferenceInHours(this.post.createdAt);
     if (!this.showAll && this.post.content.length > 200) {
       this.post.content = this.post.content.slice(0, 200);
     }
+    this.image = this.post.images.filter((img: any) => img.type === 'image');
+    console.log(this.image);
   }
   async submitComment(form: NgForm) {
     const comment = form.value;
@@ -121,9 +132,11 @@ export class PostComponent implements OnInit {
     }
   }
   getImageCount(): number {
-    return this.post.images.filter((img: any) => img.type === 'image').length;
+    return this.post.images.length;
   }
-
+  getImage() : image {
+    return this.post.images[this.currentImageIndex];
+  }
   handleKeyPress = (event: KeyboardEvent): void => {
     if (!this.showImagePopup) return;
 
@@ -144,7 +157,6 @@ export class PostComponent implements OnInit {
     }
   };
 
-  // Clean up on component destroy
   ngOnDestroy(): void {
     document.removeEventListener('keydown', this.handleKeyPress);
     document.body.style.overflow = '';

@@ -8,6 +8,7 @@ import { PostReq } from '../../model/Post.model';
 })
 export class Post {
   constructor(private http: HttpClient) {}
+
   getPost(id: number): Observable<PostReq> {
     let token = localStorage.getItem('token');
     return this.http.get<PostReq>('http://localhost:8080/api/post?postId=' + id, {
@@ -16,6 +17,16 @@ export class Post {
       },
     });
   }
+
+  getSubPosts(offset: number = 0): Observable<PostReq[]> {
+    let token = localStorage.getItem('token');
+    return this.http.get<PostReq[]>(`http://localhost:8080/api/subpost?offset=${offset}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
   reportUser(form: Object) {
     let token = localStorage.getItem('token');
     return this.http.post('http://localhost:8080/api/report_post', JSON.stringify(form), {

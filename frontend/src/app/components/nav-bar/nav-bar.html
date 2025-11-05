@@ -22,7 +22,22 @@
       </li>
 
       <li class="nav-item">
-        <a routerLink="/notifications" class="nav-link d-flex align-items-center position-relative" routerLinkActive="active">
+        <a
+          routerLink="/subscriptions"
+          routerLinkActive="active"
+          class="nav-link d-flex align-items-center"
+        >
+          <i class="bi bi-person-check fs-5"></i>
+          <span class="ms-2 d-none d-sm-inline">subscriptions Post</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          routerLink="/notifications"
+          class="nav-link d-flex align-items-center position-relative"
+          routerLinkActive="active"
+        >
           <i class="bi bi-bell fs-5"></i>
           @if (countofnotifs! > 0) {
           <span class="notification-badge">
@@ -35,7 +50,11 @@
       </li>
 
       <li class="nav-item">
-        <a routerLink="/search" class="nav-link d-flex align-items-center" routerLinkActive="active">
+        <a
+          routerLink="/search"
+          class="nav-link d-flex align-items-center"
+          routerLinkActive="active"
+        >
           <i class="bi bi-search fs-5"></i>
           <span class="ms-2 d-none d-sm-inline">Search</span>
         </a>
@@ -65,7 +84,11 @@
 
       @if (user.role === 'ADMIN') {
       <li class="nav-item">
-        <a routerLink="/admin" class="nav-link d-flex align-items-center admin-link" routerLinkActive="active">
+        <a
+          routerLink="/admin"
+          class="nav-link d-flex align-items-center admin-link"
+          routerLinkActive="active"
+        >
           <i class="bi bi-sliders fs-5"></i>
           <span class="ms-2 d-none d-sm-inline">Dashboard</span>
         </a>

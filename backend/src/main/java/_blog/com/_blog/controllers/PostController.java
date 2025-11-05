@@ -62,6 +62,15 @@ public class PostController {
                 .ok(postServ.getPosts(userid, offset.intValue()));
     }
 
+    @GetMapping(path = "subpost")
+    public ResponseEntity<?> getSubPost(HttpServletRequest request,
+            @RequestParam(defaultValue = "0", name = "offset") Long offset)
+            throws Exception {
+        Long userid = (long) request.getAttribute("userId");
+        return ResponseEntity
+                .ok(postServ.getSubPosts(userid, offset.intValue()));
+    }
+
     @GetMapping(path = "user_post")
     public ResponseEntity<List<PostReq>> getUserPost(@RequestAttribute("userId") Long userid,
             @RequestParam(defaultValue = "0", name = "offset") Long offset,

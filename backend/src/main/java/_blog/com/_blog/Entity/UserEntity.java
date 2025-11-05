@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import _blog.com._blog.utils.Upload;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
@@ -79,5 +81,13 @@ public class UserEntity {
         if (createdAt == null) {
             createdAt = LocalDateTime.now();
         }
+    }
+
+    @PreRemove
+    public void PreRemove() {
+        if (urlPhoto.equals("default-avatar.jpg")) {
+            return;
+        }
+        Upload.delete(urlPhoto, "image");
     }
 }

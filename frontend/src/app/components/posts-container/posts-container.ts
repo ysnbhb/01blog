@@ -24,6 +24,7 @@ export class PostsContainer implements OnInit {
   errro!: string;
   succues!: string;
   @Input() user!: UserRes;
+  @Input() subscription = false;
 
   constructor(private post: Post) {}
   ngOnInit(): void {
@@ -38,14 +39,25 @@ export class PostsContainer implements OnInit {
     }
   }, 1000);
   GetPost() {
-    this.post.getPosts(this.offset).subscribe({
-      next: (data) => {
-        this.posts.push(...data);
-      },
-      error: () => {
-        this.setError('Error loading posts');
-      },
-    });
+    if (!this.subscription) {
+      this.post.getPosts(this.offset).subscribe({
+        next: (data) => {
+          this.posts.push(...data);
+        },
+        error: () => {
+          this.setError('Error loading posts');
+        },
+      });
+    } else {
+      this.post.getSubPosts(this.offset).subscribe({
+        next: (data) => {
+          this.posts.push(...data);
+        },
+        error: () => {
+          this.setError('Error loading posts');
+        },
+      });
+    }
   }
   setSuccues(succues: string) {
     this.succues = succues;

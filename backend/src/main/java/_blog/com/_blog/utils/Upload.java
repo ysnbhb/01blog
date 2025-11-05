@@ -3,6 +3,9 @@ package _blog.com._blog.utils;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.awt.image.BufferedImage;
 import java.util.UUID;
 import javax.imageio.ImageIO;
@@ -66,6 +69,35 @@ public class Upload {
         }
 
         return fileName;
+    }
+
+    public static void delete(String file, String type) {
+        if (file == null || file.isEmpty()) {
+            System.out.println("No file name provided, skipping delete.");
+            return;
+        }
+
+        String projectDir = System.getProperty("user.dir");
+        String baseDir;
+
+        if ("image".equalsIgnoreCase(type)) {
+            baseDir = UPLOAD_DIR_Photo;
+        } else if ("video".equalsIgnoreCase(type)) {
+            baseDir = UPLOAD_DIR_video;
+        } else {
+            System.err.println("Unknown file type: " + type);
+            return;
+        }
+
+        Path filePath = Paths.get(projectDir, baseDir, file);
+
+        try {
+            Files.deleteIfExists(filePath);
+            System.out.println("Deleted file: " + filePath);
+        } catch (IOException e) {
+            System.err.println("Failed to delete file: " + filePath);
+            e.printStackTrace();
+        }
     }
 
     private static String getExtension(String originalName) {

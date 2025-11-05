@@ -1,23 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { NavBar } from '../components/nav-bar/nav-bar';
 import { PostsContainer } from '../components/posts-container/posts-container';
+import { UserRes } from '../../model/User.model';
 import { Router } from '@angular/router';
 import { User } from '../services/user';
-import { UserRes } from '../../model/User.model';
+import { NavBar } from "../components/nav-bar/nav-bar";
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [NavBar, PostsContainer],
-  templateUrl: './home.html',
-  styleUrls: ['./home.css'],
+  selector: 'app-sub-post',
+  imports: [PostsContainer, NavBar],
+  templateUrl: './sub-post.html',
+  styleUrl: './sub-post.css',
 })
-export class Home implements OnInit {
+export class SubPost implements OnInit {
   user!: UserRes;
   constructor(private rout: Router, private userser: User) {}
   ngOnInit(): void {
     this.userser.getUser().subscribe({
-      next: (data: UserRes) => {        
+      next: (data: UserRes) => {
         this.user = data;
       },
       error: (_) => {
@@ -25,6 +24,4 @@ export class Home implements OnInit {
       },
     });
   }
-
-
 }

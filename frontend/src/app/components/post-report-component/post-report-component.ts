@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Admin } from '../../services/admin';
 import { Router } from '@angular/router';
 import { Post } from '../../services/post';

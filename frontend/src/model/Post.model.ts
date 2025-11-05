@@ -5,8 +5,6 @@ export interface PostReq {
   id: number;
   content: string;
   title: string;
-  urlPhot: string;
-  typePhoto?: 'image' | 'video' | string;
   createdAt: string;
   user: UserRes;
   numOflike: number;

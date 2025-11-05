@@ -167,6 +167,21 @@ public class PostServ {
                 .toList();
     }
 
+    public List<PostReq> getSubPosts(Long userId, int offset) throws ProgramExeption {
+        return postRepositery.getsubPosts(userId, offset, false)
+                .stream()
+                .map((post) -> {
+                    PostReq postReq = PostConvert.convertToPostReq(post);
+                    List<ImageReq> images = imageRepo.findImgesByPostId(postReq.getId())
+                            .stream()
+                            .map(ImageCovert::convertToImageUtil)
+                            .toList();
+                    postReq.setImages(images);
+                    return postReq;
+                })
+                .toList();
+    }
+
     public List<PostReq> getUserPosts(Long userid, int offset, String uuid) throws ProgramExeption {
         List<Map<String, Object>> posts = postRepositery.getUserPosts(userid, offset, false, uuid);
         return posts

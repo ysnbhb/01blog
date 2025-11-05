@@ -1,10 +1,16 @@
 import { Routes } from '@angular/router';
 ('admin/reports/users');
+('/subscriptions');
 export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./home/home').then((m) => m.Home),
     title: 'Home',
+  },
+  {
+    path: 'subscriptions',
+    loadComponent: () => import('./sub-post/sub-post').then((m) => m.SubPost),
+    title: 'subscriptions',
   },
 
   {
