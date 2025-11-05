@@ -7,9 +7,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.UUID;
 import javax.imageio.ImageIO;
 import org.springframework.web.multipart.MultipartFile;
+
+import _blog.com._blog.Entity.Image;
 import _blog.com._blog.Exception.ProgramExeption;
 
 public class Upload {
@@ -141,6 +144,15 @@ public class Upload {
             throw new ProgramExeption(500, "Failed to save video");
         }
         return fileName;
+    }
+
+    public static boolean contain(List<Image> images, String img) {
+        for (Image image : images) {
+            if (image.getUrl().equals(img)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

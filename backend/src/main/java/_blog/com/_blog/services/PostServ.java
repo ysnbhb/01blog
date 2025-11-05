@@ -126,7 +126,9 @@ public class PostServ {
         }
         if (deletePhoto != null) {
             for (String img : deletePhoto) {
-                imageRepo.deleteByUrl(img);
+                if (Upload.contain(images, img)) {
+                    imageRepo.deleteByUrl(img);
+                }
             }
         }
         if (postReq.getImages() != null) {
