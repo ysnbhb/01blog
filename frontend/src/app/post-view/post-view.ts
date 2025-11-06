@@ -48,7 +48,7 @@ export class PostView implements OnInit {
         this.user = data;
       },
       error: (_) => {
-        console.error('Error fetching user data');
+        // console.error('Error fetching user data');
         this.rout.navigate(['/login']);
       },
     });
@@ -62,7 +62,7 @@ export class PostView implements OnInit {
         error: (error) => {
           // this.error = error.error;
           this.setError(error.error);
-          console.error('Error fetching post data:', error);
+          // console.error('Error fetching post data:', error);
         },
       });
     }

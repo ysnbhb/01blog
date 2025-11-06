@@ -10,6 +10,8 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.UUID;
 import javax.imageio.ImageIO;
+
+import org.apache.tika.Tika;
 import org.springframework.web.multipart.MultipartFile;
 
 import _blog.com._blog.Entity.Image;
@@ -19,6 +21,7 @@ public class Upload {
 
     private static final String UPLOAD_DIR_Photo = "uploads/images";
     private static final String UPLOAD_DIR_video = "uploads/video";
+    private static final Tika tika = new Tika();
 
     public static boolean isRealPhoto(MultipartFile file) throws ProgramExeption {
         if (file == null || file.isEmpty()) {
@@ -116,10 +119,12 @@ public class Upload {
             if (contentType == null || !contentType.startsWith("video/")) {
                 return false;
             }
-
-            byte[] header = file.getBytes();
-            String headerStr = new String(header, 0, Math.min(header.length, 64));
-            return headerStr.contains("ftyp") || headerStr.contains("moov");
+            try {
+                String detectedType = tika.detect(file.getInputStream());
+                return detectedType.startsWith("video/");
+            } catch (Exception e) {
+                return false;
+            }
         } catch (Exception e) {
             return false;
         }

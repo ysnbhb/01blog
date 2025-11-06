@@ -18,6 +18,8 @@ import java.util.Map;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.multipart.MultipartException;
 
 //handel global exception 
 @ControllerAdvice
@@ -39,6 +41,24 @@ public class GlobalExceptionHandler {
                         MethodArgumentTypeMismatchException ex) {
                 String message = "invalid input";
 
+                return ResponseEntity
+                                .status(HttpStatus.BAD_REQUEST)
+                                .body(Map.of("error", message));
+        }
+
+        @ExceptionHandler(MultipartException.class)
+        public ResponseEntity<Map<String, String>> handleMultipartException(
+                        MultipartException ex) {
+                String message = "invalid input";
+                return ResponseEntity
+                                .status(HttpStatus.BAD_REQUEST)
+                                .body(Map.of("error", message));
+        }
+
+        @ExceptionHandler(DataIntegrityViolationException.class)
+        public ResponseEntity<Map<String, String>> handleDataIntegrityViolationException(
+                        DataIntegrityViolationException ex) {
+                String message = "invalid input";
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)
                                 .body(Map.of("error", message));
