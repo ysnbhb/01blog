@@ -1,24 +1,35 @@
+/* ========================================
+   POST CARD BASE
+======================================== */
 .post-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   background: #ffffff;
   border-radius: 12px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  will-change: transform;
 }
 
 .post-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12) !important;
 }
 
+/* ========================================
+   USER AVATAR
+======================================== */
 .user-avatar {
   object-fit: cover;
-  border: 2px solid #f0f2f5;
-  transition: transform 0.2s ease;
+  border: 2.5px solid #f0f2f5;
+  border-radius: 50%;
+  transition: transform 0.25s ease;
 }
 
 .user-avatar-link:hover .user-avatar {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
+/* ========================================
+   USERNAME & TEXT
+======================================== */
 .username-display {
   font-weight: 600;
   color: #1c1e21;
@@ -32,12 +43,25 @@
 
 .post-timestamp {
   font-size: 0.8rem;
+  color: #65676b;
   display: flex;
   align-items: center;
+  gap: 4px;
 }
 
+.post-content {
+  color: #1c1e21;
+  line-height: 1.65;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+/* ========================================
+   DROPDOWN MENU
+======================================== */
 .dropdown-toggle-custom {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  color: #65676b;
   transition: color 0.2s ease;
 }
 
@@ -47,55 +71,68 @@
 
 .dropdown-menu {
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0.5rem 0;
   min-width: 180px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  margin-top: 8px !important;
 }
 
 .dropdown-item {
-  padding: 0.6rem 1.25rem;
+  padding: 0.65rem 1.25rem;
   font-size: 0.9rem;
-  transition: background-color 0.2s ease;
+  border-radius: 8px;
+  margin: 0 0.5rem;
+  transition: all 0.2s ease;
 }
 
 .dropdown-item:hover {
-  background-color: #f8f9fa;
+  background: #f0f2f5;
+  color: #0d6efd;
 }
 
 .dropdown-item i {
   width: 20px;
+  text-align: center;
 }
 
-.post-content {
-  color: #1c1e21;
-  line-height: 1.6;
-  font-size: 0.95rem;
-  word-wrap: break-word;
-}
-
+/* ========================================
+   MEDIA (Images & Videos)
+======================================== */
 .post-media-container {
   position: relative;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 12px;
   background: #f0f2f5;
+  margin: 1rem 0;
 }
 
-.post-image {
+.post-image,
+.blog-image {
   width: 100%;
-  height: auto;
   max-height: 600px;
   object-fit: cover;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+  cursor: zoom-in;
+  transition: opacity 0.3s ease;
 }
 
-.post-video {
+.post-image:hover,
+.blog-image:hover {
+  opacity: 0.95;
+}
+
+.post-video,
+.blog-video {
   width: 100%;
   max-height: 600px;
   object-fit: contain;
   background: #000;
+  border-radius: 12px;
 }
 
+/* ========================================
+   INTERACTIONS & BUTTONS
+======================================== */
 .interaction-stats {
   color: #65676b;
   font-size: 0.9rem;
@@ -112,47 +149,63 @@
 
 .action-buttons {
   gap: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .btn-action {
   color: #65676b;
   font-weight: 600;
   font-size: 0.9rem;
-  padding: 0.5rem 1rem;
-  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 12px;
   background: transparent;
-  border-radius: 8px;
-  transition: background-color 0.2s ease;
+  border: none;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
 }
 
 .btn-action:hover {
-  background-color: #f0f2f5;
-  color: #1c1e21;
+  background: #f0f2f5;
+  color: #0d6efd;
 }
 
 .btn-action i {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
+.btn-action.liked i {
+  color: #e91e63;
+  animation: likePulse 0.4s ease;
+}
+
+@keyframes likePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+}
+
+/* ========================================
+   COMMENT SECTION
+======================================== */
 .comment-section {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 
 .comment-input {
-  padding: 0.625rem 3rem 0.625rem 1rem;
-  border: 1px solid #e4e6eb;
+  padding: 0.75rem 3.5rem 0.75rem 1rem;
+  border: 1.5px solid #e4e6eb;
   background: #f0f2f5;
+  border-radius: 25px;
   font-size: 0.9rem;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .comment-input:focus {
   background: #ffffff;
   border-color: #0d6efd;
   box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+  outline: none;
 }
 
 .comment-submit-btn {
@@ -161,166 +214,70 @@
   top: 50%;
   transform: translateY(-50%);
   color: #0d6efd;
-  padding: 0.25rem 0.5rem;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  padding: 0.25rem;
   transition: transform 0.2s ease;
 }
 
 .comment-submit-btn:hover {
-  transform: translateY(-50%) scale(1.1);
-}
-
-@media (max-width: 768px) {
-  .post-card {
-    border-radius: 3;
-    margin-left: -12px;
-    margin-right: -12px;
-  }
-  .comment {
-    width: 90% !important;
-  }
-
-  .card-body {
-    padding: 1rem !important;
-  }
-
-  .btn-action {
-    font-size: 0.85rem;
-    padding: 0.4rem 0.5rem;
-  }
-
-  .btn-action span {
-    display: none;
-  }
-
-  .btn-action i {
-    margin: 0 !important;
-  }
-}
-
-@keyframes likeAnimation {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.3);
-  }
-}
-
-.btn-action.liked i {
-  animation: likeAnimation 0.4s ease;
-}
-
-.admin-icon {
-  font-size: 0.9rem;
-  color: #0d6efd;
-  transition: color 0.2s ease;
-}
-
-.admin-icon:hover {
-  color: #0a58ca;
-}
-
-@media (max-width: 768px) {
-  .admin-icon {
-    font-size: 0.85rem;
-  }
-}
-.blog-media-section {
-  margin: 2rem 0;
-  width: 100%;
-}
-
-.blog-media-figure {
-  margin: 2rem 0;
-  padding: 0;
-  position: relative;
-}
-
-.blog-media-figure:first-child {
-  margin-top: 1.5rem;
-}
-
-.blog-media-figure:last-child {
-  margin-bottom: 1.5rem;
-}
-
-.blog-image-wrapper {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #f8f9fa;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-.blog-image-wrapper:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  transform: translateY(-2px);
-}
-
-.blog-image {
-  width: auto;
-  height: auto;
-  display: block;
-  max-height: 700px;
-  object-fit: contain;
-  background: #ffffff;
-  cursor: zoom-in;
-  transition: opacity 0.3s ease;
-  max-width: 100%;
-}
-
-.blog-image:hover {
-  opacity: 0.95;
+  transform: translateY(-50%) scale(1.2);
 }
 
 /* ========================================
-   BLOG VIDEO STYLES
+   ADMIN BADGE
 ======================================== */
+.admin-icon {
+  font-size: 0.9rem;
+  color: #0d6efd;
+  background: rgba(13, 110, 253, 0.1);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
 
+/* ========================================
+   BLOG MEDIA (IMAGES & VIDEOS)
+======================================== */
+.blog-media-figure {
+  margin: 2rem 0;
+  padding: 0;
+}
+
+.blog-image-wrapper,
 .blog-video-wrapper {
-  position: relative;
-  width: 100%;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
-  background: #000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  aspect-ratio: 16 / 9;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-.blog-video {
-  width: 100%;
-  height: 100%;
-  display: block;
+.blog-image-wrapper:hover,
+.blog-video-wrapper:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+.blog-image {
+  max-height: 700px;
   object-fit: contain;
-  background: #000;
+  background: #fff;
 }
 
-.blog-video::-webkit-media-controls-panel {
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
-}
-
-/* Zoom Icon */
 .zoom-icon {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: 16px;
+  right: 16px;
   background: rgba(0, 0, 0, 0.7);
   color: white;
-  width: 45px;
-  height: 45px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.3rem;
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: all 0.3s ease;
   pointer-events: none;
 }
 
@@ -330,15 +287,11 @@
 }
 
 /* ========================================
-   IMAGE POPUP OVERLAY
+   LIGHTBOX POPUP
 ======================================== */
-
 .image-popup-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.95);
   z-index: 9999;
   display: flex;
@@ -346,82 +299,26 @@
   justify-content: center;
   animation: fadeIn 0.3s ease;
   cursor: zoom-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* ========================================
-   POPUP CONTAINER
-======================================== */
-
-.image-popup-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem;
-}
-
-/* ========================================
-   POPUP IMAGE
-======================================== */
-
-.popup-image-wrapper {
-  max-width: 100%;
-  max-height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: default;
+  backdrop-filter: blur(8px);
 }
 
 .popup-image {
-  max-width: 100%;
+  max-width: 95vw;
   max-height: 90vh;
-  width: auto;
-  height: auto;
   object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-  animation: zoomIn 0.3s ease;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  animation: zoomIn 0.4s ease;
 }
 
-@keyframes zoomIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* ========================================
-   POPUP CLOSE BUTTON
-======================================== */
-
-.popup-close-btn {
+.popup-close-btn,
+.popup-nav-btn {
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   border: 2px solid rgba(255, 255, 255, 0.3);
   color: white;
-  font-size: 1.5rem;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -430,51 +327,34 @@
   z-index: 10001;
 }
 
+.popup-close-btn {
+  top: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+}
+
 .popup-close-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.3);
   transform: rotate(90deg) scale(1.1);
 }
 
-/* ========================================
-   POPUP NAVIGATION BUTTONS
-======================================== */
-
 .popup-nav-btn {
-  position: absolute;
   top: 50%;
   transform: translateY(-50%);
   width: 55px;
   height: 55px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  color: white;
   font-size: 1.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10001;
 }
+
+.popup-prev-btn { left: 2rem; }
+.popup-next-btn { right: 2rem; }
 
 .popup-nav-btn:hover {
   background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-50%) scale(1.1);
+  transform: translateY(-50%) scale(1.15);
 }
-
-.popup-prev-btn {
-  left: 2rem;
-}
-
-.popup-next-btn {
-  right: 2rem;
-}
-
-/* ========================================
-   POPUP COUNTER
-======================================== */
 
 .popup-counter {
   position: absolute;
@@ -482,291 +362,92 @@
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10px);
   color: white;
   padding: 0.75rem 1.5rem;
-  border-radius: 25px;
-  font-size: 1rem;
+  border-radius: 30px;
   font-weight: 600;
-  z-index: 10001;
+  font-size: 1rem;
+  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* ========================================
-   BLOG VIDEO STYLES
+   RESPONSIVE
 ======================================== */
-
-.blog-video-wrapper {
-  position: relative;
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  aspect-ratio: 16 / 9;
-}
-
-.blog-video {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: contain;
-  background: #000;
-}
-
-.blog-video::-webkit-media-controls-panel {
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
-}
-
-/* ========================================
-   FIGURE CAPTION (Optional)
-======================================== */
-
-.blog-media-figure figcaption {
-  margin-top: 0.75rem;
-  font-size: 0.9rem;
-  color: #6c757d;
-  text-align: center;
-  font-style: italic;
-  line-height: 1.5;
-}
-
-/* ========================================
-   LOADING STATE
-======================================== */
-
-.blog-image.loading,
-.blog-video.loading {
-  background: linear-gradient(90deg, #f0f0f0 0%, #e0e0e0 50%, #f0f0f0 100%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  min-height: 400px;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.blog-media-figure.full-width {
-  margin-left: -1rem;
-  margin-right: -1rem;
-  width: calc(100% + 2rem);
-}
-
-.blog-media-figure.full-width .blog-image-wrapper,
-.blog-media-figure.full-width .blog-video-wrapper {
-  border-radius: 0;
-}
-
-@media (max-width: 992px) {
-  .blog-media-section {
-    margin: 1.5rem 0;
-  }
-
-  .blog-media-figure {
-    margin: 1.5rem 0;
-  }
-
-  .blog-image {
-    max-height: 600px;
-  }
-
-  .image-popup-container {
-    padding: 2rem;
-  }
-
-  .popup-nav-btn {
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
-  }
-
-  .popup-prev-btn {
-    left: 1.5rem;
-  }
-
-  .popup-next-btn {
-    right: 1.5rem;
-  }
-}
-
 @media (max-width: 768px) {
-  .blog-media-section {
-    margin: 1.25rem 0;
+  .post-card {
+    border-radius: 16px !important;
+    margin: 0 -12px;
+    width: calc(100% + 24px);
   }
 
-  .blog-media-figure {
-    margin: 1.25rem 0;
+  .card-body {
+    padding: 1rem !important;
   }
 
-  .blog-image-wrapper,
-  .blog-video-wrapper {
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  .btn-action span {
+    display: none;
   }
 
-  .blog-image {
-    max-height: 500px;
+  .btn-action {
+    padding: 0.5rem;
   }
 
-  .blog-media-figure figcaption {
-    font-size: 0.85rem;
-    padding: 0 0.5rem;
-  }
-
-  .zoom-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 1.1rem;
-  }
-
-  .image-popup-container {
-    padding: 1rem;
-  }
-
-  .popup-close-btn {
-    width: 45px;
-    height: 45px;
+  .btn-action i {
+    margin: 0 !important;
     font-size: 1.3rem;
-    top: 1rem;
-    right: 1rem;
   }
 
+  .comment-input {
+    padding-right: 3rem;
+  }
+
+  .popup-close-btn,
   .popup-nav-btn {
     width: 45px;
     height: 45px;
     font-size: 1.3rem;
   }
 
-  .popup-prev-btn {
-    left: 1rem;
-  }
-
-  .popup-next-btn {
-    right: 1rem;
-  }
-
-  .popup-counter {
-    bottom: 1.5rem;
-    font-size: 0.9rem;
-    padding: 0.625rem 1.25rem;
-  }
+  .popup-prev-btn { left: 1rem; }
+  .popup-next-btn { right: 1rem; }
+  .popup-close-btn { top: 1rem; right: 1rem; }
 }
 
 @media (max-width: 576px) {
-  .blog-media-section {
-    margin: 1rem 0;
-  }
-
-  .blog-media-figure {
-    margin: 1rem 0;
-  }
-
-  .blog-image-wrapper,
-  .blog-video-wrapper {
-    border-radius: 6px;
-  }
-
-  .blog-image {
+  .blog-image,
+  .post-image {
     max-height: 400px;
-  }
-
-  .blog-video-wrapper {
-    aspect-ratio: 16 / 9;
-  }
-
-  .blog-media-figure {
-    margin-left: -0.5rem;
-    margin-right: -0.5rem;
-    width: calc(100% + 1rem);
   }
 
   .zoom-icon {
     opacity: 1;
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
   }
-
-  .popup-nav-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-  }
-
-  .popup-prev-btn {
-    left: 0.5rem;
-  }
-
-  .popup-next-btn {
-    right: 0.5rem;
-  }
-
-  .popup-counter {
-    bottom: 1rem;
-    font-size: 0.85rem;
-    padding: 0.5rem 1rem;
-  }
-
-  .popup-close-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-    top: 0.75rem;
-    right: 0.75rem;
-  }
-}
-
-.blog-image:focus-visible,
-.blog-video:focus-visible {
-  outline: 3px solid #0d6efd;
-  outline-offset: 4px;
 }
 
 /* ========================================
-   ELEGANT SPACING BETWEEN CONTENT
+   ANIMATIONS
 ======================================== */
-
-/* If you have text between images */
-.blog-media-figure + p,
-.blog-media-figure + .blog-content {
-  margin-top: 2rem;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-p + .blog-media-figure,
-.blog-content + .blog-media-figure {
-  margin-top: 2rem;
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-/* ========================================
-   LIGHTBOX EFFECT (Optional Enhancement)
-======================================== */
-
-/* Keyboard shortcuts hint (optional) */
-.popup-help-text {
-  position: absolute;
-  top: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.85rem;
-  text-align: center;
-  z-index: 10001;
-  opacity: 0;
-  animation: fadeInOut 3s ease;
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-@keyframes fadeInOut {
-  0%,
-  100% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
+.loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
 }

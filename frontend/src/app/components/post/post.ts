@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { PostReq } from '../../../model/Post.model';
 import { CommonModule } from '@angular/common';
 import { UserRes } from '../../../model/User.model';
@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { FormatDatePipe } from '../../pipe/format-date-pipe';
 import { image } from '../../../model/images';
+import { FormatNamberPipe } from '../../pipe/format-namber-pipe';
 
 @Component({
   selector: 'app-post',
@@ -21,11 +22,12 @@ import { image } from '../../../model/images';
     RouterLink,
     FormsModule,
     FormatDatePipe,
+    FormatNamberPipe
   ],
   templateUrl: './post.html',
   styleUrl: './post.css',
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnDestroy {
   @Input() post!: PostReq;
   @Output() remove = new EventEmitter<number>();
   @Output() report = new EventEmitter<number>();
@@ -134,7 +136,7 @@ export class PostComponent implements OnInit {
   getImageCount(): number {
     return this.post.images.length;
   }
-  getImage() : image {
+  getImage(): image {
     return this.post.images[this.currentImageIndex];
   }
   handleKeyPress = (event: KeyboardEvent): void => {
