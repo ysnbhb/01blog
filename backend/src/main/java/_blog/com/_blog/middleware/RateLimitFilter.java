@@ -1,14 +1,14 @@
 package _blog.com._blog.middleware;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import _blog.com._blog.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -16,7 +16,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
+@RequiredArgsConstructor
 public class RateLimitFilter extends OncePerRequestFilter {
+    private final JwtService jwtService;
 
     private static final int MAX_REQUESTS = 100;
     private static final int WINDOW_SECONDS = 60;
@@ -60,9 +62,11 @@ public class RateLimitFilter extends OncePerRequestFilter {
     }
 
     private String getKey(HttpServletRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated() && auth.getName() != null) {
-            return "user:" + auth.getName();
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            Long userId = jwtService.extractUserId(token);
+            return "user:" + userId;
         }
         String forwarded = request.getHeader("X-Forwarded-For");
         return (forwarded != null ? forwarded.split(",")[0].trim() : request.getRemoteAddr());
