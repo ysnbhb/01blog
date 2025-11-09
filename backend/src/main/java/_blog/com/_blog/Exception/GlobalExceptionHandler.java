@@ -66,7 +66,7 @@ public class GlobalExceptionHandler {
 
         @ExceptionHandler(NoResourceFoundException.class)
         public ResponseEntity<Map<String, String>> handleNoResourceFoundException(NoResourceFoundException ex) {
-                String message = "this file not exist";
+                String message = "this page not exist";
 
                 return ResponseEntity
                                 .status(HttpStatus.NOT_FOUND)
