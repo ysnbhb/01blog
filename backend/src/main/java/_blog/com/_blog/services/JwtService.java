@@ -23,9 +23,9 @@ public class JwtService {
     private static final long EXPIRATION_TIME = TimeUnit.DAYS.toMillis(30);
     @Value("${jwt.token}")
     private String secretKey;
-
+    
     private Key getSigningKey() {
-        System.out.println(secretKey);
+       
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 

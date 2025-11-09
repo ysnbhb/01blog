@@ -18,8 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class RateLimitFilter extends OncePerRequestFilter {
 
-    private static final int MAX_REQUESTS = 100; 
-    private static final int WINDOW_SECONDS = 60; 
+    private static final int MAX_REQUESTS = 100;
+    private static final int WINDOW_SECONDS = 60;
 
     private final Map<String, RequestWindow> requestMap = new ConcurrentHashMap<>();
 

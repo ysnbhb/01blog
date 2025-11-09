@@ -79,7 +79,6 @@ public class Upload {
 
     public static void delete(String file, String type) {
         if (file == null || file.isEmpty()) {
-            System.out.println("No file name provided, skipping delete.");
             return;
         }
 
@@ -99,9 +98,7 @@ public class Upload {
 
         try {
             Files.deleteIfExists(filePath);
-            System.out.println("Deleted file: " + filePath);
         } catch (IOException e) {
-            System.err.println("Failed to delete file: " + filePath);
             e.printStackTrace();
         }
     }
