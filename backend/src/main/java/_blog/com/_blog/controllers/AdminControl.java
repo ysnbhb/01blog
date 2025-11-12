@@ -40,7 +40,8 @@ public class AdminControl {
         if (offset < 0) {
             return null;
         }
-        return adminServ.getUsers(offset, limit);
+        offset = Math.max(0, offset) * Math.max(1, limit);
+        return adminServ.getUsers(offset * limit, limit);
     }
 
     @PutMapping("/hide_post")
