@@ -37,11 +37,8 @@ public class AdminControl {
     @GetMapping("/users")
     public List<UserReq> getUsers(@RequestParam(defaultValue = "0", name = "offset") int offset,
             @RequestParam(defaultValue = "0", name = "limit") int limit) {
-        if (offset < 0) {
-            return null;
-        }
         offset = Math.max(0, offset) * Math.max(1, limit);
-        return adminServ.getUsers(offset * limit, limit);
+        return adminServ.getUsers(offset, limit);
     }
 
     @PutMapping("/hide_post")
