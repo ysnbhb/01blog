@@ -16,11 +16,12 @@
             placeholder="Enter your blog title..."
             required
             minlength="5"
+            maxlength="100"
             ngModel
           />
           <div class="form-text text-muted mt-2">
             <i class="bi bi-info-circle me-1"></i>
-            Minimum 5 characters
+            Minimum 5 characters and max 100
           </div>
         </div>
         <div class="mb-4">
@@ -45,16 +46,13 @@
             placeholder="# Your blog post starts here...\n\nUse **Markdown** for formatting.\n\n```js\n// Code blocks are supported\n ('Hello');\n```"
             required
             minlength="10"
+            maxlength="10000"
           ></textarea>
           <div class="form-text text-muted mt-2">
-            <i class="bi bi-markdown-fill me-1"></i>
-            <a
-              href="https://www.markdownguide.org/cheat-sheet"
-              target="_blank"
-              class="text-decoration-none"
-            >
-              Full Markdown support
-            </a>
+            <div class="form-text text-muted mt-2">
+              <i class="bi bi-info-circle me-1"></i>
+              Minimum 10 characters and max 10000
+            </div>
           </div>
           } @else {
           <article class="markdown-body p-4 border rounded-3 bg-light">

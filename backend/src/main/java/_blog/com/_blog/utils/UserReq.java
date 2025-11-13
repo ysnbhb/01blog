@@ -14,7 +14,7 @@ public class UserReq {
     @NotBlank(message = "password must be not null")
     @Size(min = 8, message = "password must be nore than 7 character")
     private String password;
-    @NotBlank(message = "name must be not null")
+    @NotBlank(message = "email must be not null")
     @Email(message = "Email should be valid")
     private String email;
     private String uuid;
@@ -23,7 +23,7 @@ public class UserReq {
     @ValidDateOfBirth
     private String dateOfBirth;
     @NotBlank(message = "name must be not null")
-    @Size(max = 10, min = 3, message = "Name should be min 3 and max 6")
+    @Size(max = 10, min = 3, message = "Name should be min 3 and max 10")
     @NameValid
     private String name;
     @Size(max = 10, min = 3, message = "Last Name should be  min 3 and max 10")
