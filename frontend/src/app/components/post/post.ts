@@ -22,7 +22,7 @@ import { FormatNamberPipe } from '../../pipe/format-namber-pipe';
     RouterLink,
     FormsModule,
     FormatDatePipe,
-    FormatNamberPipe
+    FormatNamberPipe,
   ],
   templateUrl: './post.html',
   styleUrl: './post.css',
@@ -53,7 +53,6 @@ export class PostComponent implements OnInit, OnDestroy {
       this.post.content = this.post.content.slice(0, 200);
     }
     this.image = this.post.images.filter((img: any) => img.type === 'image');
-    console.log(this.image);
   }
   async submitComment(form: NgForm) {
     const comment = form.value;
@@ -66,7 +65,6 @@ export class PostComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.succes = '';
         }, 1000);
-        ('Comment created successfully');
       },
       error: (_) => {
         this.errro = 'Error submitting comment';
@@ -100,7 +98,11 @@ export class PostComponent implements OnInit, OnDestroy {
         }, 1000);
       }
     } catch (err) {
-      console.error('Error deleting post:', err);
+      // console.error('Error deleting post:', err);
+      this.errro = 'Error liking post';
+      setTimeout(() => {
+        this.errro = '';
+      }, 1000);
     }
   }
 

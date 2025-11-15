@@ -10,9 +10,10 @@ import { ReportPopup } from '../components/report-popup/report-popup';
 import { ErrorShow } from "../components/error-show/error-show";
 import { DeletePostPopup } from "../components/delete-post-popup/delete-post-popup";
 import { SuccuesShow } from "../components/succues-show/succues-show";
+import { PostNotFound } from "../components/post-not-found/post-not-found";
 @Component({
   selector: 'app-post-view',
-  imports: [NavBar, PostComponent, ReportPopup, ErrorShow, DeletePostPopup, SuccuesShow, RouterLink],
+  imports: [NavBar, PostComponent, ReportPopup, ErrorShow, DeletePostPopup, SuccuesShow, PostNotFound],
   templateUrl: './post-view.html',
   styleUrl: './post-view.css',
 })

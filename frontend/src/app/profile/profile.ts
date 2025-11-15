@@ -12,6 +12,7 @@ import { ReportPopup } from '../components/report-popup/report-popup';
 import { DeletePostPopup } from '../components/delete-post-popup/delete-post-popup';
 import { ErrorShow } from '../components/error-show/error-show';
 import { SuccuesShow } from '../components/succues-show/succues-show';
+import { UserNotFoundComponent } from "../components/user-not-found/user-not-found";
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +24,8 @@ import { SuccuesShow } from '../components/succues-show/succues-show';
     DeletePostPopup,
     ErrorShow,
     SuccuesShow,
-  ],
+    UserNotFoundComponent
+],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })

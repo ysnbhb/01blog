@@ -1,0 +1,141 @@
+.post-not-found-container {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.not-found-illustration {
+  opacity: 0.7;
+  animation: float 3.5s ease-in-out infinite;
+}
+
+.not-found-illustration i {
+  font-size: 6.5rem;
+  color: #ced4da;
+}
+
+.display-4 {
+  font-weight: 800;
+  color: #212529;
+  letter-spacing: -0.5px;
+}
+
+.lead {
+  font-size: 1.15rem;
+  color: #6c757d;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card {
+  border-radius: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.14);
+}
+
+.debug-info {
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+  border-radius: 12px;
+  font-family: 'Courier New', monospace;
+}
+
+.flag {
+  display: inline-block;
+  width: 1.4em;
+  height: 1em;
+  background: linear-gradient(to bottom, #c1272d 50%, #006233 50%);
+  border-radius: 2px;
+  margin-left: 4px;
+  position: relative;
+  top: 1px;
+}
+
+/* Buttons */
+.btn-lg {
+  border-radius: 3rem;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  transition: all 0.3s ease;
+  min-width: 160px;
+}
+
+.btn-primary {
+  background: #0d6efd;
+  border: none;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+.btn-primary:hover {
+  background: #0b5ed7;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4);
+}
+
+.btn-outline-primary {
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.btn-outline-primary:hover {
+  background: #0d6efd;
+  color: white;
+  transform: translateY(-3px);
+}
+
+.btn-outline-secondary:hover {
+  background: #6c757d;
+  color: white;
+  transform: translateY(-3px);
+}
+
+/* List */
+.list-unstyled li {
+  display: flex;
+  align-items: flex-start;
+  line-height: 1.6;
+}
+
+.list-unstyled i {
+  font-size: 1.1rem;
+  min-width: 20px;
+}
+
+/* Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .display-4 {
+    font-size: 2.8rem;
+  }
+  .btn-lg {
+    width: 100%;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+  .me-3 {
+    margin-right: 0 !important;
+  }
+  .flag {
+    width: 1.2em;
+    height: 0.9em;
+  }
+}
+
+@media (max-width: 576px) {
+  .not-found-illustration i {
+    font-size: 5rem;
+  }
+  .card {
+    margin: 0 -1rem;
+    border-radius: 1rem;
+  }
+}

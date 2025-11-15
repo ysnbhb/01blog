@@ -14,7 +14,6 @@
   <div class="d-flex container flex-column header p-0">
     @if (userProfile) {
     <app-haeder-profile [user]="userProfile" [role]="user.role"></app-haeder-profile>
-    }
     <div class="container profile">
       <div class="row f-flex justify-content-center scrollable-row" (scroll)="handleScroll($event)">
         @for ( post of posts; track post.id) {
@@ -29,6 +28,9 @@
         }
       </div>
     </div>
+    }@else {
+    <app-user-not-found></app-user-not-found>
+    }
   </div>
   }
 </div>
