@@ -118,7 +118,8 @@ public class Upload {
             }
             try {
                 String detectedType = tika.detect(file.getInputStream());
-                return detectedType.startsWith("video/");
+                System.out.println(detectedType + " vs " + contentType);
+                return detectedType.startsWith("video/") || detectedType.equals("application/x-matroska");
             } catch (Exception e) {
                 return false;
             }
