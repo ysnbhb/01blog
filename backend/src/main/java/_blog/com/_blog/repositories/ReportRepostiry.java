@@ -77,29 +77,33 @@ public interface ReportRepostiry extends JpaRepository<Report, Long> {
 
     @Query(value = """
             SELECT
+            r.id AS id,
                r.reason,
                u1.username,
-               u1.url_photo
+               u1.url_photo,
+               r.created_at AS createdAt
             FROM report r
             JOIN users u2 ON u2.id = r.to_userid
             JOIN users u1 ON u1.id = r.user_id
             WHERE u2.uuid = :uuid
             GROUP BY
-                r.reason ,u1.username ,u1.url_photo
+                r.reason ,u1.username ,u1.url_photo , r.created_at , r.id
             ORDER BY MAX(r.created_at) DESC
             """, nativeQuery = true)
     List<Map<String, Object>> findReasonUser(@Param("uuid") String uuid);
 
     @Query(value = """
             SELECT
+                r.id AS id,
                r.reason,
                u1.username,
-               u1.url_photo
+               u1.url_photo,
+               r.created_at AS createdAt
             FROM report r
             JOIN users u1 ON u1.id = r.user_id
             WHERE r.post_id = :postId
             GROUP BY
-                r.reason ,u1.username ,u1.url_photo
+                r.reason ,u1.username ,u1.url_photo , r.created_at , r.id
             ORDER BY MAX(r.created_at) DESC
             """, nativeQuery = true)
     List<Map<String, Object>> findReasonPost(@Param("postId") Long postid);

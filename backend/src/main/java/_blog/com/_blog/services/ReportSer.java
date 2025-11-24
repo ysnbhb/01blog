@@ -33,6 +33,8 @@ public class ReportSer {
             return;
         Post post = postRepositery.findById(report.getPostId())
                 .orElseThrow(() -> new ProgramExeption(400, "Post not found"));
+        if (user.getRole().equals("ADMIN"))
+            throw new ProgramExeption(400, "Admins can't report posts");
         if (post.getUser().getId() == user.getId())
             throw new ProgramExeption(400, "You can't report your post");
         if (post.isHide())
@@ -48,6 +50,10 @@ public class ReportSer {
     public void reportUser(ReportReq report, UserEntity user) throws ProgramExeption {
         UserEntity user2 = userRepository.findByUuid(report.getUuid())
                 .orElseThrow(() -> new ProgramExeption(400, "User not found"));
+        if (user.getRole().equals("ADMIN"))
+            throw new ProgramExeption(400, "Admins can't report users");
+        if (user2.getId() == user.getId())
+            throw new ProgramExeption(400, "You can't report yourself");
         Report report2 = new Report();
         report2.setReportedUser(user2);
         report2.setReason(report.getReason());

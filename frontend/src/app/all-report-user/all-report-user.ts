@@ -4,10 +4,11 @@ import { UserRes } from '../../model/User.model';
 import { User } from '../services/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Admin } from '../services/admin';
+import { FormatDatePipe } from '../pipe/format-date-pipe';
 
 @Component({
   selector: 'app-all-report-user',
-  imports: [NavBar],
+  imports: [NavBar , FormatDatePipe],
   templateUrl: './all-report-user.html',
   styleUrl: './all-report-user.css',
 })

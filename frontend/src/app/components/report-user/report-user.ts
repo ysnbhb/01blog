@@ -32,7 +32,7 @@ export class ReportUser {
         this.confirmreport.emit(true);
       },
       error: (err) => {
-        this.succues.emit(err.error || 'report user fieled');
+        this.error.emit(err.error.error || 'report user fieled');
         this.confirmreport.emit(true);
       },
     });

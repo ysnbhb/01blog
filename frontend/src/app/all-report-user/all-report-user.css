@@ -76,14 +76,61 @@
   border-color: #ffc107;
 }
 
-/* Responsive */
+small.text-muted {
+  font-size: 0.85rem;
+  color: #6c757d !important;
+}
+
+small.text-muted i {
+  font-size: 0.9rem;
+}
+
+.report-card {
+  transition: all 0.3s ease;
+  border: 1px solid #fff3cd !important;
+}
+
+.report-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(255, 193, 7, 0.15);
+  border-color: #ffd43b !important;
+}
+
+.reporter-avatar {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.report-reason {
+  background: #fffbe6;
+  min-height: 70px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  background: #f8f9fa;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #d63384;
+}
+
 @media (max-width: 768px) {
   .reporter-avatar {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
   }
   .report-reason {
     font-size: 0.9rem;
-    min-height: 70px;
+  }
+  .text-end small {
+    font-size: 0.8rem;
   }
 }
+
