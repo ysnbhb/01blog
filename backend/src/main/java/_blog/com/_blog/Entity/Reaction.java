@@ -7,12 +7,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "reactions", uniqueConstraints = {
-        @jakarta.persistence.UniqueConstraint(columnNames = { "post_id", "user_id" })
+        @UniqueConstraint(columnNames = { "post_id", "user_id" })
 })
 public class Reaction {
     @Id
