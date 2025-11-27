@@ -11,7 +11,9 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "reactions")
+@Table(name = "reactions", uniqueConstraints = {
+        @jakarta.persistence.UniqueConstraint(columnNames = { "post_id", "user_id" })
+})
 public class Reaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

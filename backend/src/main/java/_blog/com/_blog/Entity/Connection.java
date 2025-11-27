@@ -11,7 +11,9 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "connection")
+@Table(name = "connection", uniqueConstraints = {
+        @jakarta.persistence.UniqueConstraint(columnNames = { "follower_id", "following_id" })
+})
 public class Connection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
