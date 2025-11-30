@@ -24,6 +24,9 @@ public class ConnectionSrv {
     public Map<String, Object> follow(UserEntity user, String uuid) throws ProgramExeption {
         UserEntity following = userRepository.findByUuid(uuid).orElseThrow(() -> new ProgramExeption(400, "User not Found"));
         boolean isfollowing = connectionRepo.isfollowing(user.getId(), following.getId());
+        if (user.getId().equals(following.getId())) {
+            throw new ProgramExeption(400, "You cant follow your self");
+        }
         if (isfollowing) {
             connectionRepo.deleteConnetion(user.getId(), following.getId());
             notifacationSer.deleteNotifaction(following.getId(), user.getId());
